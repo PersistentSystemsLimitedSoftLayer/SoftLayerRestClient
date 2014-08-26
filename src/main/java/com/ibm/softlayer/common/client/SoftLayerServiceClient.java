@@ -24,6 +24,25 @@ public class SoftLayerServiceClient {
 	/** The Constant logger. */
 	private static final Logger logger = LoggerFactory.getLogger(SoftLayerServiceClient.class);
 	
+	/** The token. */
+	private String token = null;	
+	
+	/**
+	 * Instantiates a new soft layer service client.
+	 *
+	 * @param token the token
+	 */
+	public SoftLayerServiceClient(String token) {
+		this.token = token;
+	}
+	
+	/**
+	 * Instantiates a new soft layer service client.
+	 */
+	public SoftLayerServiceClient() {
+		
+	}
+	
 	/**
 	 * Execute post.
 	 *
@@ -33,15 +52,16 @@ public class SoftLayerServiceClient {
 	 * @return the client response
 	 */
 	public ClientResponse authenticate(String url, String username, String password)  {		
-		logger.info("Executing authenticate:POST for following URL: " + url);
+		logger.debug("Executing authenticate:POST for following URL: " + url);
 		
 		RestClient client = new RestClient(getClientConfig());		
 		Resource resource = client.resource(url);	
 		resource.header("X-Auth-User", username);
 		resource.header("X-Auth-Key", password);		
 		
+		logger.info("Calling POST API: " + url);
 		ClientResponse response = resource.post(null);		
-		logger.info("Executed authenticate:POST for following URL: " + url + ", Response Status Code: " + response.getStatusCode());
+		logger.debug("Executed authenticate:POST for following URL: " + url + ", Response Status Code: " + response.getStatusCode());
 		return response;
 	}
 	
@@ -49,12 +69,11 @@ public class SoftLayerServiceClient {
 	 * Execute get.
 	 *
 	 * @param url the url
-	 * @param token the token
 	 * @param requestParamsMap the request params map
 	 * @return the client response
 	 */
-	public ClientResponse executeGET(String url, String token, Map<String, String> requestParamsMap)  {		
-		logger.info("Executing GET for following URL: " + url + ", requestParamsMap: " + requestParamsMap);
+	public ClientResponse executeGET(String url, Map<String, String> requestParamsMap)  {		
+		logger.debug("Executing GET for following URL: " + url + ", requestParamsMap: " + requestParamsMap);
 		
 		StringBuffer requestParams = new StringBuffer();
 		if(requestParamsMap != null){
@@ -81,8 +100,70 @@ public class SoftLayerServiceClient {
 		Resource resource = client.resource(url);	
 		resource.header("X-Auth-Token", token);
 		
+		logger.info("Calling GET API: " + url);
 		ClientResponse response = resource.get();		
-		logger.info("Executed GET for following URL: " + url + ", Response Status Code: " + response.getStatusCode());
+		logger.debug("Executed GET for following URL: " + url + ", Response Status Code: " + response.getStatusCode());
+		return response;
+	}
+	
+	/**
+	 * Execute put.
+	 *
+	 * @param url the url
+	 * @param requestObject the request object
+	 * @return the client response
+	 */
+	public ClientResponse executePUT(String url, String requestObject)  {
+		logger.debug("Executing executePUT for following URL: " + url + ", requestObject: " + requestObject);
+		
+		RestClient client = new RestClient(getClientConfig());		
+		Resource resource = client.resource(url);	
+		resource.header("X-Auth-Token", token);
+		resource.header("Content-type", "application/json");
+		
+		logger.info("Calling PUT API: " + url + ", request: " + requestObject);
+		ClientResponse response = resource.put(requestObject);
+		logger.debug("Executed executePUT for following URL: " + url + ", response: " + response.getStatusCode());
+		return response;
+	}
+	
+	/**
+	 * Execute delete.
+	 *
+	 * @param url the url
+	 * @return the client response
+	 */
+	public ClientResponse executeDELETE(String url)  {
+		logger.debug("Executing executeDELETE for following URL: " + url);
+		
+		RestClient client = new RestClient(getClientConfig());		
+		Resource resource = client.resource(url);	
+		resource.header("X-Auth-Token", token);
+		
+		logger.info("Calling DELETE API: " + url);
+		ClientResponse response = resource.delete();
+		logger.debug("Executed executeDELETE for following URL: " + url);
+		return response;
+	}
+	
+	/**
+	 * Execute post.
+	 *
+	 * @param url the url
+	 * @param requestObject the request object
+	 * @return the client response
+	 */
+	public ClientResponse executePOST(String url, String requestObject)  {
+		logger.debug("Executing executePOST for following URL: " + url + ", requestObject:" + requestObject);
+		
+		RestClient client = new RestClient(getClientConfig());		
+		Resource resource = client.resource(url);	
+		resource.header("X-Auth-Token", token);
+		resource.header("Content-type", "application/json");
+		
+		logger.info("Calling POST API: " + url + ", request: " + requestObject);
+		ClientResponse response = resource.post(requestObject);
+		logger.debug("Executed executePOST for following URL: " + url);
 		return response;
 	}
 	
