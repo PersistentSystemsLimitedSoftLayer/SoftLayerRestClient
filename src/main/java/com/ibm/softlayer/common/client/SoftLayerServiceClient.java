@@ -147,6 +147,27 @@ public class SoftLayerServiceClient {
 	}
 	
 	/**
+	 * Execute post.
+	 *
+	 * @param url the url
+	 * @param requestObject the request object
+	 * @return the client response
+	 */
+	public ClientResponse executePOST(String url, String requestObject)  {
+		logger.debug("Executing executePOST for following URL: " + url + ", requestObject:" + requestObject);
+		
+		RestClient client = new RestClient(getClientConfig());		
+		Resource resource = client.resource(url);	
+		resource.header("X-Auth-Token", token);
+		resource.header("Content-type", "application/json");
+		
+		logger.info("Calling POST API: " + url + ", request: " + requestObject);
+		ClientResponse response = resource.post(requestObject);
+		logger.debug("Executed executePOST for following URL: " + url);
+		return response;
+	}
+	
+	/**
 	 * Gets the client config.
 	 *
 	 * @return the client config

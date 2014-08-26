@@ -40,17 +40,16 @@ public class QueueServiceTest {
 	}
 	
 	/**
-	 * Test get queue by name.
+	 * Test get queues.
 	 *
 	 * @throws Exception the exception
 	 */
 	@Test
-	public void testGetQueueByName() throws Exception {			
-		GetQueueByNameService queueService = new GetQueueByNameService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY, UnitTestConstants.SL_ACCOUNTID);
-		JSONObject queueDetails = queueService.getQueue(queueName);
-		assertNotNull(queueDetails);
-		assertEquals(queueName, queueDetails.getString("name"));
-	}
+	public void testGetQueues() throws Exception {
+		GetQueuesService service = new GetQueuesService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY, UnitTestConstants.SL_ACCOUNTID);
+		JSONArray array = service.getQueues();
+		assertNotNull(array);		
+	}		
 	
 	@Test
 	public void testUpdateQueue() throws Exception {
@@ -67,19 +66,7 @@ public class QueueServiceTest {
 		assertNotNull(queueDetails);
 		assertEquals(queueName, queueDetails.getString("name"));
 		assertEquals("80000" , queueDetails.getString("expiration"));
-	}
-	
-	/**
-	 * Test get queues.
-	 *
-	 * @throws Exception the exception
-	 */
-	@Test
-	public void testGetQueues() throws Exception {
-		GetQueuesService service = new GetQueuesService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY, UnitTestConstants.SL_ACCOUNTID);
-		JSONArray array = service.getQueues();
-		assertNotNull(array);		
-	}
+	}		
 	
 	/**
 	 * Test get queues with tags.
@@ -121,14 +108,11 @@ public class QueueServiceTest {
 		assertEquals(deleted, true);
 	}
 	
-	@Test
-	public void testGetQueueByNameAfterDelete() {			
-		try {
-			//if the control reaches exception block means, queue is deleted. else, the test case should fail
-			GetQueueByNameService queueService = new GetQueueByNameService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY, UnitTestConstants.SL_ACCOUNTID);
-			queueService.getQueue(queueName);
-			Assert.fail();
-		} catch (Exception e) {
-		}
-	}
+//	@Test (expected = Exception.class)
+//	public void testGetQueueByNameAfterDelete() throws Exception {			
+//		//if the control reaches exception block means, queue is deleted. else, the test case should fail
+//		GetQueueByNameService queueService = new GetQueueByNameService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY, UnitTestConstants.SL_ACCOUNTID);
+//		queueService.getQueue(queueName);
+//		Assert.fail();
+//	}
 }
