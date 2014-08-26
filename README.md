@@ -1,4 +1,4 @@
-SoftLayerAPIClient
+SoftLayerRestClient
 ==================
 
 Mostly dedicated for IBM SoftLayer.
