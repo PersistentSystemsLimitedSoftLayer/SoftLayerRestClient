@@ -74,6 +74,18 @@ public class SoftLayerServiceClient {
 	 * @return the client response
 	 */
 	public ClientResponse executeGET(String url, Map<String, String> requestParamsMap)  {		
+		return executeGET(url, requestParamsMap, null);
+	}
+	
+	/**
+	 * Execute get.
+	 *
+	 * @param url the url
+	 * @param requestParamsMap the request params map
+	 * @param credentialsColonSeperated the credentials colon seperated
+	 * @return the client response
+	 */
+	public ClientResponse executeGET(String url, Map<String, String> requestParamsMap, String credentialsColonSeperated)  {		
 		logger.debug("Executing GET for following URL: " + url + ", requestParamsMap: " + requestParamsMap);
 		
 		StringBuffer requestParams = new StringBuffer();
@@ -99,7 +111,14 @@ public class SoftLayerServiceClient {
 		
 		RestClient client = new RestClient(getClientConfig());		
 		Resource resource = client.resource(url);	
-		resource.header("X-Auth-Token", token);
+		
+		//credentials are used for the Virtual Guest Services
+		if(credentialsColonSeperated != null && credentialsColonSeperated.trim().length() > 0) {
+			String encoding = new String (Base64.encodeBase64(credentialsColonSeperated.getBytes()));
+			resource.header("Authorization", "Basic "+encoding);
+		} else {
+			resource.header("X-Auth-Token", token);
+		}	
 		
 		logger.info("Calling GET API: " + url);
 		ClientResponse response = resource.get();		
@@ -115,12 +134,31 @@ public class SoftLayerServiceClient {
 	 * @return the client response
 	 */
 	public ClientResponse executePUT(String url, String requestObject)  {
+		return executePUT(url, requestObject, null);
+	}
+	
+	/**
+	 * Execute put.
+	 *
+	 * @param url the url
+	 * @param requestObject the request object
+	 * @param credentialsColonSeperated the credentials colon seperated
+	 * @return the client response
+	 */
+	public ClientResponse executePUT(String url, String requestObject, String credentialsColonSeperated)  {
 		logger.debug("Executing executePUT for following URL: " + url + ", requestObject: " + requestObject);
 		
 		RestClient client = new RestClient(getClientConfig());		
 		Resource resource = client.resource(url);	
-		resource.header("X-Auth-Token", token);
 		resource.header("Content-type", "application/json");
+		
+		//credentials are used for the Virtual Guest Services
+		if(credentialsColonSeperated != null && credentialsColonSeperated.trim().length() > 0) {
+			String encoding = new String (Base64.encodeBase64(credentialsColonSeperated.getBytes()));
+			resource.header("Authorization", "Basic "+encoding);
+		} else {
+			resource.header("X-Auth-Token", token);
+		}	
 		
 		logger.info("Calling PUT API: " + url + ", request: " + requestObject);
 		ClientResponse response = resource.put(requestObject);
