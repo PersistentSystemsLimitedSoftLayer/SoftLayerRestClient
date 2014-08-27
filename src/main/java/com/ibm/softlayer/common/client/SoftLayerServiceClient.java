@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Map;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.wink.client.ClientConfig;
 import org.apache.wink.client.ClientResponse;
 import org.apache.wink.client.Resource;
@@ -134,11 +135,29 @@ public class SoftLayerServiceClient {
 	 * @return the client response
 	 */
 	public ClientResponse executeDELETE(String url)  {
+		return executeDELETE(url, null);
+	}	
+	
+	/**
+	 * Execute delete.
+	 *
+	 * @param url the url
+	 * @param credentialsColonSeperated the credentials colon seperated
+	 * @return the client response
+	 */
+	public ClientResponse executeDELETE(String url, String credentialsColonSeperated)  {
 		logger.debug("Executing executeDELETE for following URL: " + url);
 		
 		RestClient client = new RestClient(getClientConfig());		
 		Resource resource = client.resource(url);	
-		resource.header("X-Auth-Token", token);
+		
+		//credentials are used for the Virtual Guest Services
+		if(credentialsColonSeperated != null && credentialsColonSeperated.trim().length() > 0) {
+			String encoding = new String (Base64.encodeBase64(credentialsColonSeperated.getBytes()));
+			resource.header("Authorization", "Basic "+encoding);
+		} else {
+			resource.header("X-Auth-Token", token);
+		}	
 		
 		logger.info("Calling DELETE API: " + url);
 		ClientResponse response = resource.delete();
@@ -154,16 +173,35 @@ public class SoftLayerServiceClient {
 	 * @return the client response
 	 */
 	public ClientResponse executePOST(String url, String requestObject)  {
-		logger.debug("Executing executePOST for following URL: " + url + ", requestObject:" + requestObject);
+		return executePOST(url, requestObject, null);
+	}		
+	
+	/**
+	 * Execute post.
+	 *
+	 * @param url the url
+	 * @param requestObject the request object
+	 * @param credentialsColonSeperated the credentials colon seperated
+	 * @return the client response
+	 */
+	public ClientResponse executePOST(String url, String requestObject, String credentialsColonSeperated)  {
+		logger.debug("Executing processPOST for following URL: " + url + ", requestObject:" + requestObject);
 		
 		RestClient client = new RestClient(getClientConfig());		
 		Resource resource = client.resource(url);	
-		resource.header("X-Auth-Token", token);
 		resource.header("Content-type", "application/json");
+		
+		//credentials are used for the Virtual Guest Services
+		if(credentialsColonSeperated != null && credentialsColonSeperated.trim().length() > 0) {
+			String encoding = new String (Base64.encodeBase64(credentialsColonSeperated.getBytes()));
+			resource.header("Authorization", "Basic "+encoding);
+		} else {
+			resource.header("X-Auth-Token", token);
+		}				
 		
 		logger.info("Calling POST API: " + url + ", request: " + requestObject);
 		ClientResponse response = resource.post(requestObject);
-		logger.debug("Executed executePOST for following URL: " + url);
+		logger.debug("Executed processPOST for following URL: " + url);
 		return response;
 	}
 	
