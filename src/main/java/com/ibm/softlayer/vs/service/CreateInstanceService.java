@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import com.ibm.softlayer.common.client.SoftLayerServiceClient;
 import com.ibm.softlayer.common.service.AbstractService;
+import com.ibm.softlayer.common.util.URIGenerator;
 
 /**
  * The Class CreateInstanceService.
@@ -37,8 +38,13 @@ public class CreateInstanceService extends AbstractService {
 	 */
 	public JSONObject createInstance(String hostname) throws Exception {
 		logger.info("Executing Create Instance with hostname: " + hostname);
-		String url = "https://api.softlayer.com/rest/v3/SoftLayer_Virtual_Guest/createObject";			
+		
+		//generate the create instance url
+		StringBuffer url = new StringBuffer();
+		url.append(URIGenerator.getVirtualGuestAPIURL());
+		url.append("/").append("createObject");
 				
+		//generate the request for POST
 		JSONObject requestJson = new JSONObject();
 		requestJson.put("hostname", hostname);
 		requestJson.put("domain", "persistent.com");
@@ -59,7 +65,7 @@ public class CreateInstanceService extends AbstractService {
 		requests.put("parameters", parameters);
 		
 		SoftLayerServiceClient client = new SoftLayerServiceClient();
-		ClientResponse clientResponse = client.executePOST(url, requests.toString(), getCredentialsColonSeperated());
+		ClientResponse clientResponse = client.executePOST(url.toString(), requests.toString(), getCredentialsColonSeperated());
 		String response = clientResponse.getEntity(String.class);
 		
 		logger.info("Executed Create Instance with hostname: " + hostname + ", Status Code: " 

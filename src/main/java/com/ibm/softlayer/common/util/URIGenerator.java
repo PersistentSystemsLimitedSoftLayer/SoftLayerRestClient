@@ -44,4 +44,22 @@ public class URIGenerator {
 		
 		return url.toString();
 	}
+	
+	/**
+	 * Gets the SL api url.
+	 *
+	 * @param appendAPI the append api
+	 * @return the SL api url
+	 */
+	public static String getVirtualGuestAPIURL(){
+		StringBuffer url = new StringBuffer();
+		url.append(properties.getProperty(SLProperties.SL_BASE_API));
+		if(!url.toString().endsWith("/")) {
+			url.append("/");
+		}
+		url.append(properties.getProperty(SLProperties.SL_VIRTAL_GUEST_API));
+		return url.toString();
+	}
+	
+	
 }
