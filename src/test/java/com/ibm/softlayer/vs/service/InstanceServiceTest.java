@@ -21,7 +21,7 @@ public class InstanceServiceTest {
 //		assertNotNull(jsonObject);
 //		instanceId = jsonObject.getString("id");
 //	}
-	
+//	
 //	@Test
 //	public void testDeleteInstance() throws Exception {
 //		instanceId = "6029528";
@@ -29,7 +29,16 @@ public class InstanceServiceTest {
 //		boolean deleted = service.deleteInstance(instanceId);
 //		assertEquals(true, deleted);
 //	}
-	
+//	
+//	@Test
+//	public void testGetInstance() throws Exception {
+//		instanceId = "6029528";
+//		GetInstanceService service = new GetInstanceService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY, UnitTestConstants.SL_ACCOUNTID);
+//		JSONObject jsonObject = service.getInstance(instanceId);
+//		assertNotNull(jsonObject);
+//		assertEquals(instanceId, jsonObject.getString("id"));
+//	}
+//	
 //	@Test (expected = Exception.class)
 //	public void testDeleteInstanceNullInstanceId() throws Exception {
 //		DeleteInstanceService service = new DeleteInstanceService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY, UnitTestConstants.SL_ACCOUNTID);
