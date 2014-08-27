@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import com.ibm.softlayer.common.client.SoftLayerServiceClient;
 import com.ibm.softlayer.common.service.AbstractService;
+import com.ibm.softlayer.common.util.URIGenerator;
 
 /**
  * The Class GetInstanceService.
@@ -42,10 +43,13 @@ public class GetInstanceService extends AbstractService {
 			throw new Exception("Instance Id is mandatory to retrieve the instance");
 		}
 		
-		String url = "https://api.softlayer.com/rest/v3/SoftLayer_Virtual_Guest/6029176/getObject";				
-		
+		//generate the get instance url
+		StringBuffer url = new StringBuffer();
+		url.append(URIGenerator.getVirtualGuestAPIURL());
+		url.append("/").append(instanceId).append("/getObject");
+				
 		SoftLayerServiceClient client = new SoftLayerServiceClient();
-		ClientResponse clientResponse = client.executeGET(url, null, getCredentialsColonSeperated());
+		ClientResponse clientResponse = client.executeGET(url.toString(), null, getCredentialsColonSeperated());
 		String response = clientResponse.getEntity(String.class);
 		logger.info("Executed Get Instance: " + instanceId + ", Response Status Code: " + clientResponse.getStatusCode() + ", Message: " + response);
 		

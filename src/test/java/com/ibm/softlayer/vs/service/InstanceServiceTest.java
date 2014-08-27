@@ -20,11 +20,12 @@ public class InstanceServiceTest {
 //		JSONObject jsonObject = service.createInstance(hostname);
 //		assertNotNull(jsonObject);
 //		instanceId = jsonObject.getString("id");
+//		assertEquals(hostname, jsonObject.getString("hostname"));
 //	}
 //	
 //	@Test
 //	public void testDeleteInstance() throws Exception {
-//		instanceId = "6029528";
+//		instanceId = "6030316";
 //		DeleteInstanceService service = new DeleteInstanceService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY, UnitTestConstants.SL_ACCOUNTID);
 //		boolean deleted = service.deleteInstance(instanceId);
 //		assertEquals(true, deleted);
@@ -32,7 +33,7 @@ public class InstanceServiceTest {
 //	
 //	@Test
 //	public void testGetInstance() throws Exception {
-//		instanceId = "6029528";
+//		instanceId = "6030316";
 //		GetInstanceService service = new GetInstanceService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY, UnitTestConstants.SL_ACCOUNTID);
 //		JSONObject jsonObject = service.getInstance(instanceId);
 //		assertNotNull(jsonObject);

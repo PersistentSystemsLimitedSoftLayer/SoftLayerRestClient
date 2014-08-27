@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import com.ibm.softlayer.common.client.SoftLayerServiceClient;
 import com.ibm.softlayer.common.service.AbstractService;
+import com.ibm.softlayer.common.util.URIGenerator;
 
 /**
  * The Class DeleteInstanceService.
@@ -39,10 +40,13 @@ public class DeleteInstanceService extends AbstractService {
 			throw new Exception("Instance Id is mandatory to delete the instance");
 		}
 		
-		String url = "https://api.softlayer.com/rest/v3/SoftLayer_Virtual_Guest/6029176";				
-		
+		//generate the delete instance url
+		StringBuffer url = new StringBuffer();
+		url.append(URIGenerator.getVirtualGuestAPIURL());
+		url.append("/").append(instanceId);
+				
 		SoftLayerServiceClient client = new SoftLayerServiceClient();
-		ClientResponse clientResponse = client.executeDELETE(url, getCredentialsColonSeperated());
+		ClientResponse clientResponse = client.executeDELETE(url.toString(), getCredentialsColonSeperated());
 		String response = clientResponse.getEntity(String.class);
 		
 		logger.info("Executed Delete Instance: " + instanceId + ", Response Status Code: " + clientResponse.getStatusCode() + ", Message: " + response);
