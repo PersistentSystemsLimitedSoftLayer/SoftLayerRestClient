@@ -92,4 +92,8 @@ public abstract class AbstractService {
 		AuthenticationService authService = AuthenticationService.getInstance();
 		return authService.getAuthToken(accountId, username, apikey);
 	}
+	
+	public String getCredentialsColonSeperated() {
+		return getUsername()+":"+getApikey();
+	}
 }
