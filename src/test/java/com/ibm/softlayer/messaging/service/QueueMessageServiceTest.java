@@ -37,7 +37,7 @@ public class QueueMessageServiceTest {
 	 */
 	@Test
 	public void testCreateQueue() throws Exception {
-		CreateQueueService service = new CreateQueueService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY, UnitTestConstants.SL_ACCOUNTID);
+		CreateQueueService service = new CreateQueueService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
 		JSONObject queueCreated = service.createQueue(queueName, 10, 40000, Arrays.asList(queueTagName));
 		assertNotNull(queueCreated);
 		assertEquals(queueName, queueCreated.getString("name"));
@@ -53,7 +53,7 @@ public class QueueMessageServiceTest {
 		Map<String, String> fields = new HashMap<String, String>();
 		fields.put("maxSize", "10000");
 		
-		SendMessageToQueueService service = new SendMessageToQueueService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY, UnitTestConstants.SL_ACCOUNTID);
+		SendMessageToQueueService service = new SendMessageToQueueService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
 		JSONObject messageSent = service.sendMessageToQueue(queueName, "Test Message", fields, 10, 40000);
 		assertNotNull(messageSent);
 		assertEquals("Test Message", messageSent.getString("body"));
@@ -67,7 +67,7 @@ public class QueueMessageServiceTest {
 	 */
 	@Test
 	public void testPopMessageFromQueue() throws Exception {				
-		GetMessageFromQueueService service = new GetMessageFromQueueService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY, UnitTestConstants.SL_ACCOUNTID);
+		GetMessageFromQueueService service = new GetMessageFromQueueService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
 		JSONArray message = service.popMessageFromQueue(queueName, -1);
 		assertNotNull(message);		
 	}
@@ -79,7 +79,7 @@ public class QueueMessageServiceTest {
 	 */
 	@Test
 	public void testDeleteMessageFromQueue() throws Exception {				
-		DeleteMessageFromQueueService service = new DeleteMessageFromQueueService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY, UnitTestConstants.SL_ACCOUNTID);
+		DeleteMessageFromQueueService service = new DeleteMessageFromQueueService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
 		boolean messagedeleted = service.deleteMessageFromQueue(queueName, messageId);
 		assertEquals(messagedeleted, true);
 	}
@@ -91,7 +91,7 @@ public class QueueMessageServiceTest {
 	 */
 	@Test
 	public void testDeleteQueue() throws Exception {
-		DeleteQueueService service = new DeleteQueueService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY, UnitTestConstants.SL_ACCOUNTID);
+		DeleteQueueService service = new DeleteQueueService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
 		boolean deleted = service.deleteQueue(queueName);;
 		assertEquals(deleted, true);
 	}

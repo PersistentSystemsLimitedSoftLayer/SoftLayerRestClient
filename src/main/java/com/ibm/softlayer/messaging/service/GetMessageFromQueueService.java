@@ -29,8 +29,8 @@ public class GetMessageFromQueueService extends AbstractService {
 	 * @param apikey the apikey
 	 * @param accountId the account id
 	 */
-	public GetMessageFromQueueService(String username, String apikey, String accountId) {
-		super(username, apikey, accountId);
+	public GetMessageFromQueueService(String username, String apikey) {
+		super(username, apikey);
 	}
 
 	
@@ -44,13 +44,13 @@ public class GetMessageFromQueueService extends AbstractService {
 	 * @throws Exception the exception
 	 */
 	public JSONArray popMessageFromQueue(String queueName, int messagesToPop) throws Exception {
-		logger.info("Executing popMessageFromQueue for Account: " + getAccountId() + ", queueName: " + queueName + ", messagesToPop: " + messagesToPop);
+		logger.info("Executing popMessageFromQueue for queueName: " + queueName + ", messagesToPop: " + messagesToPop);
 		
 		//authenticate the user and retrieve the token
 		String token = getAuthToken();
 		
 		//generate the get queues URL		
-		String url = URIGenerator.getURL(getAccountId(), APIConstants.QUEUES_API);
+		String url = URIGenerator.getSLMessagingAPIURL();
 		
 		//append the queuename to the URL		
 		url += "/" + queueName + "/" + APIConstants.MESSAGES_API;
