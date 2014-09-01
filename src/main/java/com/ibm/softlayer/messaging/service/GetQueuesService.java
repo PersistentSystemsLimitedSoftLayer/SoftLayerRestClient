@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import com.ibm.softlayer.common.client.SoftLayerServiceClient;
 import com.ibm.softlayer.common.service.AbstractService;
 import com.ibm.softlayer.common.util.URIGenerator;
-import com.ibm.softlayer.util.APIConstants;
 
 /**
  * The Class GetQueuesService.
@@ -22,8 +21,8 @@ public class GetQueuesService extends AbstractService {
 	/** The Constant logger. */
 	private static final Logger logger = LoggerFactory.getLogger(GetQueuesService.class);	
 
-	public GetQueuesService(String username, String apiKey, String accountId) {
-		super(username, apiKey, accountId);
+	public GetQueuesService(String username, String apiKey) {
+		super(username, apiKey);
 	}		
 	
 	/**
@@ -51,13 +50,13 @@ public class GetQueuesService extends AbstractService {
 	 * @throws Exception the exception
 	 */
 	private JSONArray getAllQueues(String tags) throws Exception {
-		logger.info("Executing getQueues for Account: " + getAccountId() + ", username: " + getUsername());
+		logger.info("Executing getQueues for username: " + getUsername());
 		
 		//authenticate the user and retrieve the token
 		String token = getAuthToken();
 		
 		//generate the get queues URL		
-		String url = URIGenerator.getURL(getAccountId(), APIConstants.QUEUES_API);
+		String url = URIGenerator.getSLMessagingAPIURL();
 		
 		//check if tags exists, add it as request params
 		Map<String, String> requestParams = new HashMap<String, String>();
@@ -68,7 +67,7 @@ public class GetQueuesService extends AbstractService {
 		SoftLayerServiceClient client = new SoftLayerServiceClient(token);
 		ClientResponse clientResponse = client.executeGET(url, requestParams);
 		String response = clientResponse.getEntity(String.class);
-		logger.info("Executed getQueues for Account: " + getAccountId() + ", username: " + getUsername() + ", clientResponse: " + clientResponse.getStatusCode());
+		logger.info("Executed getQueues for username: " + getUsername() + ", clientResponse: " + clientResponse.getStatusCode());
 		
 		if(clientResponse.getStatusCode() == 200){
 			JSONObject json = new JSONObject(response);

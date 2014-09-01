@@ -8,26 +8,41 @@ import org.slf4j.LoggerFactory;
 import com.ibm.softlayer.common.client.SoftLayerServiceClient;
 import com.ibm.softlayer.common.service.AbstractService;
 import com.ibm.softlayer.common.util.URIGenerator;
-import com.ibm.softlayer.util.APIConstants;
 
+/**
+ * The Class GetQueueByNameService.
+ */
 public class GetQueueByNameService extends AbstractService {
 
 	/** The Constant logger. */
 	private static final Logger logger = LoggerFactory.getLogger(GetQueueByNameService.class);		
 	
-	public GetQueueByNameService(String username, String apiKey, String accountId) {
-		super(username, apiKey, accountId);
+	/**
+	 * Instantiates a new gets the queue by name service.
+	 *
+	 * @param username the username
+	 * @param apiKey the api key
+	 */
+	public GetQueueByNameService(String username, String apiKey) {
+		super(username, apiKey);
 	}	
 	
 	
+	/**
+	 * Gets the queue.
+	 *
+	 * @param queueName the queue name
+	 * @return the queue
+	 * @throws Exception the exception
+	 */
 	public JSONObject getQueue(String queueName) throws Exception {
-		logger.info("Executing getQueue for Account: " + accountId + ", queueName: " + queueName + ", username: " + username);
+		logger.info("Executing getQueue for queueName: " + queueName + ", username: " + username);
 		
 		//authenticate the user and retrieve the token
 		String token = getAuthToken();
 		
 		//generate the get queues URL
-		String url = URIGenerator.getURL(accountId, APIConstants.QUEUES_API);
+		String url = URIGenerator.getSLMessagingAPIURL();
 		
 		//append the auth to the URL		
 		url += "/" + queueName;
@@ -35,7 +50,7 @@ public class GetQueueByNameService extends AbstractService {
 		SoftLayerServiceClient client = new SoftLayerServiceClient(token);
 		ClientResponse clientResponse = client.executeGET(url, null);
 		String response = clientResponse.getEntity(String.class);
-		logger.info("Executed getQueue for Account: " + accountId + ", QueueName: " 
+		logger.info("Executed getQueue for QueueName: " 
 				+ queueName + ", username: " + username + ", clientResponse: " + clientResponse.getStatusCode());
 		
 		if(clientResponse.getStatusCode() == 200){
