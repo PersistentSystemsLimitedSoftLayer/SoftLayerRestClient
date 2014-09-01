@@ -22,10 +22,9 @@ public class GetQueueByNameService extends AbstractService {
 	 *
 	 * @param username the username
 	 * @param apiKey the api key
-	 * @param accountId the account id
 	 */
-	public GetQueueByNameService(String username, String apiKey, String accountId) {
-		super(username, apiKey, accountId);
+	public GetQueueByNameService(String username, String apiKey) {
+		super(username, apiKey);
 	}	
 	
 	
@@ -37,7 +36,7 @@ public class GetQueueByNameService extends AbstractService {
 	 * @throws Exception the exception
 	 */
 	public JSONObject getQueue(String queueName) throws Exception {
-		logger.info("Executing getQueue for Account: " + accountId + ", queueName: " + queueName + ", username: " + username);
+		logger.info("Executing getQueue for queueName: " + queueName + ", username: " + username);
 		
 		//authenticate the user and retrieve the token
 		String token = getAuthToken();
@@ -51,7 +50,7 @@ public class GetQueueByNameService extends AbstractService {
 		SoftLayerServiceClient client = new SoftLayerServiceClient(token);
 		ClientResponse clientResponse = client.executeGET(url, null);
 		String response = clientResponse.getEntity(String.class);
-		logger.info("Executed getQueue for Account: " + accountId + ", QueueName: " 
+		logger.info("Executed getQueue for QueueName: " 
 				+ queueName + ", username: " + username + ", clientResponse: " + clientResponse.getStatusCode());
 		
 		if(clientResponse.getStatusCode() == 200){
