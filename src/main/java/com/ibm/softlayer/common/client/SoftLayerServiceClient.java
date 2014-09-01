@@ -224,8 +224,9 @@ public class SoftLayerServiceClient {
 	 */
 	public ClientResponse executePOST(String url, String requestObject, String credentialsColonSeperated)  {
 		logger.debug("Executing processPOST for following URL: " + url + ", requestObject:" + requestObject);
-		
-		RestClient client = new RestClient(getClientConfig());		
+	
+		RestClient client = new RestClient(getClientConfig());
+	
 		Resource resource = client.resource(url);	
 		resource.header("Content-type", "application/json");
 		

@@ -12,11 +12,11 @@ public class UnitTestConstants {
 	}
 
 	/** The Constant SL_ACCOUNTID. */
-	public static final String SL_ACCOUNTID = "5yi4q";
+	public static final String SL_ACCOUNTID = "367792";
 	
 	/** The Constant SL_USERNAME. */
-	public static final String SL_USERNAME = "runtestsuser";
+	public static final String SL_USERNAME = "sneha_shahade";
 	
 	/** The Constant SL_APIKEY. */
-	public static final String SL_APIKEY = "00d558fda0af8a6ced4ab8a77a90047529bce8d115f2515da66a30594cf5fc48";
+	public static final String SL_APIKEY = "9fb255517c63d4c7ccb7eaaf3dc967e10989b759ca8dd047cf3e57ea3aa406bb";
 }

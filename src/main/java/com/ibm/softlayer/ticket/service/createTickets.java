@@ -33,11 +33,13 @@ public class createTickets  extends AbstractService{
 		System.out.println("Printing URL "+ url+"/createStandardTicket.json");
 				
 		SoftLayerServiceClient client = new SoftLayerServiceClient();
+		
+		
 		String templateObject =getJSON(AssignedToUser,subjectId,tittle, content);
 	
-		
-		
-		ClientResponse clientResponse = client.executePOST(url+"/createStandardTicket.json", templateObject);
+		System.out.println("Printing Request Body to pass" +templateObject);
+	
+		ClientResponse clientResponse = client.executePOST(url+"/createStandardTicket.json", templateObject,getCredentialsColonSeperated());
 		String response = clientResponse.getEntity(String.class);
 		logger.info("Executed Create Tickets for Account");
 		

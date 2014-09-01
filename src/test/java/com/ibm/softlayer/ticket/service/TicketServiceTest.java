@@ -60,9 +60,9 @@ public class TicketServiceTest {
 	public void testCreateTicket() throws Exception {
 		String id="12139500";
 		String AssinedToUser="245236";
-		String SubjectId="";
+		String SubjectId="1522";
 		String tittle="TestAutoTicket";
-		String content="This ticket is generated for Testing Automation process";
+		String content="This is Second ticket. generated for Testing Automation process";
 		createTickets service = new createTickets(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY,UnitTestConstants.SL_ACCOUNTID);
 		org.apache.wink.json4j.JSONObject ticketObject = service.createTickets(AssinedToUser, SubjectId, tittle, content);
 		System.out.println(ticketObject.toString());
