@@ -30,4 +30,19 @@ public class GetQueueByNameServiceTest {
 		assertNotNull(queueDetails);
 		assertEquals(queueName, queueDetails.getString("name"));
 	}
+	@Test
+	public void testGetQueueByNamewe() throws Exception {
+		
+		//get all queues
+		GetQueuesService service = new GetQueuesService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY, UnitTestConstants.SL_ACCOUNTID);
+		JSONArray array = service.getQueues();
+		assertNotNull(array);		
+		String queueName = array.getJSONObject(0).getString("name");
+		
+		//get the queue details by name, consider queue first in the above list
+		GetQueueByNameService queueService = new GetQueueByNameService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY, UnitTestConstants.SL_ACCOUNTID);
+		JSONObject queueDetails = queueService.getQueue(queueName);
+		assertNotNull(queueDetails);
+		assertEquals(queueName, queueDetails.getString("name"));
+	}
 }

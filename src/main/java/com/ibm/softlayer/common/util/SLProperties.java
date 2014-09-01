@@ -30,6 +30,10 @@ public class SLProperties {
 	/** The Constant SL_VERSION. */
 	public static final String SL_VERSION = "SL_VERSION";
 	
+	public static final String SL_BASE_API = "SL_BASE_API";
+	
+	public static final String SL_VIRTAL_GUEST_API = "SL_VIRTAL_GUEST_API";
+	
 	/** The instance. */
 	private static final SLProperties instance = new SLProperties();	
 	

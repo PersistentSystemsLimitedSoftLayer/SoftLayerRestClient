@@ -8,13 +8,12 @@ import org.slf4j.LoggerFactory;
 import com.ibm.softlayer.common.client.SoftLayerServiceClient;
 import com.ibm.softlayer.common.service.AbstractService;
 import com.ibm.softlayer.common.util.URIGenerator;
+import com.ibm.softlayer.util.APIConstants;
 
 public class GetQueueByNameService extends AbstractService {
 
 	/** The Constant logger. */
 	private static final Logger logger = LoggerFactory.getLogger(GetQueueByNameService.class);		
-	
-	private static final String GET_QUEUES = "queues";
 	
 	public GetQueueByNameService(String username, String apiKey, String accountId) {
 		super(username, apiKey, accountId);
@@ -28,19 +27,20 @@ public class GetQueueByNameService extends AbstractService {
 		String token = getAuthToken();
 		
 		//generate the get queues URL
-		String url = URIGenerator.getURL(accountId, GET_QUEUES);
+		String url = URIGenerator.getURL(accountId, APIConstants.QUEUES_API);
 		
 		//append the auth to the URL		
 		url += "/" + queueName;
 		
-		SoftLayerServiceClient client = new SoftLayerServiceClient();
-		ClientResponse clientResponse = client.executeGET(url, token, null);
+		SoftLayerServiceClient client = new SoftLayerServiceClient(token);
+		ClientResponse clientResponse = client.executeGET(url, null);
 		String response = clientResponse.getEntity(String.class);
 		logger.info("Executed getQueue for Account: " + accountId + ", QueueName: " 
 				+ queueName + ", username: " + username + ", clientResponse: " + clientResponse.getStatusCode());
 		
 		if(clientResponse.getStatusCode() == 200){
 			JSONObject json = new JSONObject(response);
+			logger.debug("GetQueue by Name: JSON Response: " + response);
 			return json;			
 		}
 		
