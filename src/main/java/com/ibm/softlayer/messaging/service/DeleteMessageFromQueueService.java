@@ -45,7 +45,7 @@ public class DeleteMessageFromQueueService extends AbstractService {
 		String token = getAuthToken();
 		
 		//generate the get queues URL		
-		String url = URIGenerator.getURL(getAccountId(), APIConstants.QUEUES_API);
+		String url = URIGenerator.getSLMessagingAPIURL();
 		
 		//append the queuename to the URL		
 		url += "/" + queueName + "/" + APIConstants.MESSAGES_API + "/" + messageId;
