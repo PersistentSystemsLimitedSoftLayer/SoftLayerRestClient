@@ -14,7 +14,7 @@ import org.junit.Test;
 import com.ibm.softlayer.util.UnitTestConstants;
 
 public class TicketServiceTest {
-
+/*
 	@Test
 	public void testListAllTicket() throws Exception {
 		getTickets service = new getTickets(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY,UnitTestConstants.SL_ACCOUNTID);
@@ -55,7 +55,7 @@ public class TicketServiceTest {
 		//assertEquals(queueName, queueCreated.getString("name"));
 		
 	}
-	/*
+	*/
 	@Test
 	public void testCreateTicket() throws Exception {
 		String id="12139500";
@@ -69,6 +69,6 @@ public class TicketServiceTest {
 		assertNotNull(ticketObject);
 		//assertEquals(queueName, queueCreated.getString("name"));
 		
-	}*/
+	}
 	
 }
