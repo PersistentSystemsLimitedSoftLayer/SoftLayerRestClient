@@ -26,10 +26,9 @@ public class CreateQueueService extends AbstractService {
 	 *
 	 * @param username the username
 	 * @param apikey the apikey
-	 * @param accountId the account id
 	 */
-	public CreateQueueService(String username, String apikey, String accountId) {
-		super(username, apikey, accountId);		
+	public CreateQueueService(String username, String apikey) {
+		super(username, apikey);		
 	}
 	
 	/**
@@ -43,7 +42,7 @@ public class CreateQueueService extends AbstractService {
 	 * @throws Exception the exception
 	 */
 	public JSONObject createQueue(String queueName, int visibilityIntervals, int expiration, List<String> tags) throws Exception {
-		logger.info("Executing createQueue for Account: " + getAccountId() + ", username: " + getUsername());
+		logger.info("Executing createQueue for username: " + getUsername());
 		
 		//authenticate the user and retrieve the token
 		String token = getAuthToken();
@@ -57,7 +56,7 @@ public class CreateQueueService extends AbstractService {
 		SoftLayerServiceClient client = new SoftLayerServiceClient(token);
 		ClientResponse clientResponse = client.executePUT(url, getJSON(visibilityIntervals, expiration, tags));
 		String response = clientResponse.getEntity(String.class);
-		logger.info("Executed createQueue for Account: " + getAccountId() + ", QueueName: " + queueName + ", clientResponse: " + clientResponse.getStatusCode());
+		logger.info("Executed createQueue for QueueName: " + queueName + ", clientResponse: " + clientResponse.getStatusCode());
 		
 		if(clientResponse.getStatusCode() == 201 || clientResponse.getStatusCode() == 200){
 			JSONObject json = new JSONObject(response);

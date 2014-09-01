@@ -25,8 +25,8 @@ public class DeleteMessageFromQueueService extends AbstractService {
 	 * @param apikey the apikey
 	 * @param accountId the account id
 	 */
-	public DeleteMessageFromQueueService(String username, String apikey, String accountId) {
-		super(username, apikey, accountId);
+	public DeleteMessageFromQueueService(String username, String apikey) {
+		super(username, apikey);
 	}
 
 	
@@ -39,7 +39,7 @@ public class DeleteMessageFromQueueService extends AbstractService {
 	 * @throws Exception the exception
 	 */
 	public boolean deleteMessageFromQueue(String queueName, String messageId) throws Exception {
-		logger.info("Executing deleteMessageFromQueue for Account: " + getAccountId() + ", queueName: " + queueName + ", messageId: " + messageId);
+		logger.info("Executing deleteMessageFromQueue for queueName: " + queueName + ", messageId: " + messageId);
 		
 		//authenticate the user and retrieve the token
 		String token = getAuthToken();

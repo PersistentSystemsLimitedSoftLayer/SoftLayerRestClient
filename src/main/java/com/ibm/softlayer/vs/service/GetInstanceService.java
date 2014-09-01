@@ -23,10 +23,9 @@ public class GetInstanceService extends AbstractService {
 	 *
 	 * @param username the username
 	 * @param apikey the apikey
-	 * @param accountId the account id
 	 */
-	public GetInstanceService(String username, String apikey, String accountId) {
-		super(username, apikey, accountId);
+	public GetInstanceService(String username, String apikey) {
+		super(username, apikey);
 	}
 
 	

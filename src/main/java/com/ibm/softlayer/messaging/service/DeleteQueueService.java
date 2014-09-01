@@ -23,8 +23,8 @@ public class DeleteQueueService extends AbstractService {
 	 * @param apikey the apikey
 	 * @param accountId the account id
 	 */
-	public DeleteQueueService(String username, String apikey, String accountId) {
-		super(username, apikey, accountId);
+	public DeleteQueueService(String username, String apikey) {
+		super(username, apikey);
 	}
 
 	/**
@@ -35,7 +35,7 @@ public class DeleteQueueService extends AbstractService {
 	 * @throws Exception the exception
 	 */
 	public boolean deleteQueue(String queueName) throws Exception {
-		logger.info("Executing deleteQueue for Account: " + getAccountId() + ", queueName: " + queueName);
+		logger.info("Executing deleteQueue for queueName: " + queueName);
 		
 		//authenticate the user and retrieve the token
 		String token = getAuthToken();
@@ -49,7 +49,7 @@ public class DeleteQueueService extends AbstractService {
 		SoftLayerServiceClient client = new SoftLayerServiceClient(token);
 		ClientResponse clientResponse = client.executeDELETE(url);
 		String response = clientResponse.getEntity(String.class);
-		logger.info("Executed deleteQueue for Account: " + getAccountId() + ", QueueName: " + queueName + ", clientResponse: " + clientResponse.getStatusCode());
+		logger.info("Executed deleteQueue for QueueName: " + queueName + ", clientResponse: " + clientResponse.getStatusCode());
 		
 		if(clientResponse.getStatusCode() == 202){
 			return true;
