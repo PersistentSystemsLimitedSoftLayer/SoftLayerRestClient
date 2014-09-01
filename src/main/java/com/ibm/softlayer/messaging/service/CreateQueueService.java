@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import com.ibm.softlayer.common.client.SoftLayerServiceClient;
 import com.ibm.softlayer.common.service.AbstractService;
 import com.ibm.softlayer.common.util.URIGenerator;
-import com.ibm.softlayer.util.APIConstants;
 
 /**
  * The Class CreateQueueService.
@@ -50,7 +49,7 @@ public class CreateQueueService extends AbstractService {
 		String token = getAuthToken();
 		
 		//generate the get queues URL		
-		String url = URIGenerator.getURL(getAccountId(), APIConstants.QUEUES_API);
+		String url = URIGenerator.getSLMessagingAPIURL();
 		
 		//append the auth to the URL		
 		url += "/" + queueName;
