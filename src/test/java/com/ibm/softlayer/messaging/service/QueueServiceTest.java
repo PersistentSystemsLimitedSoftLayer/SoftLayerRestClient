@@ -4,8 +4,6 @@ import static junit.framework.Assert.*;
 
 import java.util.Arrays;
 
-import junit.framework.Assert;
-
 import org.apache.wink.json4j.JSONArray;
 import org.apache.wink.json4j.JSONObject;
 import org.junit.Test;
@@ -33,7 +31,7 @@ public class QueueServiceTest {
 	 */
 	@Test
 	public void testCreateQueue() throws Exception {
-		CreateQueueService service = new CreateQueueService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY, UnitTestConstants.SL_ACCOUNTID);
+		CreateQueueService service = new CreateQueueService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
 		JSONObject queueCreated = service.createQueue(queueName, 10, 40000, Arrays.asList(queueTagName));
 		assertNotNull(queueCreated);
 		assertEquals(queueName, queueCreated.getString("name"));
@@ -46,14 +44,14 @@ public class QueueServiceTest {
 	 */
 	@Test
 	public void testGetQueues() throws Exception {
-		GetQueuesService service = new GetQueuesService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY, UnitTestConstants.SL_ACCOUNTID);
+		GetQueuesService service = new GetQueuesService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
 		JSONArray array = service.getQueues();
 		assertNotNull(array);		
 	}		
 	
 	@Test
 	public void testUpdateQueue() throws Exception {
-		CreateQueueService service = new CreateQueueService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY, UnitTestConstants.SL_ACCOUNTID);
+		CreateQueueService service = new CreateQueueService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
 		JSONObject queueUpdated = service.createQueue(queueName, 10, 80000, Arrays.asList(queueTagName));
 		assertNotNull(queueUpdated);
 		assertEquals(queueName, queueUpdated.getString("name"));
@@ -61,7 +59,7 @@ public class QueueServiceTest {
 	
 	@Test
 	public void testGetQueueByNameAfterUpdate() throws Exception {			
-		GetQueueByNameService queueService = new GetQueueByNameService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY, UnitTestConstants.SL_ACCOUNTID);
+		GetQueueByNameService queueService = new GetQueueByNameService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
 		JSONObject queueDetails = queueService.getQueue(queueName);
 		assertNotNull(queueDetails);
 		assertEquals(queueName, queueDetails.getString("name"));
@@ -75,7 +73,7 @@ public class QueueServiceTest {
 	 */
 	@Test
 	public void testGetQueuesWithTags() throws Exception {
-		GetQueuesService service = new GetQueuesService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY, UnitTestConstants.SL_ACCOUNTID);
+		GetQueuesService service = new GetQueuesService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
 		JSONArray array = service.getQueues(queueTagName);
 		assertNotNull(array);
 		assertEquals(1, array.size());
@@ -83,7 +81,7 @@ public class QueueServiceTest {
 	
 	@Test
 	public void testGetQueuesWithMultipleTags() throws Exception {
-		GetQueuesService service = new GetQueuesService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY, UnitTestConstants.SL_ACCOUNTID);
+		GetQueuesService service = new GetQueuesService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
 		JSONArray array = service.getQueues("testtagB, testtagC");
 		assertNotNull(array);
 		assertEquals(1, array.size());
@@ -96,14 +94,14 @@ public class QueueServiceTest {
 	 */
 	@Test (expected = Exception.class)
 	public void testGetQueueByName_NotFound() throws Exception {			
-		GetQueueByNameService queueService = new GetQueueByNameService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY, UnitTestConstants.SL_ACCOUNTID);
+		GetQueueByNameService queueService = new GetQueueByNameService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
 		JSONObject queueDetails = queueService.getQueue("TestQueue1234");
 		assertNull(queueDetails);
 	}
 	
 	@Test
 	public void testDeleteQueue() throws Exception {
-		DeleteQueueService service = new DeleteQueueService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY, UnitTestConstants.SL_ACCOUNTID);
+		DeleteQueueService service = new DeleteQueueService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
 		boolean deleted = service.deleteQueue(queueName);;
 		assertEquals(deleted, true);
 	}

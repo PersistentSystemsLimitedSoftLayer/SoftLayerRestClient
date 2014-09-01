@@ -28,8 +28,8 @@ public class SendMessageToQueueService extends AbstractService {
 	 * @param apikey the apikey
 	 * @param accountId the account id
 	 */
-	public SendMessageToQueueService(String username, String apikey, String accountId) {
-		super(username, apikey, accountId);
+	public SendMessageToQueueService(String username, String apikey) {
+		super(username, apikey);
 	}
 
 	/**
@@ -45,13 +45,13 @@ public class SendMessageToQueueService extends AbstractService {
 	 */
 	public JSONObject sendMessageToQueue(String queueName, String messageBody, 
 			Map<String, String> fields, int visibilityIntervals, int visibility_delay) throws Exception {
-		logger.info("Executing sendMessageToQueue for Account: " + getAccountId() + ", queueName: " + queueName + ", messageBody: " + messageBody);
+		logger.info("Executing sendMessageToQueue for queueName: " + queueName + ", messageBody: " + messageBody);
 		
 		//authenticate the user and retrieve the token
 		String token = getAuthToken();
 		
 		//generate the get queues URL		
-		String url = URIGenerator.getURL(getAccountId(), APIConstants.QUEUES_API);
+		String url = URIGenerator.getSLMessagingAPIURL();
 		
 		//append the auth to the URL		
 		url += "/" + queueName + "/" + APIConstants.MESSAGES_API;
