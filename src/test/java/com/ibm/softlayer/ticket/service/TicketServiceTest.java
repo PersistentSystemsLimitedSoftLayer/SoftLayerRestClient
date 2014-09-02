@@ -47,24 +47,13 @@ public class TicketServiceTest {
 		assertNotNull(ticketArray);
 	}
 	
-/*
-	
-	
-	
-	
-	
-	
 	@Test
 	public void testGetTicketByID() throws Exception {
-		String id="12139500";
-		getTickets service = new getTickets(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY,UnitTestConstants.SL_ACCOUNTID);
-		org.apache.wink.json4j.JSONObject ticketObject = service.getTicketByID(id);
-		System.out.println(ticketObject.toString());
+		String ticketId="12221584";
+		GetTicketByIdService service = new GetTicketByIdService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		JSONObject ticketObject = service.getTicketById(ticketId);		
 		assertNotNull(ticketObject);
-		//assertEquals(queueName, queueCreated.getString("name"));
+		assertEquals(ticketId, ticketObject.getString("id"));
 		
-	}
-	*/
-
-	
+	}	
 }

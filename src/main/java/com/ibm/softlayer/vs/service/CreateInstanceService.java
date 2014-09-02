@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import com.ibm.softlayer.common.client.SoftLayerServiceClient;
 import com.ibm.softlayer.common.service.AbstractService;
 import com.ibm.softlayer.common.util.URIGenerator;
+import com.ibm.softlayer.util.APIConstants;
 
 /**
  * The Class CreateInstanceService.
@@ -42,7 +43,7 @@ public class CreateInstanceService extends AbstractService {
 		
 		//generate the create instance url
 		StringBuffer url = new StringBuffer();
-		url.append(URIGenerator.getVirtualGuestAPIURL());
+		url.append(URIGenerator.getSLBaseURL(APIConstants.VIRTUAL_GUEST_ROOT_API));
 		url.append("/").append("createObject");
 				
 		//generate the request for POST
@@ -95,7 +96,7 @@ public class CreateInstanceService extends AbstractService {
 		
 		//generate the create instance url
 		StringBuffer url = new StringBuffer();
-		url.append(URIGenerator.getVirtualGuestAPIURL());
+		url.append(URIGenerator.getSLBaseURL(APIConstants.VIRTUAL_GUEST_ROOT_API));
 		url.append("/").append("createObjects");
 				
 		//generate the request for POST
