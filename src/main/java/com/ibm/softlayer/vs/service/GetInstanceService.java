@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import com.ibm.softlayer.common.client.SoftLayerServiceClient;
 import com.ibm.softlayer.common.service.AbstractService;
 import com.ibm.softlayer.common.util.URIGenerator;
+import com.ibm.softlayer.util.APIConstants;
 
 /**
  * The Class GetInstanceService.
@@ -44,7 +45,7 @@ public class GetInstanceService extends AbstractService {
 		
 		//generate the get instance url
 		StringBuffer url = new StringBuffer();
-		url.append(URIGenerator.getVirtualGuestAPIURL());
+		url.append(URIGenerator.getSLBaseURL(APIConstants.VIRTUAL_GUEST_ROOT_API));
 		url.append("/").append(instanceId).append("/getObject");
 				
 		SoftLayerServiceClient client = new SoftLayerServiceClient();

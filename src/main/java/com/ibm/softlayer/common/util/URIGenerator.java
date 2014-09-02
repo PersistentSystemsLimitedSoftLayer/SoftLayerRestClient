@@ -21,7 +21,7 @@ public class URIGenerator {
 		
 		//generate the get queues URL
 		StringBuffer url = new StringBuffer();
-		url.append(properties.getProperty(SLProperties.SL_MESSAGING_BASE_API));
+		url.append(properties.getProperty(SLProperties.SL_MESSAGING_BASE_API)).append("/");
 		if(!url.toString().endsWith("/")) {
 			url.append("/");
 		}
@@ -33,23 +33,24 @@ public class URIGenerator {
 		url.append(api);
 		
 		return url.toString();
-	}
+	}		
 	
 	/**
-	 * Gets the SL api url.
+	 * Gets the SL base url.
 	 *
-	 * @return the SL api url
+	 * @param apiUrl the api url
+	 * @return the SL base url
 	 */
-	public static String getVirtualGuestAPIURL(){
+	public static String getSLBaseURL(String apiUrl) {
 		StringBuffer url = new StringBuffer();
 		url.append(properties.getProperty(SLProperties.SL_BASE_API));
 		if(!url.toString().endsWith("/")) {
 			url.append("/");
 		}
-		url.append(properties.getProperty(SLProperties.SL_VIRTAL_GUEST_API));
+		
+		url.append(apiUrl);
 		return url.toString();
-	}
-	
+	}		
 	
 	/**
 	 * Gets the SL messaging apiurl.
@@ -68,5 +69,5 @@ public class URIGenerator {
 				
 		url.append(APIConstants.QUEUES_API);
 		return url.toString();
-	}		
+	}	
 }

@@ -11,8 +11,8 @@ public abstract class AbstractService {
 	protected String username = null;
 	
 	/** The apikey. */
-	protected String apikey = null;		
-
+	protected String apikey = null;	
+	
 	/**
 	 * Gets the username.
 	 *
@@ -49,6 +49,7 @@ public abstract class AbstractService {
 		this.apikey = apikey;
 	}	
 	
+	
 	/**
 	 * Instantiates a new abstract service.
 	 *
@@ -68,7 +69,7 @@ public abstract class AbstractService {
 	 */
 	public String getAuthToken() throws Exception {
 		//authenticate the user and retrieve the token
-		SLProperties properties = SLProperties.getInstance();	
+		SLProperties properties = SLProperties.getInstance();		
 		AuthenticationService authService = AuthenticationService.getInstance();
 		return authService.getAuthToken(properties.getProperty(SLProperties.SL_MESSAGING_ACCOUNTID), username, apikey);
 	}
