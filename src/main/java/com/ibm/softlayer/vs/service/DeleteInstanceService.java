@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import com.ibm.softlayer.common.client.SoftLayerServiceClient;
 import com.ibm.softlayer.common.service.AbstractService;
 import com.ibm.softlayer.common.util.URIGenerator;
+import com.ibm.softlayer.util.APIConstants;
 
 /**
  * The Class DeleteInstanceService.
@@ -41,7 +42,7 @@ public class DeleteInstanceService extends AbstractService {
 		
 		//generate the delete instance url
 		StringBuffer url = new StringBuffer();
-		url.append(URIGenerator.getVirtualGuestAPIURL());
+		url.append(URIGenerator.getSLBaseURL(APIConstants.VIRTUAL_GUEST_ROOT_API));
 		url.append("/").append(instanceId);
 				
 		SoftLayerServiceClient client = new SoftLayerServiceClient();

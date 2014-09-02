@@ -33,59 +33,24 @@ public class URIGenerator {
 		url.append(api);
 		
 		return url.toString();
-	}
-	
-	
-	
-	private static StringBuffer getRestPublicBaseURL () {
-		StringBuffer url = new StringBuffer();
-		url.append("https://");
-		url.append(properties.getProperty(SLProperties.SL_BASE_API)).append("/");
-		//url.append(properties.getProperty(SLProperties.SL_REST_VERSION)).append("/");
-		return url;
-	}
+	}		
 	
 	/**
-	 * Gets the url.
+	 * Gets the SL base url.
 	 *
-	 * @param accountId the account id
-	 * @param api the api
-	 * @return the url
+	 * @param apiUrl the api url
+	 * @return the SL base url
 	 */
-	public static String getRestURL(String api) {
-		
-		//generate the get queues URL
-		StringBuffer url = getRestPublicBaseURL();
-		if(!url.toString().endsWith("/")) {
-			url.append("/");
-		}
-		
-		//append the account id
-		//url.append(accountId).append("/");
-		
-		//append the auth to the URL
-		url.append(api);
-		
-		return url.toString();
-	}
-	
-	/**
-	 * Gets the SL api url.
-	 *
-	 * @param appendAPI the append api
-	 * @return the SL api url
-	 */
-	public static String getVirtualGuestAPIURL(){
+	public static String getSLBaseURL(String apiUrl) {
 		StringBuffer url = new StringBuffer();
 		url.append(properties.getProperty(SLProperties.SL_BASE_API));
 		if(!url.toString().endsWith("/")) {
 			url.append("/");
 		}
-		url.append(properties.getProperty(SLProperties.SL_VIRTAL_GUEST_API));
+		
+		url.append(apiUrl);
 		return url.toString();
-	}
-	
-	
+	}		
 	
 	/**
 	 * Gets the SL messaging apiurl.
