@@ -21,10 +21,9 @@ public class DeleteInstanceService extends AbstractService {
 	 *
 	 * @param username the username
 	 * @param apikey the apikey
-	 * @param accountId the account id
 	 */
-	public DeleteInstanceService(String username, String apikey, String accountId) {
-		super(username, apikey, accountId);
+	public DeleteInstanceService(String username, String apikey) {
+		super(username, apikey);
 	}
 
 	/**

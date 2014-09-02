@@ -6,6 +6,7 @@ import static junit.framework.Assert.assertNull;
 import org.junit.Test;
 
 import com.ibm.softlayer.common.service.AuthenticationService;
+import com.ibm.softlayer.common.util.SLProperties;
 import com.ibm.softlayer.util.UnitTestConstants;
 
 /**
@@ -13,6 +14,8 @@ import com.ibm.softlayer.util.UnitTestConstants;
  */
 public class AuthenticationServiceTest {	
 	
+	private static final SLProperties properties = SLProperties.getInstance();	
+	private static final String SL_ACCOUNTID = properties.getProperty(SLProperties.SL_MESSAGING_ACCOUNTID);
 	/**
 	 * Test get token.
 	 *
@@ -21,7 +24,7 @@ public class AuthenticationServiceTest {
 	@Test
 	public void testGetToken() throws Exception {
 		AuthenticationService service = AuthenticationService.getInstance();
-		String token = service.getAuthToken(UnitTestConstants.SL_ACCOUNTID, UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		String token = service.getAuthToken(SL_ACCOUNTID, UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
 		assertNotNull(token);
 	}
 	
@@ -35,7 +38,7 @@ public class AuthenticationServiceTest {
 		String password = "a5d16217cdaabaccdb5c928a64c61afe065bd567077";		
 
 		AuthenticationService service = AuthenticationService.getInstance();
-		String token = service.getAuthToken(UnitTestConstants.SL_ACCOUNTID, UnitTestConstants.SL_USERNAME, password);
+		String token = service.getAuthToken(SL_ACCOUNTID, UnitTestConstants.SL_USERNAME, password);
 		assertNull(token);
 	}
 }
