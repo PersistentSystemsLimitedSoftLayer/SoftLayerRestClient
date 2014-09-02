@@ -96,7 +96,7 @@ public class CreateInstanceService extends AbstractService {
 		//generate the create instance url
 		StringBuffer url = new StringBuffer();
 		url.append(URIGenerator.getVirtualGuestAPIURL());
-		url.append("/").append("createObjects.json");
+		url.append("/").append("createObjects");
 				
 		//generate the request for POST
 		JSONArray parameters = new JSONArray();
