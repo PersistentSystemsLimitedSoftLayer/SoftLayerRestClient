@@ -20,12 +20,12 @@ import com.ibm.softlayer.util.APIConstants;
 
 public class createTickets  extends AbstractService{
 	private static final Logger logger = LoggerFactory.getLogger(GetQueuesService.class);
-	public createTickets(String username, String apikey, String accountId) {
-		super(username, apikey,accountId);	
+	public createTickets(String username, String apikey) {
+		super(username, apikey);	
 	}
 
 	public JSONObject createTickets(String AssignedToUser,String subjectId, String tittle,String content) throws Exception {
-		logger.info("Executing Create ticket " + getAccountId() + ", username: " + getUsername());
+		logger.info("Executing Create ticket username: " + getUsername());
 		
 		//generate the get queues URL		
 		String url = URIGenerator.getRestURL( APIConstants.TICKET_API);

@@ -21,13 +21,13 @@ public class getTickets extends AbstractService {
 	private static final Logger logger = LoggerFactory.getLogger(GetQueuesService.class);
 	
 	
-	public getTickets(String username, String apikey, String accountId) {
-		super(username, apikey,accountId);	
+	public getTickets(String username, String apikey) {
+		super(username, apikey);	
 	}
 	
 	public JSONArray getTickets(String call) throws Exception 
 	{
-		logger.info("Executing "+call+" getAllTickets for Account: " + getAccountId() + ", username: " + getUsername());
+		logger.info("Executing "+call+" getAllTickets for username: " + getUsername());
 		
 		//generate the get queues URL		
 		String url = URIGenerator.getRestURL(APIConstants.ACCOUNT_API);
@@ -40,7 +40,7 @@ public class getTickets extends AbstractService {
 		
 		ClientResponse clientResponse = client.executeGET(url+"/"+call,null, getCredentialsColonSeperated());
 		String response = clientResponse.getEntity(String.class);
-		logger.info("Executed get tickets for Account: " + getAccountId() + ", username: " + getUsername() + ", clientResponse: " + clientResponse.getStatusCode());
+		logger.info("Executed get tickets for username: " + getUsername() + ", clientResponse: " + clientResponse.getStatusCode());
 		
 		if(clientResponse.getStatusCode() == 200){
 			JSONArray json = new JSONArray(response);
@@ -79,7 +79,7 @@ public class getTickets extends AbstractService {
 	{
 		
 		{
-			logger.info("Executing get a Ticket by id for Account: " + getAccountId() + ", username: " + getUsername());
+			logger.info("Executing get a Ticket by id for username: " + getUsername());
 			
 			//generate the get queues URL		
 			String url = URIGenerator.getRestURL(APIConstants.TICKET_API);
@@ -93,7 +93,7 @@ public class getTickets extends AbstractService {
 			
 			ClientResponse clientResponse = client.executeGET(url+"/getObject/id/"+id,requestParams, getCredentialsColonSeperated());
 			String response = clientResponse.getEntity(String.class);
-			logger.info("Executed get tickets for Account: " + getAccountId() + ", username: " + getUsername() + ", clientResponse: " + clientResponse.getStatusCode());
+			logger.info("Executed get tickets for username: " + getUsername() + ", clientResponse: " + clientResponse.getStatusCode());
 			
 			if(clientResponse.getStatusCode() == 200){
 				JSONObject json = new JSONObject(response);
