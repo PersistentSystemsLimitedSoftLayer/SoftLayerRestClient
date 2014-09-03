@@ -6,7 +6,7 @@ import org.apache.wink.json4j.JSONObject;
 
 import com.ibm.softlayer.util.APIConstants;
 
-public class GetAssignedUserToTicketService extends AbstractTicketsService {
+public class GetAssignedUserToTicketService extends AbstractGetTicketsService {
 
 	public GetAssignedUserToTicketService(String username, String apikey) {
 		super(username, apikey);		

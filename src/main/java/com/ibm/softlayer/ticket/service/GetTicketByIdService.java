@@ -9,7 +9,7 @@ import com.ibm.softlayer.util.APIConstants;
 /**
  * The Class GetTicketByIdService.
  */
-public class GetTicketByIdService extends AbstractTicketsService {
+public class GetTicketByIdService extends AbstractGetTicketsService {
 	
 	/**
 	 * Instantiates a new gets the ticket by id service.
