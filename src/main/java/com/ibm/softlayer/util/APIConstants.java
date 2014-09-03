@@ -40,4 +40,6 @@ public class APIConstants {
 	
 	/** The Constant VIRTUAL_GUEST_ROOT_API. */
 	public static final String VIRTUAL_GUEST_ROOT_API = "SoftLayer_Virtual_Guest";
+	
+	public static final String TEST_MESSAGE = "TEST_MESSAGE";
 }
