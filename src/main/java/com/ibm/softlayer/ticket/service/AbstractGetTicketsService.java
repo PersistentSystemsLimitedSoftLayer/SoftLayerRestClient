@@ -16,10 +16,10 @@ import com.ibm.softlayer.util.APIConstants;
 /**
  * The Class AbstractGetTicketDetails.
  */
-public abstract class AbstractTicketsService extends AbstractService {
+public abstract class AbstractGetTicketsService extends AbstractService {
 
 	/** The Constant logger. */
-	private static final Logger logger = LoggerFactory.getLogger(AbstractTicketsService.class);
+	private static final Logger logger = LoggerFactory.getLogger(AbstractGetTicketsService.class);
 	
 	/**
 	 * Instantiates a new abstract get ticket details.
@@ -27,7 +27,7 @@ public abstract class AbstractTicketsService extends AbstractService {
 	 * @param username the username
 	 * @param apikey the apikey
 	 */
-	public AbstractTicketsService(String username, String apikey) {
+	public AbstractGetTicketsService(String username, String apikey) {
 		super(username, apikey);		
 	}
 

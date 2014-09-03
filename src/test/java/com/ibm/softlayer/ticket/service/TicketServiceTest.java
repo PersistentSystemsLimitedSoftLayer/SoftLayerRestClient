@@ -30,7 +30,7 @@ public class TicketServiceTest {
 //		assertNotNull(ticketObject);
 //		assertEquals(assinedToUser, ticketObject.getString("assignedUserId"));		
 //	}
-
+//
 	@Test
 	public void testGetTicketByID() throws Exception {
 		GetTicketByIdService service = new GetTicketByIdService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
