@@ -16,21 +16,48 @@ import com.ibm.softlayer.util.UnitTestConstants;
 
 public class TicketServiceTest {
 	
-	private static String ticketId = "12221584"; 
+	private static String ticketId = null; 
 	
-//	@Test
-//	public void testCreateTicket() throws Exception {		
-//		String assinedToUser="245236";
-//		String SubjectId="1522";
-//		String tittle="TestAutoTicket";
-//		String content="This is Second ticket. generated for Testing Automation process";
-//		
-//		CreateTicketsService service = new CreateTicketsService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
-//		JSONObject ticketObject = service.createTickets(assinedToUser, SubjectId, tittle, content);
-//		assertNotNull(ticketObject);
-//		assertEquals(assinedToUser, ticketObject.getString("assignedUserId"));		
-//	}
-//
+	@Test
+	public void testCreateTicket() throws Exception {		
+		String assinedToUser="245236";
+		String SubjectId="1522";
+		String tittle="TestAutoTicket";
+		String content="New Ticket is created.... generated for Testing Automation process";
+		
+		CreateTicketsService service = new CreateTicketsService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		JSONObject ticketObject = service.createTickets(assinedToUser, SubjectId, tittle, content);
+		assertNotNull(ticketObject);
+		assertEquals(assinedToUser, ticketObject.getString("assignedUserId"));	
+		ticketId = ticketObject.getString("id");
+	}	
+	
+	@Test
+	public void testAddAnUpdateToTicket() throws Exception {			
+		String content="This is Second update to this ticket. generated for Testing Automation process";		
+		AddUpdateTicketService service = new AddUpdateTicketService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		JSONArray ticketObject = service.addAnUpdateToTicket(ticketId, content);
+		assertNotNull(ticketObject);
+		assertEquals(content, ticketObject.getJSONObject(0).getString("entry"));		
+	}
+	
+	@Test
+	public void testGetTicketUpdates() throws Exception {
+		GetTicketUpdatesService service = new GetTicketUpdatesService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		JSONArray ticketObject = service.getTicketUpdates(ticketId);		
+		assertNotNull(ticketObject);		
+		assertEquals(2, ticketObject.size());
+	}
+	
+	@Test
+	public void testGetTicketUpdatesWithObjectMasks() throws Exception {
+		GetTicketUpdatesService service = new GetTicketUpdatesService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		JSONArray ticketObject = service.getTicketUpdates(ticketId, Arrays.asList("entry"));		
+		assertNotNull(ticketObject);
+		assertEquals(2, ticketObject.size());
+	}	
+	
+
 	@Test
 	public void testGetTicketByID() throws Exception {
 		GetTicketByIdService service = new GetTicketByIdService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
@@ -69,21 +96,7 @@ public class TicketServiceTest {
 		assertNotNull(ticketObject);
 		assertEquals(1, ticketObject.size());
 		assertNotNull(ticketObject.getString("email"));
-	}
-	
-	@Test
-	public void testGetTicketUpdates() throws Exception {
-		GetTicketUpdatesService service = new GetTicketUpdatesService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
-		JSONArray ticketObject = service.getTicketUpdates(ticketId);		
-		assertNotNull(ticketObject);		
-	}
-	
-	@Test
-	public void testGetTicketUpdatesWithObjectMasks() throws Exception {
-		GetTicketUpdatesService service = new GetTicketUpdatesService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
-		JSONArray ticketObject = service.getTicketUpdates(ticketId, Arrays.asList("entry"));		
-		assertNotNull(ticketObject);
-	}
+	}	
 	
 	@Test
 	public void testListOpenTicket() throws Exception {
