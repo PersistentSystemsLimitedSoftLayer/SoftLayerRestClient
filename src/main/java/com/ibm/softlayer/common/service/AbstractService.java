@@ -1,5 +1,7 @@
 package com.ibm.softlayer.common.service;
 
+import com.ibm.softlayer.common.util.SLProperties;
+
 /**
  * The Class AbstractService.
  */
@@ -9,11 +11,8 @@ public abstract class AbstractService {
 	protected String username = null;
 	
 	/** The apikey. */
-	protected String apikey = null;
+	protected String apikey = null;	
 	
-	/** The account id. */
-	protected String accountId = null;
-
 	/**
 	 * Gets the username.
 	 *
@@ -48,37 +47,18 @@ public abstract class AbstractService {
 	 */
 	public void setApikey(String apikey) {
 		this.apikey = apikey;
-	}		
-
-	/**
-	 * Gets the account id.
-	 *
-	 * @return the accountId
-	 */
-	public String getAccountId() {
-		return accountId;
-	}
-
-	/**
-	 * Sets the account id.
-	 *
-	 * @param accountId the accountId to set
-	 */
-	public void setAccountId(String accountId) {
-		this.accountId = accountId;
-	}
+	}	
+	
 	
 	/**
 	 * Instantiates a new abstract service.
 	 *
 	 * @param username the username
 	 * @param apikey the apikey
-	 * @param accountId the account id
 	 */
-	public AbstractService(String username, String apikey, String accountId) {
+	public AbstractService(String username, String apikey) {
 		this.username = username;
-		this.apikey = apikey;
-		this.accountId = accountId;
+		this.apikey = apikey;		
 	}	
 	
 	/**
@@ -89,7 +69,17 @@ public abstract class AbstractService {
 	 */
 	public String getAuthToken() throws Exception {
 		//authenticate the user and retrieve the token
+		SLProperties properties = SLProperties.getInstance();		
 		AuthenticationService authService = AuthenticationService.getInstance();
-		return authService.getAuthToken(accountId, username, apikey);
+		return authService.getAuthToken(properties.getProperty(SLProperties.SL_MESSAGING_ACCOUNTID), username, apikey);
+	}
+	
+	/**
+	 * Gets the credentials colon seperated.
+	 *
+	 * @return the credentials colon seperated
+	 */
+	public String getCredentialsColonSeperated() {
+		return getUsername()+":"+getApikey();
 	}
 }

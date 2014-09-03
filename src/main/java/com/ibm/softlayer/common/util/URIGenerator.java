@@ -1,25 +1,14 @@
 package com.ibm.softlayer.common.util;
 
+import com.ibm.softlayer.util.APIConstants;
+
 /**
  * The Class URIGenerator.
  */
 public class URIGenerator {
 
 	/** The Constant properties. */
-	private static final SLProperties properties = SLProperties.getInstance();
-	
-	/**
-	 * Gets the public base url.
-	 *
-	 * @return the public base url
-	 */
-	private static StringBuffer getPublicBaseURL () {
-		StringBuffer url = new StringBuffer();
-		url.append("https://");
-		url.append(properties.getProperty(SLProperties.SL_PUBLIC_HOSTNAME)).append("/");
-		url.append(properties.getProperty(SLProperties.SL_VERSION)).append("/");
-		return url;
-	}
+	private static final SLProperties properties = SLProperties.getInstance();	
 	
 	/**
 	 * Gets the url.
@@ -31,7 +20,8 @@ public class URIGenerator {
 	public static String getURL(String accountId, String api) {
 		
 		//generate the get queues URL
-		StringBuffer url = getPublicBaseURL();
+		StringBuffer url = new StringBuffer();
+		url.append(properties.getProperty(SLProperties.SL_MESSAGING_BASE_API)).append("/");
 		if(!url.toString().endsWith("/")) {
 			url.append("/");
 		}
@@ -43,5 +33,41 @@ public class URIGenerator {
 		url.append(api);
 		
 		return url.toString();
-	}
+	}		
+	
+	/**
+	 * Gets the SL base url.
+	 *
+	 * @param apiUrl the api url
+	 * @return the SL base url
+	 */
+	public static String getSLBaseURL(String apiUrl) {
+		StringBuffer url = new StringBuffer();
+		url.append(properties.getProperty(SLProperties.SL_BASE_API));
+		if(!url.toString().endsWith("/")) {
+			url.append("/");
+		}
+		
+		url.append(apiUrl);
+		return url.toString();
+	}		
+	
+	/**
+	 * Gets the SL messaging apiurl.
+	 *
+	 * @return the SL messaging apiurl
+	 */
+	public static String getSLMessagingAPIURL(){
+		StringBuffer url = new StringBuffer();
+		url.append(properties.getProperty(SLProperties.SL_MESSAGING_BASE_API));
+		if(!url.toString().endsWith("/")) {
+			url.append("/");
+		}
+		
+		//append the account id
+		url.append(properties.getProperty(SLProperties.SL_MESSAGING_ACCOUNTID)).append("/");
+				
+		url.append(APIConstants.QUEUES_API);
+		return url.toString();
+	}	
 }

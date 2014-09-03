@@ -11,12 +11,8 @@ public class UnitTestConstants {
 		PropertyConfigurator.configure("log4j.properties");
 	}
 
-	/** The Constant SL_ACCOUNTID. */
-	public static final String SL_ACCOUNTID = "5yi4q";
-	
-	/** The Constant SL_USERNAME. */
-	public static final String SL_USERNAME = "shakil_usgaonker";
+	public static final String SL_USERNAME = "runtestsuser";
 	
 	/** The Constant SL_APIKEY. */
-	public static final String SL_APIKEY = "7545e8894920141b06d91cd3ab16bfd4eade9e996a3be6266b9fc7c4a129322b";
+	public static final String SL_APIKEY = "00d558fda0af8a6ced4ab8a77a90047529bce8d115f2515da66a30594cf5fc48";
 }

@@ -21,14 +21,11 @@ public class SLProperties {
 	/** The Constant SL_PROXYPORT. */
 	public static final String SL_PROXYPORT = "SL_PROXYPORT";
 	
-	/** The Constant SL_PUBLIC_HOSTNAME. */
-	public static final String SL_PUBLIC_HOSTNAME = "SL_PUBLIC_HOSTNAME";
+	public static final String SL_BASE_API = "SL_BASE_API";
 	
-	/** The Constant SL_PRIVATE_HOSTNAME. */
-	public static final String SL_PRIVATE_HOSTNAME = "SL_PRIVATE_HOSTNAME";
+	public static final String SL_MESSAGING_ACCOUNTID = "SL_MESSAGING_ACCOUNTID";
 	
-	/** The Constant SL_VERSION. */
-	public static final String SL_VERSION = "SL_VERSION";
+	public static final String SL_MESSAGING_BASE_API = "SL_MESSAGING_BASE_API";
 	
 	/** The instance. */
 	private static final SLProperties instance = new SLProperties();	
