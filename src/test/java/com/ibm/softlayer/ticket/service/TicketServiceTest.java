@@ -9,9 +9,6 @@ import org.apache.wink.json4j.JSONArray;
 import org.apache.wink.json4j.JSONObject;
 import org.junit.Test;
 
-
-
-
 import com.ibm.softlayer.util.UnitTestConstants;
 
 public class TicketServiceTest {
@@ -117,5 +114,12 @@ public class TicketServiceTest {
 		GetTicketsService service = new GetTicketsService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
 		JSONArray ticketArray = service.getAllTickets();
 		assertNotNull(ticketArray);
-	}		
+	}	
+	
+	@Test
+	public void testListSubjects() throws Exception{
+		ListSubjectsService service = new ListSubjectsService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		JSONArray array = service.list_subjects();
+		assertNotNull(array);
+	}
 }
