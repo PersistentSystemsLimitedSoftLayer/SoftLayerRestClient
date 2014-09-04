@@ -4,19 +4,22 @@ import org.apache.wink.client.ClientResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ibm.softlayer.common.client.SoftLayerServiceClient;
-import com.ibm.softlayer.common.service.AbstractService;
 import com.ibm.softlayer.common.util.URIGenerator;
 import com.ibm.softlayer.util.APIConstants;
 
 /**
  * The Class SendMessageToQueueService.
  */
-public class DeleteMessageFromQueueService extends AbstractService {
+public class DeleteMessageFromQueueService {
 
 	/** The Constant logger. */
 	private static final Logger logger = LoggerFactory.getLogger(DeleteMessageFromQueueService.class);	
 
+	/** The username. */
+	private String username = null;
+	
+	/** The api key. */
+	private String apiKey = null;
 	
 	/**
 	 * Instantiates a new delete message from queue service.
@@ -26,7 +29,8 @@ public class DeleteMessageFromQueueService extends AbstractService {
 	 * @param accountId the account id
 	 */
 	public DeleteMessageFromQueueService(String username, String apikey) {
-		super(username, apikey);
+		this.username = username;
+		this.apiKey = apikey;	
 	}
 
 	
@@ -42,7 +46,7 @@ public class DeleteMessageFromQueueService extends AbstractService {
 		logger.info("Executing deleteMessageFromQueue for queueName: " + queueName + ", messageId: " + messageId);
 		
 		//authenticate the user and retrieve the token
-		String token = getAuthToken();
+		String token =  MessagingSoftLayerClient.authenticate(username, apiKey);
 		
 		//generate the get queues URL		
 		String url = URIGenerator.getSLMessagingAPIURL();
@@ -50,7 +54,7 @@ public class DeleteMessageFromQueueService extends AbstractService {
 		//append the queuename to the URL		
 		url += "/" + queueName + "/" + APIConstants.MESSAGES_API + "/" + messageId;
 		
-		SoftLayerServiceClient client = new SoftLayerServiceClient(token);
+		MessagingSoftLayerClient client = new MessagingSoftLayerClient(token);
 		ClientResponse clientResponse = client.executeDELETE(url);
 		String response = clientResponse.getEntity(String.class);
 		if(clientResponse.getStatusCode() == 202) {
