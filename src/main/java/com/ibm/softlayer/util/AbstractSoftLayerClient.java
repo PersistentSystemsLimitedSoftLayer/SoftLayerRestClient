@@ -86,7 +86,7 @@ public abstract class AbstractSoftLayerClient {
 		
 		ClientResponse clientResponse = resource.head();
 		String response = clientResponse.getEntity(String.class);
-		logger.info("Executed executePUT for URL: " + url + ", clientResponse: " + clientResponse.getStatusCode() + ", response: " + response);
+		logger.info("Executed executeHEAD for URL: " + url + ", clientResponse: " + clientResponse.getStatusCode() + ", response: " + response);
 		return clientResponse;
 	}
 	
@@ -180,6 +180,63 @@ public abstract class AbstractSoftLayerClient {
 		ClientResponse clientResponse = resource.get();	
 		String response = clientResponse.getEntity(String.class);		
 		logger.info("Executed GET for following URL: " + url + ", clientResponse: " + clientResponse.getStatusCode() + ", response: " + response);
+		return clientResponse;
+	}
+	
+	/**
+	 * Execute delete.
+	 *
+	 * @param url the url
+	 * @return the client response
+	 */
+	public ClientResponse executeDELETE(String url)  {
+		logger.info("Executing executeDELETE for following URL: " + url);
+		
+		RestClient client = new RestClient(getClientConfig());		
+		Resource resource = client.resource(url);	
+		
+		if(useAuthToken) {
+			resource.header("X-Auth-Token", getxAuthToken());
+		}
+		
+		ClientResponse clientResponse = resource.delete();
+		String response = clientResponse.getEntity(String.class);		
+		logger.info("Executed executeDELETE for following URL: " + url + ", clientResponse: " + clientResponse.getStatusCode() + ", response: " + response);
+		return clientResponse;
+	}
+	
+	/**
+	 * Execute post.
+	 *
+	 * @param url the url
+	 * @param requestObject the request object
+	 * @param additionalHeaders the additional headers
+	 * @return the client response
+	 */
+	public ClientResponse executePOST(String url, String requestObject, Map<String, String> additionalHeaders)  {
+		logger.info("Executing processPOST for following URL: " + url + ", requestObject:" + requestObject);
+		
+		RestClient client = new RestClient(getClientConfig());		
+		Resource resource = client.resource(url);	
+		resource.header("Content-type", "application/json");
+		resource.header("Accept", "application/json");
+		
+		//add additional headers if provided
+		if(additionalHeaders != null && additionalHeaders.size() > 0){
+			for(Map.Entry<String, String> entry : additionalHeaders.entrySet()) {
+				logger.info("Adding additional header: Key: " + entry.getKey() + ", Value: " + entry.getValue());
+				resource.header(entry.getKey(), entry.getValue());
+			}
+		}
+		
+		//credentials are used for the Virtual Guest Services
+		if(useAuthToken) {
+			resource.header("X-Auth-Token", getxAuthToken());
+		}				
+		
+		ClientResponse clientResponse = resource.post(requestObject);
+		String response = clientResponse.getEntity(String.class);		
+		logger.info("Executed executePOST for following URL: " + url + ", clientResponse: " + clientResponse.getStatusCode() + ", response: " + response);
 		return clientResponse;
 	}
 	
