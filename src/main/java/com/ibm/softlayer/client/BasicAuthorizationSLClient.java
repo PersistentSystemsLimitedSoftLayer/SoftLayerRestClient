@@ -2,8 +2,6 @@ package com.ibm.softlayer.client;
 
 import org.apache.commons.codec.binary.Base64;
 
-import com.ibm.softlayer.util.AbstractSoftLayerClient;
-
 /**
  * The Class BasicAuthorizationSLClient.
  */
