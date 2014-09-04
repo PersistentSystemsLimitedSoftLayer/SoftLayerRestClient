@@ -8,16 +8,20 @@ import org.apache.wink.json4j.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ibm.softlayer.common.client.SoftLayerServiceClient;
-import com.ibm.softlayer.common.service.AbstractService;
 import com.ibm.softlayer.common.util.URIGenerator;
 import com.ibm.softlayer.util.APIConstants;
 
 /**
  * The Class AbstractGetTicketDetails.
  */
-public abstract class AbstractGetTicketsService extends AbstractService {
+public abstract class AbstractGetTicketsService {
 
+	/** The username. */
+	private String username = null;
+	
+	/** The api key. */
+	private String apiKey = null;
+	
 	/** The Constant logger. */
 	private static final Logger logger = LoggerFactory.getLogger(AbstractGetTicketsService.class);
 	
@@ -28,7 +32,8 @@ public abstract class AbstractGetTicketsService extends AbstractService {
 	 * @param apikey the apikey
 	 */
 	public AbstractGetTicketsService(String username, String apikey) {
-		super(username, apikey);		
+		this.username = username;
+		this.apiKey = apikey;
 	}
 
 	/**
@@ -117,7 +122,7 @@ public abstract class AbstractGetTicketsService extends AbstractService {
 	 */
 	protected JSONArray getTickets(String ticketsURL, List<String> objectMasks) throws Exception 
 	{
-		logger.info("Executing getTickets: " + ticketsURL + " for username: " + getUsername());
+		logger.info("Executing getTickets: " + ticketsURL + " for username: " + username);
 		
 		//generate the get queues URL	
 		StringBuffer url = new StringBuffer(URIGenerator.getSLBaseURL(APIConstants.ACCOUNT_ROOT_API));
@@ -132,7 +137,7 @@ public abstract class AbstractGetTicketsService extends AbstractService {
 		//execute the get tickets call
 		ClientResponse clientResponse = executeGET(url.toString());
 		String response = clientResponse.getEntity(String.class);
-		logger.info("Executed get tickets for username: " + getUsername() + ", clientResponse: " + clientResponse.getStatusCode() + ", response: " + response);
+		logger.info("Executed get tickets for username: " + username + ", clientResponse: " + clientResponse.getStatusCode() + ", response: " + response);
 		
 		if(clientResponse.getStatusCode() == 200){
 			JSONArray json = new JSONArray(response);
@@ -176,8 +181,8 @@ public abstract class AbstractGetTicketsService extends AbstractService {
 	 */
 	private ClientResponse executeGET(String url) throws Exception {
 		//execute the get tickets call
-		SoftLayerServiceClient client = new SoftLayerServiceClient();		
-		ClientResponse clientResponse = client.executeGET(url.toString(), null, getCredentialsColonSeperated());
+		TicketSoftLayerClient client = new TicketSoftLayerClient(username, apiKey);	
+		ClientResponse clientResponse = client.executeGET(url.toString());
 		return clientResponse;
 	}
 }
