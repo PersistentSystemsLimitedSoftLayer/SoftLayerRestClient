@@ -9,6 +9,8 @@ import org.apache.wink.json4j.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ibm.softlayer.client.XAuthTokenSLClient;
+import com.ibm.softlayer.util.TokenGenerator;
 import com.ibm.softlayer.util.URIGenerator;
 
 /**
@@ -59,7 +61,7 @@ public class GetQueuesService {
 		logger.info("Executing getQueues for username: " + username);
 		
 		//authenticate the user and retrieve the token
-		String token = MessagingSoftLayerClient.authenticate(username, apiKey);
+		String token = TokenGenerator.getTokenForMessaging(username, apiKey);
 		
 		//generate the get queues URL		
 		String url = URIGenerator.getSLMessagingAPIURL();
@@ -70,7 +72,7 @@ public class GetQueuesService {
 			requestParams.put("tags", tags);
 		}
 		
-		MessagingSoftLayerClient client = new MessagingSoftLayerClient(token);
+		XAuthTokenSLClient client = new XAuthTokenSLClient(token);
 		ClientResponse clientResponse = client.executeGET(url, requestParams);
 		String response = clientResponse.getEntity(String.class);
 		logger.info("Executed getQueues for username: " + username + ", clientResponse: " + clientResponse.getStatusCode());
