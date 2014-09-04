@@ -4,7 +4,9 @@ import org.apache.wink.client.ClientResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ibm.softlayer.client.XAuthTokenSLClient;
 import com.ibm.softlayer.util.APIConstants;
+import com.ibm.softlayer.util.TokenGenerator;
 import com.ibm.softlayer.util.URIGenerator;
 
 /**
@@ -46,7 +48,7 @@ public class DeleteMessageFromQueueService {
 		logger.info("Executing deleteMessageFromQueue for queueName: " + queueName + ", messageId: " + messageId);
 		
 		//authenticate the user and retrieve the token
-		String token =  MessagingSoftLayerClient.authenticate(username, apiKey);
+		String token =  TokenGenerator.getTokenForMessaging(username, apiKey);
 		
 		//generate the get queues URL		
 		String url = URIGenerator.getSLMessagingAPIURL();
@@ -54,7 +56,7 @@ public class DeleteMessageFromQueueService {
 		//append the queuename to the URL		
 		url += "/" + queueName + "/" + APIConstants.MESSAGES_API + "/" + messageId;
 		
-		MessagingSoftLayerClient client = new MessagingSoftLayerClient(token);
+		XAuthTokenSLClient client = new XAuthTokenSLClient(token);
 		ClientResponse clientResponse = client.executeDELETE(url);
 		String response = clientResponse.getEntity(String.class);
 		if(clientResponse.getStatusCode() == 202) {

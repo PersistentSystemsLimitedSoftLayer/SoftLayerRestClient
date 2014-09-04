@@ -9,7 +9,9 @@ import org.apache.wink.json4j.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ibm.softlayer.client.XAuthTokenSLClient;
 import com.ibm.softlayer.util.APIConstants;
+import com.ibm.softlayer.util.TokenGenerator;
 import com.ibm.softlayer.util.URIGenerator;
 
 /**
@@ -50,7 +52,7 @@ public class GetMessageFromQueueService {
 		logger.info("Executing popMessageFromQueue for queueName: " + queueName + ", messagesToPop: " + messagesToPop);
 		
 		//authenticate the user and retrieve the token
-		String token = MessagingSoftLayerClient.authenticate(username, apiKey);
+		String token = TokenGenerator.getTokenForMessaging(username, apiKey);
 		
 		//generate the get queues URL		
 		String url = URIGenerator.getSLMessagingAPIURL();
@@ -64,7 +66,7 @@ public class GetMessageFromQueueService {
 			requestParams.put("batch", String.valueOf(messagesToPop));
 		}
 		
-		MessagingSoftLayerClient client = new MessagingSoftLayerClient(token);
+		XAuthTokenSLClient client = new XAuthTokenSLClient(token);
 		ClientResponse clientResponse = client.executeGET(url, requestParams);
 		String response = clientResponse.getEntity(String.class);
 		if(clientResponse.getStatusCode() == 200){

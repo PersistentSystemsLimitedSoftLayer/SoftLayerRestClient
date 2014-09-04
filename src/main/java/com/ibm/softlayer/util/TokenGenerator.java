@@ -1,43 +1,28 @@
-package com.ibm.softlayer.messaging.service;
+package com.ibm.softlayer.util;
 
 import org.apache.wink.client.ClientResponse;
 import org.apache.wink.json4j.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ibm.softlayer.util.APIConstants;
-import com.ibm.softlayer.util.AbstractSoftLayerClient;
-import com.ibm.softlayer.util.SLProperties;
-import com.ibm.softlayer.util.SoftLayerAuthenticationService;
-import com.ibm.softlayer.util.URIGenerator;
-
 /**
  * The Class StorageSoftLayerClient.
  */
-public class MessagingSoftLayerClient extends AbstractSoftLayerClient {
+public class TokenGenerator {
 
 	/** The Constant logger. */
-	private static final Logger logger = LoggerFactory.getLogger(MessagingSoftLayerClient.class);
+	private static final Logger logger = LoggerFactory.getLogger(TokenGenerator.class);		
+	
 	
 	/**
-	 * Instantiates a new messaging soft layer client.
-	 *
-	 * @param token the token
-	 */
-	public MessagingSoftLayerClient(String token) {
-		setxAuthToken(token);
-		setUseAuthToken(true);
-	}		
-	
-	/**
-	 * Authenticate.
+	 * Gets the token for messaging.
 	 *
 	 * @param username the username
 	 * @param apiKey the api key
-	 * @return the string
+	 * @return the token for messaging
 	 * @throws Exception the exception
 	 */
-	public static String authenticate(String username, String apiKey) throws Exception {				
+	public static String getTokenForMessaging(String username, String apiKey) throws Exception {				
 		logger.debug("Executing authenticate for username: " + username);
 		SLProperties properties = SLProperties.getInstance();		
 		String authURL = URIGenerator.getURL(properties.getProperty(SLProperties.SL_MESSAGING_ACCOUNTID), APIConstants.AUTH_API);
