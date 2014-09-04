@@ -4,12 +4,18 @@ package com.ibm.softlayer.util;
  * The Class APIConstants.
  */
 public class APIConstants {
+	
+	public static final String X_AUTH_TOKEN = "X-Auth-Token";
+	
+	public static final String X_STORAGE_URL = "X-Storage-Url";
 
 	/** The Constant QUEUES_API. */
 	public static final String QUEUES_API = "queues";
 	
 	/** The Constant MESSAGES_API. */
 	public static final String MESSAGES_API = "messages";
+	
+	public static final String AUTH_API = "auth";
 	
 	/** The Constant GETSTATUS_API. */
 	public static final String GETSTATUS_API = "getStatus";
@@ -37,6 +43,9 @@ public class APIConstants {
 	
 	/** The Constant TICKETS_ROOT_API. */
 	public static final String TICKETS_ROOT_API = "SoftLayer_Ticket";
+	
+	
+	public static final String TICKETS_SUBJECTS_API = "SoftLayer_Ticket_Subject";
 	
 	/** The Constant VIRTUAL_GUEST_ROOT_API. */
 	public static final String VIRTUAL_GUEST_ROOT_API = "SoftLayer_Virtual_Guest";
