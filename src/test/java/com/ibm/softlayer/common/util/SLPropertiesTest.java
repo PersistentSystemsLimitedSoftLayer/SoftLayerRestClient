@@ -2,7 +2,7 @@ package com.ibm.softlayer.common.util;
 
 import org.junit.Test;
 
-import com.ibm.softlayer.common.util.SLProperties;
+import com.ibm.softlayer.util.SLProperties;
 
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;

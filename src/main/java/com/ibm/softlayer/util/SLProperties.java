@@ -1,4 +1,4 @@
-package com.ibm.softlayer.common.util;
+package com.ibm.softlayer.util;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -9,18 +9,24 @@ import org.apache.wink.json4j.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ibm.softlayer.common.client.SoftLayerServiceClient;
-import com.ibm.softlayer.common.service.AbstractService;
-import com.ibm.softlayer.common.util.URIGenerator;
+import com.ibm.softlayer.client.XAuthTokenSLClient;
 import com.ibm.softlayer.util.APIConstants;
+import com.ibm.softlayer.util.TokenGenerator;
+import com.ibm.softlayer.util.URIGenerator;
 
 /**
  * The Class SendMessageToQueueService.
  */
-public class GetMessageFromQueueService extends AbstractService {
+public class GetMessageFromQueueService {
 
 	/** The Constant logger. */
 	private static final Logger logger = LoggerFactory.getLogger(GetMessageFromQueueService.class);	
+	
+	/** The username. */
+	private String username = null;
+	
+	/** The api key. */
+	private String apiKey = null;
 	
 	/**
 	 * Instantiates a new gets the message from queue service.
@@ -30,10 +36,9 @@ public class GetMessageFromQueueService extends AbstractService {
 	 * @param accountId the account id
 	 */
 	public GetMessageFromQueueService(String username, String apikey) {
-		super(username, apikey);
-	}
-
-	
+		this.username = username;
+		this.apiKey = apikey;	
+	}	
 
 	/**
 	 * Pop message from queue.
@@ -47,7 +52,7 @@ public class GetMessageFromQueueService extends AbstractService {
 		logger.info("Executing popMessageFromQueue for queueName: " + queueName + ", messagesToPop: " + messagesToPop);
 		
 		//authenticate the user and retrieve the token
-		String token = getAuthToken();
+		String token = TokenGenerator.getTokenForMessaging(username, apiKey);
 		
 		//generate the get queues URL		
 		String url = URIGenerator.getSLMessagingAPIURL();
@@ -61,7 +66,7 @@ public class GetMessageFromQueueService extends AbstractService {
 			requestParams.put("batch", String.valueOf(messagesToPop));
 		}
 		
-		SoftLayerServiceClient client = new SoftLayerServiceClient(token);
+		XAuthTokenSLClient client = new XAuthTokenSLClient(token);
 		ClientResponse clientResponse = client.executeGET(url, requestParams);
 		String response = clientResponse.getEntity(String.class);
 		if(clientResponse.getStatusCode() == 200){

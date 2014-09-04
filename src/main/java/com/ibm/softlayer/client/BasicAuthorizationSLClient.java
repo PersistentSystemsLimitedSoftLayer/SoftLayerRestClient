@@ -1,13 +1,11 @@
-package com.ibm.softlayer.ticket.service;
+package com.ibm.softlayer.client;
 
 import org.apache.commons.codec.binary.Base64;
 
-import com.ibm.softlayer.util.AbstractSoftLayerClient;
-
 /**
- * The Class TicketSoftLayerClient.
+ * The Class BasicAuthorizationSLClient.
  */
-public class TicketSoftLayerClient extends AbstractSoftLayerClient {
+public class BasicAuthorizationSLClient extends AbstractSoftLayerClient {
 
 	/** The username. */
 	private String username = null;
@@ -15,18 +13,20 @@ public class TicketSoftLayerClient extends AbstractSoftLayerClient {
 	/** The api key. */
 	private String apiKey = null;
 	
+	
 	/**
-	 * Instantiates a new ticket soft layer client.
+	 * Instantiates a new basic authorization sl client.
 	 *
 	 * @param username the username
 	 * @param apikey the apikey
 	 */
-	public TicketSoftLayerClient(String username, String apikey) {			
+	public BasicAuthorizationSLClient(String username, String apikey) {			
 		this.username = username;
 		this.apiKey = apikey;
 		setxAuthToken(new String (Base64.encodeBase64(getCredentialsColonSeperated().getBytes())));
 		setUseBasicAuth(true);		
 	}		
+	
 	
 	/**
 	 * Gets the credentials colon seperated.

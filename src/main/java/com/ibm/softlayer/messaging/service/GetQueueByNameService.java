@@ -5,17 +5,23 @@ import org.apache.wink.json4j.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ibm.softlayer.common.client.SoftLayerServiceClient;
-import com.ibm.softlayer.common.service.AbstractService;
-import com.ibm.softlayer.common.util.URIGenerator;
+import com.ibm.softlayer.client.XAuthTokenSLClient;
+import com.ibm.softlayer.util.TokenGenerator;
+import com.ibm.softlayer.util.URIGenerator;
 
 /**
  * The Class GetQueueByNameService.
  */
-public class GetQueueByNameService extends AbstractService {
+public class GetQueueByNameService {
 
 	/** The Constant logger. */
 	private static final Logger logger = LoggerFactory.getLogger(GetQueueByNameService.class);		
+	
+	/** The username. */
+	private String username = null;
+	
+	/** The api key. */
+	private String apiKey = null;
 	
 	/**
 	 * Instantiates a new gets the queue by name service.
@@ -24,9 +30,9 @@ public class GetQueueByNameService extends AbstractService {
 	 * @param apiKey the api key
 	 */
 	public GetQueueByNameService(String username, String apiKey) {
-		super(username, apiKey);
-	}	
-	
+		this.username = username;
+		this.apiKey = apiKey;	
+	}		
 	
 	/**
 	 * Gets the queue.
@@ -39,7 +45,7 @@ public class GetQueueByNameService extends AbstractService {
 		logger.info("Executing getQueue for queueName: " + queueName + ", username: " + username);
 		
 		//authenticate the user and retrieve the token
-		String token = getAuthToken();
+		String token = TokenGenerator.getTokenForMessaging(username, apiKey);
 		
 		//generate the get queues URL
 		String url = URIGenerator.getSLMessagingAPIURL();
@@ -47,7 +53,7 @@ public class GetQueueByNameService extends AbstractService {
 		//append the auth to the URL		
 		url += "/" + queueName;
 		
-		SoftLayerServiceClient client = new SoftLayerServiceClient(token);
+		XAuthTokenSLClient client = new XAuthTokenSLClient(token);
 		ClientResponse clientResponse = client.executeGET(url, null);
 		String response = clientResponse.getEntity(String.class);
 		logger.info("Executed getQueue for QueueName: " 

@@ -13,7 +13,7 @@ import org.apache.wink.json4j.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ibm.softlayer.storage.StorageSoftLayerClient;
+import com.ibm.softlayer.client.XAuthTokenSLClient;
 
 /**
  * The Class ContainerService.
@@ -57,7 +57,7 @@ public class ContainerService {
 		}
 		url.append(containerName);
 		
-		StorageSoftLayerClient client = new StorageSoftLayerClient(authToken);		
+		XAuthTokenSLClient client = new XAuthTokenSLClient(authToken);		
 		ClientResponse clientResponse = client.executePUT(url.toString());
 		if(clientResponse.getStatusCode() == 201){
 			logger.debug("Executed createContainer for containerName: " + containerName);
@@ -84,7 +84,7 @@ public class ContainerService {
 		}
 		url.append(containerName);
 		
-		StorageSoftLayerClient client = new StorageSoftLayerClient(authToken);		
+		XAuthTokenSLClient client = new XAuthTokenSLClient(authToken);		
 		ClientResponse clientResponse = client.executeGET(url.toString());
 		String response = clientResponse.getEntity(String.class);
 		if(clientResponse.getStatusCode() == 200) {
@@ -112,7 +112,7 @@ public class ContainerService {
 		}
 		url.append(containerName);
 		
-		StorageSoftLayerClient client = new StorageSoftLayerClient(authToken);		
+		XAuthTokenSLClient client = new XAuthTokenSLClient(authToken);		
 		ClientResponse clientResponse = client.executeDELETE(url.toString());
 		String response = clientResponse.getEntity(String.class);
 		if(clientResponse.getStatusCode() == 204) {
@@ -148,7 +148,7 @@ public class ContainerService {
 			}
 		}
 		
-		StorageSoftLayerClient client = new StorageSoftLayerClient(authToken);
+		XAuthTokenSLClient client = new XAuthTokenSLClient(authToken);
 		ClientResponse clientResponse = client.executePOST(url.toString(), null, updatedMetaData);
 		String response = clientResponse.getEntity(String.class);
 		logger.debug("Executed executeHEAD: URL: " + url + " clientResponse: " + clientResponse.getStatusCode() + ", response: " + response);
@@ -175,7 +175,7 @@ public class ContainerService {
 		}
 		url.append(containerName);
 		
-		StorageSoftLayerClient client = new StorageSoftLayerClient(authToken);
+		XAuthTokenSLClient client = new XAuthTokenSLClient(authToken);
 		ClientResponse clientResponse = client.executeHEAD(url.toString());
 		String response = clientResponse.getEntity(String.class);
 		logger.debug("Executed executeHEAD: URL: " + url + " clientResponse: " + clientResponse.getStatusCode() + ", response: " + response);
@@ -226,7 +226,7 @@ public class ContainerService {
 			}			
 		}
 		
-		StorageSoftLayerClient client = new StorageSoftLayerClient(authToken);
+		XAuthTokenSLClient client = new XAuthTokenSLClient(authToken);
 		ClientResponse clientResponse = client.executePOST(url.toString(), null, updatedMetaData);
 		String response = clientResponse.getEntity(String.class);
 		logger.debug("Executed executeHEAD: URL: " + url + " clientResponse: " + clientResponse.getStatusCode() + ", response: " + response);

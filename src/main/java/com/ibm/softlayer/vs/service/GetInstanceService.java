@@ -5,19 +5,23 @@ import org.apache.wink.json4j.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ibm.softlayer.common.client.SoftLayerServiceClient;
-import com.ibm.softlayer.common.service.AbstractService;
-import com.ibm.softlayer.common.util.URIGenerator;
+import com.ibm.softlayer.client.BasicAuthorizationSLClient;
 import com.ibm.softlayer.util.APIConstants;
+import com.ibm.softlayer.util.URIGenerator;
 
 /**
  * The Class GetInstanceService.
  */
-public class GetInstanceService extends AbstractService {
+public class GetInstanceService {
 
 	/** The Constant logger. */
 	private static final Logger logger = LoggerFactory.getLogger(GetInstanceService.class);	
 	
+	/** The username. */
+	private String username = null;
+	
+	/** The api key. */
+	private String apiKey = null;
 	
 	/**
 	 * Instantiates a new gets the instance service.
@@ -26,7 +30,8 @@ public class GetInstanceService extends AbstractService {
 	 * @param apikey the apikey
 	 */
 	public GetInstanceService(String username, String apikey) {
-		super(username, apikey);
+		this.username = username;
+		this.apiKey = apikey;
 	}
 
 	
@@ -48,8 +53,8 @@ public class GetInstanceService extends AbstractService {
 		url.append(URIGenerator.getSLBaseURL(APIConstants.VIRTUAL_GUEST_ROOT_API));
 		url.append("/").append(instanceId).append("/getObject");
 				
-		SoftLayerServiceClient client = new SoftLayerServiceClient();
-		ClientResponse clientResponse = client.executeGET(url.toString(), null, getCredentialsColonSeperated());
+		BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(username, apiKey);
+		ClientResponse clientResponse = client.executeGET(url.toString(), null);
 		String response = clientResponse.getEntity(String.class);
 		logger.info("Executed Get Instance: " + instanceId + ", Response Status Code: " + clientResponse.getStatusCode() + ", Message: " + response);
 		

@@ -1,4 +1,4 @@
-package com.ibm.softlayer.util;
+package com.ibm.softlayer.client;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -11,7 +11,7 @@ import org.apache.wink.client.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ibm.softlayer.common.util.SLProperties;
+import com.ibm.softlayer.util.SLProperties;
 
 /**
  * The Class AbstractSoftLayerClient.

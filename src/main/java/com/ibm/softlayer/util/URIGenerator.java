@@ -1,6 +1,5 @@
-package com.ibm.softlayer.common.util;
+package com.ibm.softlayer.util;
 
-import com.ibm.softlayer.util.APIConstants;
 
 /**
  * The Class URIGenerator.
