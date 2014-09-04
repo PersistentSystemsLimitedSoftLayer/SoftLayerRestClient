@@ -1,5 +1,7 @@
 package com.ibm.softlayer.ticket.service;
 
+import java.util.List;
+
 import org.apache.wink.client.ClientResponse;
 import org.apache.wink.json4j.JSONArray;
 import org.slf4j.Logger;
@@ -25,8 +27,6 @@ public class ListSubjectsService extends AbstractService {
 	 *            the username
 	 * @param apikey
 	 *            the apikey
-	 * @param accountId
-	 *            the account id
 	 */
 
 	public ListSubjectsService(String username, String apikey) {
@@ -34,13 +34,10 @@ public class ListSubjectsService extends AbstractService {
 	}
 
 	public JSONArray list_subjects() throws Exception {
-		logger.info("Executing createQueue for Account: " 
+		logger.info("Executing List Subject for Account: " 
 				+ ", username: " + getUsername());
 
-		// authenticate the user and retrieve the token
-		//String token = getAuthToken();
-
-		// generate the get queues URL
+		
 		String url = URIGenerator.getSLBaseURL(APIConstants.TICKETS_SUBJECTS_API);
 
 		SoftLayerServiceClient client = new SoftLayerServiceClient();
@@ -62,6 +59,67 @@ public class ListSubjectsService extends AbstractService {
 		throw new Exception("Could not create List Subjects: Code: "
 				+ clientResponse.getStatusCode() + ", Reason: " + response);
 
+	}
+	
+	/**
+	 * 
+	 * @param objectMask
+	 * @return
+	 * @throws Exception
+	 */
+	
+	public JSONArray list_subjectsByObjectMask(List<String> objectMask) throws Exception {
+		logger.info("Executing list Subject for Account: " 
+				+ ", username: " + getUsername());
+
+		String url = URIGenerator.getSLBaseURL(APIConstants.TICKETS_SUBJECTS_API);
+		url += "/getAllObjects";
+		StringBuffer buffer= new StringBuffer(url);
+		processObjectMasks(buffer, objectMask);
+
+		SoftLayerServiceClient client = new SoftLayerServiceClient();
+		ClientResponse clientResponse = client.executeGET(buffer.toString(), null,getCredentialsColonSeperated());
+
+		String response = clientResponse.getEntity(String.class);
+		
+		logger.info("Executed list Subject for ticket service for Account: "
+				 + "clientResponse: "
+				+ clientResponse.getStatusCode());
+
+		if (clientResponse.getStatusCode() == 201
+				|| clientResponse.getStatusCode() == 200) {
+			JSONArray json = new JSONArray(response);
+			logger.debug("List Subject: JSON Response: " + response);
+			return json;
+		}
+
+		throw new Exception("Could not create List Subjects: Code: "
+				+ clientResponse.getStatusCode() + ", Reason: " + response);
+
+	}
+	
+	/**
+	 * Process object masks.
+	 *
+	 * @param url the url
+	 * @param objectMasks the object masks
+	 */
+	private void processObjectMasks(StringBuffer url, List<String> objectMasks) {
+		//setting the object masks
+		if(objectMasks != null && objectMasks.size() > 0){
+			StringBuffer mask = new StringBuffer();
+			for(String maskVal : objectMasks) {
+				if(mask.toString().trim().length() > 0){
+					mask.append(";");
+				}
+				mask.append(maskVal);
+			}
+			
+			//append the mask to the URL
+			if(mask.toString().trim().length() > 0){
+				url.append("?").append("objectMask=").append(mask.toString());
+			}
+		}
 	}
 
 }
