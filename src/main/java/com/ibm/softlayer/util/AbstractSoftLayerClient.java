@@ -28,8 +28,24 @@ public abstract class AbstractSoftLayerClient {
 	private boolean useAuthToken = false;
 	
 	/** The x auth token. */
-	private String xAuthToken = null;
+	private String xAuthToken = null;		
 	
+	private boolean useBasicAuth = false;		
+
+	/**
+	 * @return the useBasicAuth
+	 */
+	public boolean isUseBasicAuth() {
+		return useBasicAuth;
+	}
+
+	/**
+	 * @param useBasicAuth the useBasicAuth to set
+	 */
+	public void setUseBasicAuth(boolean useBasicAuth) {
+		this.useBasicAuth = useBasicAuth;
+	}
+
 	/**
 	 * Checks if is use auth token.
 	 *
@@ -82,6 +98,8 @@ public abstract class AbstractSoftLayerClient {
 		
 		if(useAuthToken) {
 			resource.header("X-Auth-Token", getxAuthToken());
+		} else if(useBasicAuth) {
+			resource.header("Authorization", "Basic "+ getxAuthToken());
 		}							
 		
 		ClientResponse clientResponse = resource.head();
@@ -118,6 +136,8 @@ public abstract class AbstractSoftLayerClient {
 		//adding the authentication header
 		if(useAuthToken) {
 			resource.header("X-Auth-Token", getxAuthToken());
+		} else if(useBasicAuth) {
+			resource.header("Authorization", "Basic "+ getxAuthToken());
 		}
 		
 		ClientResponse clientResponse = resource.put(requestObject);
@@ -175,6 +195,8 @@ public abstract class AbstractSoftLayerClient {
 		
 		if(useAuthToken) {
 			resource.header("X-Auth-Token", getxAuthToken());
+		} else if(useBasicAuth) {
+			resource.header("Authorization", "Basic "+ getxAuthToken());
 		}
 		
 		ClientResponse clientResponse = resource.get();	
@@ -205,6 +227,9 @@ public abstract class AbstractSoftLayerClient {
 		return clientResponse;
 	}
 	
+	public ClientResponse executePOST(String url, String requestObject)  {
+		return executePOST(url, requestObject, null);
+	}
 	/**
 	 * Execute post.
 	 *
@@ -232,7 +257,9 @@ public abstract class AbstractSoftLayerClient {
 		//credentials are used for the Virtual Guest Services
 		if(useAuthToken) {
 			resource.header("X-Auth-Token", getxAuthToken());
-		}				
+		} else if(useBasicAuth) {
+			resource.header("Authorization", "Basic "+ getxAuthToken());
+		}
 		
 		ClientResponse clientResponse = resource.post(requestObject);
 		String response = clientResponse.getEntity(String.class);		
