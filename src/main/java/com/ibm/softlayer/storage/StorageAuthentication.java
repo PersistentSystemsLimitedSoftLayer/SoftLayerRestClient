@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import com.ibm.softlayer.util.APIConstants;
 import com.ibm.softlayer.util.SLProperties;
+import com.ibm.softlayer.util.TokenGenerator;
 
 /**
  * The Class ObjectStorageAuthentication.
@@ -44,7 +45,7 @@ public class StorageAuthentication {
 		//append the api version
 		url.append(properties.getProperty(SLProperties.SL_STORAGE_BASE_API_VERSION));				
 		
-		JSONObject jsonObject = StorageSoftLayerClient.authenticate(url.toString(), tenant, username, apikey);
+		JSONObject jsonObject = TokenGenerator.getTokenForStorage(url.toString(), tenant, username, apikey);
 		logger.info("Executed getAuthToken: response: " + jsonObject);	
 		return jsonObject;
 	}

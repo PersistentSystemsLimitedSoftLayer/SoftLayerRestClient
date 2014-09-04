@@ -1,6 +1,5 @@
 package com.ibm.softlayer.client;
 
-import com.ibm.softlayer.util.AbstractSoftLayerClient;
 
 /**
  * The Class XAuthTokenSLClient.
