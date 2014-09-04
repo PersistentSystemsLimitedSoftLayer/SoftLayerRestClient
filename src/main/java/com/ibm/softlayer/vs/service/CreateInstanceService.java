@@ -8,18 +8,23 @@ import org.apache.wink.json4j.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ibm.softlayer.common.client.SoftLayerServiceClient;
-import com.ibm.softlayer.common.service.AbstractService;
-import com.ibm.softlayer.common.util.URIGenerator;
+import com.ibm.softlayer.client.BasicAuthorizationSLClient;
 import com.ibm.softlayer.util.APIConstants;
+import com.ibm.softlayer.util.URIGenerator;
 
 /**
  * The Class CreateInstanceService.
  */
-public class CreateInstanceService extends AbstractService {
+public class CreateInstanceService {
 
 	/** The Constant logger. */
 	private static final Logger logger = LoggerFactory.getLogger(CreateInstanceService.class);	
+	
+	/** The username. */
+	private String username = null;
+	
+	/** The api key. */
+	private String apiKey = null;
 	
 	/**
 	 * Instantiates a new creates the instance service.
@@ -28,7 +33,8 @@ public class CreateInstanceService extends AbstractService {
 	 * @param apikey the apikey
 	 */
 	public CreateInstanceService(String username, String apikey) {
-		super(username, apikey);
+		this.username = username;
+		this.apiKey = apikey;
 	}
 
 	/**
@@ -67,8 +73,8 @@ public class CreateInstanceService extends AbstractService {
 		JSONObject requests = new JSONObject();
 		requests.put("parameters", parameters);
 		
-		SoftLayerServiceClient client = new SoftLayerServiceClient();
-		ClientResponse clientResponse = client.executePOST(url.toString(), requests.toString(), getCredentialsColonSeperated());
+		BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(username, apiKey);
+		ClientResponse clientResponse = client.executePOST(url.toString(), requests.toString());
 		String response = clientResponse.getEntity(String.class);
 		
 		logger.info("Executed Create Instance with hostnames: " + hostname + ", Status Code: " 
@@ -125,8 +131,8 @@ public class CreateInstanceService extends AbstractService {
 		JSONObject requests = new JSONObject();
 		requests.put("parameters", multipleRequests);
 		
-		SoftLayerServiceClient client = new SoftLayerServiceClient();
-		ClientResponse clientResponse = client.executePOST(url.toString(), requests.toString(), getCredentialsColonSeperated());
+		BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(username, apiKey);
+		ClientResponse clientResponse = client.executePOST(url.toString(), requests.toString());
 		String response = clientResponse.getEntity(String.class);
 		
 		logger.info("Executed Create Instance with hostnames: " + hostnames + ", Status Code: " 

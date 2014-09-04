@@ -9,17 +9,21 @@ import org.apache.wink.json4j.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ibm.softlayer.common.client.SoftLayerServiceClient;
-import com.ibm.softlayer.common.service.AbstractService;
-import com.ibm.softlayer.common.util.URIGenerator;
+import com.ibm.softlayer.util.URIGenerator;
 
 /**
  * The Class CreateQueueService.
  */
-public class CreateQueueService extends AbstractService {
+public class CreateQueueService {
 
 	/** The Constant logger. */
 	private static final Logger logger = LoggerFactory.getLogger(CreateQueueService.class);	
+	
+	/** The username. */
+	private String username = null;
+	
+	/** The api key. */
+	private String apiKey = null;
 	
 	/**
 	 * Instantiates a new creates the queue service.
@@ -28,7 +32,8 @@ public class CreateQueueService extends AbstractService {
 	 * @param apikey the apikey
 	 */
 	public CreateQueueService(String username, String apikey) {
-		super(username, apikey);		
+		this.username = username;
+		this.apiKey = apikey;	
 	}
 	
 	/**
@@ -42,10 +47,10 @@ public class CreateQueueService extends AbstractService {
 	 * @throws Exception the exception
 	 */
 	public JSONObject createQueue(String queueName, int visibilityIntervals, int expiration, List<String> tags) throws Exception {
-		logger.info("Executing createQueue for username: " + getUsername());
+		logger.info("Executing createQueue for username: " + username);
 		
 		//authenticate the user and retrieve the token
-		String token = getAuthToken();
+		String token = MessagingSoftLayerClient.authenticate(username, apiKey);
 		
 		//generate the get queues URL		
 		String url = URIGenerator.getSLMessagingAPIURL();
@@ -53,7 +58,7 @@ public class CreateQueueService extends AbstractService {
 		//append the auth to the URL		
 		url += "/" + queueName;
 				
-		SoftLayerServiceClient client = new SoftLayerServiceClient(token);
+		MessagingSoftLayerClient client = new MessagingSoftLayerClient(token);
 		ClientResponse clientResponse = client.executePUT(url, getJSON(visibilityIntervals, expiration, tags));
 		String response = clientResponse.getEntity(String.class);
 		logger.info("Executed createQueue for QueueName: " + queueName + ", clientResponse: " + clientResponse.getStatusCode());

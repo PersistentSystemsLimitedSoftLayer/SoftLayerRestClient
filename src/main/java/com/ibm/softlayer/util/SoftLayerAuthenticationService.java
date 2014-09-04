@@ -7,8 +7,7 @@ import org.apache.wink.client.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ibm.softlayer.common.util.SLProperties;
-
+// TODO: Auto-generated Javadoc
 /**
  * The Class SoftLayerAuthenticationService.
  */
@@ -55,6 +54,25 @@ public class SoftLayerAuthenticationService {
 		logger.info("Calling GET API for Storage authentication: " + url);
 		ClientResponse response = resource.get();		
 		logger.debug("Executed authenticate:GET for following URL: " + url + ", Response Status Code: " + response.getStatusCode());
+		return response;
+	}
+	
+	/**
+	 * Authenticate post.
+	 *
+	 * @param url the url
+	 * @return the client response
+	 */
+	public ClientResponse authenticatePOST(String url)  {		
+		logger.info("Executing authenticate:POST for following URL: " + url);
+		
+		RestClient client = new RestClient(getClientConfig());		
+		Resource resource = client.resource(url);	
+		resource.header("X-Auth-User", username);
+		resource.header("X-Auth-Key", apiKey);		
+		
+		ClientResponse response = resource.post(null);		
+		logger.info("Executed authenticate:POST for following URL: " + url + ", Response Status Code: " + response.getStatusCode());
 		return response;
 	}
 	

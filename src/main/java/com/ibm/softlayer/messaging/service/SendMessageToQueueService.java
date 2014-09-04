@@ -8,19 +8,23 @@ import org.apache.wink.json4j.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ibm.softlayer.common.client.SoftLayerServiceClient;
-import com.ibm.softlayer.common.service.AbstractService;
-import com.ibm.softlayer.common.util.URIGenerator;
 import com.ibm.softlayer.util.APIConstants;
+import com.ibm.softlayer.util.URIGenerator;
 
 /**
  * The Class SendMessageToQueueService.
  */
-public class SendMessageToQueueService extends AbstractService {
+public class SendMessageToQueueService {
 
 	/** The Constant logger. */
 	private static final Logger logger = LoggerFactory.getLogger(SendMessageToQueueService.class);	
 
+	/** The username. */
+	private String username = null;
+	
+	/** The api key. */
+	private String apiKey = null;
+	
 	/**
 	 * Instantiates a new send message to queue service.
 	 *
@@ -29,7 +33,8 @@ public class SendMessageToQueueService extends AbstractService {
 	 * @param accountId the account id
 	 */
 	public SendMessageToQueueService(String username, String apikey) {
-		super(username, apikey);
+		this.username = username;
+		this.apiKey = apikey;
 	}
 
 	/**
@@ -48,7 +53,7 @@ public class SendMessageToQueueService extends AbstractService {
 		logger.info("Executing sendMessageToQueue for queueName: " + queueName + ", messageBody: " + messageBody);
 		
 		//authenticate the user and retrieve the token
-		String token = getAuthToken();
+		String token = MessagingSoftLayerClient.authenticate(username, apiKey);
 		
 		//generate the get queues URL		
 		String url = URIGenerator.getSLMessagingAPIURL();
@@ -56,7 +61,7 @@ public class SendMessageToQueueService extends AbstractService {
 		//append the auth to the URL		
 		url += "/" + queueName + "/" + APIConstants.MESSAGES_API;
 		
-		SoftLayerServiceClient client = new SoftLayerServiceClient(token);
+		MessagingSoftLayerClient client = new MessagingSoftLayerClient(token);
 		ClientResponse clientResponse = client.executePOST(url, getJSON(messageBody, fields, visibilityIntervals, visibility_delay));
 		String response = clientResponse.getEntity(String.class);
 				
