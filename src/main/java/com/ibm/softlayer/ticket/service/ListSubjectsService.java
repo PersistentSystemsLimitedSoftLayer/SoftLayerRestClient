@@ -7,8 +7,9 @@ import org.apache.wink.json4j.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ibm.softlayer.common.util.URIGenerator;
+import com.ibm.softlayer.client.BasicAuthorizationSLClient;
 import com.ibm.softlayer.util.APIConstants;
+import com.ibm.softlayer.util.URIGenerator;
 
 /**
  * The Class ListSubjectsService.
@@ -49,7 +50,7 @@ public class ListSubjectsService {
 		
 		String url = URIGenerator.getSLBaseURL(APIConstants.TICKETS_SUBJECTS_API);
 
-		TicketSoftLayerClient client = new TicketSoftLayerClient(username, apiKey);	
+		BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(username, apiKey);	
 		ClientResponse clientResponse = client.executeGET(url+"/getAllObjects");
 
 		String response = clientResponse.getEntity(String.class);
@@ -85,7 +86,7 @@ public class ListSubjectsService {
 		StringBuffer buffer= new StringBuffer(url);
 		processObjectMasks(buffer, objectMask);
 
-		TicketSoftLayerClient client = new TicketSoftLayerClient(username, apiKey);	
+		BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(username, apiKey);	
 		ClientResponse clientResponse = client.executeGET(buffer.toString());
 
 		String response = clientResponse.getEntity(String.class);

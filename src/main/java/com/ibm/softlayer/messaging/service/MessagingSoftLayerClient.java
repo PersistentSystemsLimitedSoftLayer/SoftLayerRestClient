@@ -5,11 +5,11 @@ import org.apache.wink.json4j.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ibm.softlayer.common.util.SLProperties;
-import com.ibm.softlayer.common.util.URIGenerator;
 import com.ibm.softlayer.util.APIConstants;
 import com.ibm.softlayer.util.AbstractSoftLayerClient;
+import com.ibm.softlayer.util.SLProperties;
 import com.ibm.softlayer.util.SoftLayerAuthenticationService;
+import com.ibm.softlayer.util.URIGenerator;
 
 /**
  * The Class StorageSoftLayerClient.

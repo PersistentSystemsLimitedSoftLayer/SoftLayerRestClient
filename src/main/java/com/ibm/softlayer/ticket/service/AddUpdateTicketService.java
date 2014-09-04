@@ -6,8 +6,9 @@ import org.apache.wink.json4j.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ibm.softlayer.common.util.URIGenerator;
+import com.ibm.softlayer.client.BasicAuthorizationSLClient;
 import com.ibm.softlayer.util.APIConstants;
+import com.ibm.softlayer.util.URIGenerator;
 
 /**
  * The Class AddUpdateTicketService.
@@ -64,7 +65,7 @@ public class AddUpdateTicketService {
 		requests.put("parameters", parameters);		
 	
 		//post the request
-		TicketSoftLayerClient client = new TicketSoftLayerClient(username, apiKey);		
+		BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(username, apiKey);		
 		ClientResponse clientResponse = client.executePOST(url.toString(), requests.toString());
 		String response = clientResponse.getEntity(String.class);
 		logger.info("Executed create Ticket: clientResponse: " + clientResponse.getStatusCode() + ", response: " + response);
