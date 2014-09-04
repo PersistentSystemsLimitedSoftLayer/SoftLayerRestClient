@@ -6,18 +6,22 @@ import org.apache.wink.json4j.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ibm.softlayer.common.client.SoftLayerServiceClient;
-import com.ibm.softlayer.common.service.AbstractService;
 import com.ibm.softlayer.common.util.URIGenerator;
 import com.ibm.softlayer.util.APIConstants;
 
 /**
  * The Class AddUpdateTicketService.
  */
-public class AddUpdateTicketService  extends AbstractService {
+public class AddUpdateTicketService {
 	
 	/** The Constant logger. */
 	private static final Logger logger = LoggerFactory.getLogger(AddUpdateTicketService.class);
+	
+	/** The username. */
+	private String username = null;
+	
+	/** The api key. */
+	private String apiKey = null;
 	
 	/**
 	 * Instantiates a new adds the update ticket service.
@@ -26,7 +30,8 @@ public class AddUpdateTicketService  extends AbstractService {
 	 * @param apikey the apikey
 	 */
 	public AddUpdateTicketService(String username, String apikey) {
-		super(username, apikey);	
+		this.username = username;
+		this.apiKey = apikey;
 	}
 
 	/**
@@ -59,8 +64,8 @@ public class AddUpdateTicketService  extends AbstractService {
 		requests.put("parameters", parameters);		
 	
 		//post the request
-		SoftLayerServiceClient client = new SoftLayerServiceClient();		
-		ClientResponse clientResponse = client.executePOST(url.toString(), requests.toString(), getCredentialsColonSeperated());
+		TicketSoftLayerClient client = new TicketSoftLayerClient(username, apiKey);		
+		ClientResponse clientResponse = client.executePOST(url.toString(), requests.toString());
 		String response = clientResponse.getEntity(String.class);
 		logger.info("Executed create Ticket: clientResponse: " + clientResponse.getStatusCode() + ", response: " + response);
 		

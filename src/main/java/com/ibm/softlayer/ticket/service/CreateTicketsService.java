@@ -6,18 +6,22 @@ import org.apache.wink.json4j.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ibm.softlayer.common.client.SoftLayerServiceClient;
-import com.ibm.softlayer.common.service.AbstractService;
 import com.ibm.softlayer.common.util.URIGenerator;
 import com.ibm.softlayer.util.APIConstants;
 
 /**
  * The Class CreateTicketsService.
  */
-public class CreateTicketsService  extends AbstractService {
+public class CreateTicketsService {
 	
 	/** The Constant logger. */
 	private static final Logger logger = LoggerFactory.getLogger(CreateTicketsService.class);
+	
+	/** The username. */
+	private String username = null;
+	
+	/** The api key. */
+	private String apiKey = null;
 	
 	/**
 	 * Instantiates a new creates the tickets service.
@@ -26,7 +30,8 @@ public class CreateTicketsService  extends AbstractService {
 	 * @param apikey the apikey
 	 */
 	public CreateTicketsService(String username, String apikey) {
-		super(username, apikey);	
+		this.username = username;
+		this.apiKey = apikey;
 	}
 
 	/**
@@ -40,7 +45,7 @@ public class CreateTicketsService  extends AbstractService {
 	 * @throws Exception the exception
 	 */
 	public JSONObject createTickets(String assignedToUser,String subjectId, String title, String content) throws Exception {
-		logger.info("Executing Create ticket username: " + getUsername());
+		logger.info("Executing Create ticket username: " + username);
 		
 		//generate the create Tickets URL		
 		StringBuffer url = new StringBuffer(URIGenerator.getSLBaseURL(APIConstants.TICKETS_ROOT_API));
@@ -51,8 +56,8 @@ public class CreateTicketsService  extends AbstractService {
 		
 		String templateObject = getJSON(assignedToUser,subjectId,title, content);
 	
-		SoftLayerServiceClient client = new SoftLayerServiceClient();		
-		ClientResponse clientResponse = client.executePOST(url.toString(), templateObject, getCredentialsColonSeperated());
+		TicketSoftLayerClient client = new TicketSoftLayerClient(username, apiKey);		
+		ClientResponse clientResponse = client.executePOST(url.toString(), templateObject);
 		String response = clientResponse.getEntity(String.class);
 		logger.info("Executed create Ticket: clientResponse: " + clientResponse.getStatusCode() + ", response: " + response);
 		
