@@ -67,6 +67,28 @@ public class SoftLayerServiceClient {
 	}
 	
 	/**
+	 * Authenticate get.
+	 *
+	 * @param url the url
+	 * @param username the username
+	 * @param password the password
+	 * @return the client response
+	 */
+	public ClientResponse authenticateGET(String url, String username, String password)  {		
+		logger.debug("Executing authenticate:GET for following URL: " + url);
+		
+		RestClient client = new RestClient(getClientConfig());		
+		Resource resource = client.resource(url);	
+		resource.header("X-Auth-User", username);
+		resource.header("X-Auth-Key", password);		
+		
+		logger.info("Calling GET API: " + url);
+		ClientResponse response = resource.get();		
+		logger.debug("Executed authenticate:POST for following URL: " + url + ", Response Status Code: " + response.getStatusCode());
+		return response;
+	}
+	
+	/**
 	 * Execute get.
 	 *
 	 * @param url the url

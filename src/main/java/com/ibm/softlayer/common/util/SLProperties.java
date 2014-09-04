@@ -27,6 +27,10 @@ public class SLProperties {
 	
 	public static final String SL_MESSAGING_BASE_API = "SL_MESSAGING_BASE_API";
 	
+	public static final String SL_STORAGE_BASE_API = "SL_STORAGE_BASE_API";
+	
+	public static final String SL_STORAGE_BASE_API_VERSION = "SL_STORAGE_BASE_API_VERSION";
+	
 	/** The instance. */
 	private static final SLProperties instance = new SLProperties();	
 	
