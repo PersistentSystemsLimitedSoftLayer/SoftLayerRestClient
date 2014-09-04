@@ -61,7 +61,7 @@ public class TicketServiceTest {
 		JSONObject ticketObject = service.getTicketById(ticketId);		
 		assertNotNull(ticketObject);
 		assertEquals(ticketId, ticketObject.getString("id"));		
-	}
+	} 
 	
 	@Test
 	public void testGetTicketByIDWithObjectMask() throws Exception {
@@ -121,5 +121,12 @@ public class TicketServiceTest {
 		ListSubjectsService service = new ListSubjectsService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
 		JSONArray array = service.list_subjects();
 		assertNotNull(array);
+	}
+	
+	@Test
+	public void testListSubjectsWithObjectMask() throws Exception{
+		ListSubjectsService service = new ListSubjectsService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		JSONArray jsonObject = service.list_subjectsByObjectMask(Arrays.asList("group"));
+		assertNotNull(jsonObject);
 	}
 }
