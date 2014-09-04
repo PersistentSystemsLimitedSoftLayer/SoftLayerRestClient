@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.ibm.softlayer.ticket.service.TicketServiceTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 28.383 sec
