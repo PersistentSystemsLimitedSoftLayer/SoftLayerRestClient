@@ -4,7 +4,7 @@ import org.apache.wink.client.ClientResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ibm.softlayer.common.util.URIGenerator;
+import com.ibm.softlayer.util.URIGenerator;
 
 /**
  * The Class DeleteQueueService.

@@ -8,8 +8,9 @@ import org.apache.wink.json4j.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ibm.softlayer.common.util.URIGenerator;
+import com.ibm.softlayer.client.BasicAuthorizationSLClient;
 import com.ibm.softlayer.util.APIConstants;
+import com.ibm.softlayer.util.URIGenerator;
 
 /**
  * The Class AbstractGetTicketDetails.
@@ -181,7 +182,7 @@ public abstract class AbstractGetTicketsService {
 	 */
 	private ClientResponse executeGET(String url) throws Exception {
 		//execute the get tickets call
-		TicketSoftLayerClient client = new TicketSoftLayerClient(username, apiKey);	
+		BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(username, apiKey);	
 		ClientResponse clientResponse = client.executeGET(url.toString());
 		return clientResponse;
 	}

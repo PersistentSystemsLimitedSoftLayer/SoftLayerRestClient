@@ -11,8 +11,6 @@ import org.apache.wink.client.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ibm.softlayer.common.util.SLProperties;
-
 /**
  * The Class AbstractSoftLayerClient.
  */

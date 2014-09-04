@@ -7,8 +7,6 @@ import org.apache.wink.client.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ibm.softlayer.common.util.SLProperties;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class SoftLayerAuthenticationService.
