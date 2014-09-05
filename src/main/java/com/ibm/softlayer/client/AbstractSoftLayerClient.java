@@ -191,7 +191,7 @@ public abstract class AbstractSoftLayerClient {
 		
 		RestClient client = new RestClient(getClientConfig());		
 		Resource resource = client.resource(url);	
-		resource.header("Accept", "application/json");
+		//resource.header("Accept", "application/json");
 		
 		if(useAuthToken) {
 			resource.header("X-Auth-Token", getxAuthToken());
@@ -272,7 +272,7 @@ public abstract class AbstractSoftLayerClient {
 	 *
 	 * @return the client config
 	 */
-	private ClientConfig getClientConfig() {
+	protected ClientConfig getClientConfig() {
 		ClientConfig config = new ClientConfig();
 		config.proxyHost(properties.getProperty(SLProperties.SL_PROXYHOST));
 		config.proxyPort(Integer.valueOf(properties.getProperty(SLProperties.SL_PROXYPORT)));
