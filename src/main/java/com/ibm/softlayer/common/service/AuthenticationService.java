@@ -1,4 +1,4 @@
-package com.ibm.softlayer.util;
+package com.ibm.softlayer.common.service;
 
 import org.apache.wink.client.ClientConfig;
 import org.apache.wink.client.ClientResponse;
@@ -7,13 +7,15 @@ import org.apache.wink.client.RestClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ibm.softlayer.util.SLProperties;
+
 /**
  * The Class SoftLayerAuthenticationService.
  */
-public class SoftLayerAuthenticationService {
+public class AuthenticationService {
 	
 	/** The Constant logger. */
-	private static final Logger logger = LoggerFactory.getLogger(SoftLayerAuthenticationService.class);
+	private static final Logger logger = LoggerFactory.getLogger(AuthenticationService.class);
 	
 	/** The properties. */
 	private final SLProperties properties = SLProperties.getInstance();
@@ -30,7 +32,7 @@ public class SoftLayerAuthenticationService {
 	 * @param username the username
 	 * @param apikey the apikey
 	 */
-	public SoftLayerAuthenticationService(String username, String apikey) {
+	public AuthenticationService(String username, String apikey) {
 		this.username = username;
 		this.apiKey = apikey;
 	}	

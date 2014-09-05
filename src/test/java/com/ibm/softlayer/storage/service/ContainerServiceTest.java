@@ -11,9 +11,9 @@ import org.apache.wink.json4j.JSONObject;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.ibm.softlayer.storage.StorageAuthentication;
 import com.ibm.softlayer.storage.object.service.ContainerService;
 import com.ibm.softlayer.util.APIConstants;
+import com.ibm.softlayer.util.TokenGenerator;
 import com.ibm.softlayer.util.UnitTestConstants;
 
 public class ContainerServiceTest {
@@ -25,8 +25,7 @@ public class ContainerServiceTest {
 	
 	@BeforeClass
 	public static void authenticateUser() throws Exception {
-		StorageAuthentication auth = new StorageAuthentication();
-		JSONObject authTokens = auth.getAuthToken(UnitTestConstants.STORAGE_TENANT_NAME, UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		JSONObject authTokens = TokenGenerator.getTokenForStorage(UnitTestConstants.STORAGE_TENANT_NAME, UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
 		assertNotNull(authTokens);
 		assertNotNull(authTokens.get(APIConstants.X_AUTH_TOKEN));
 		assertNotNull(authTokens.get(APIConstants.X_STORAGE_URL));
