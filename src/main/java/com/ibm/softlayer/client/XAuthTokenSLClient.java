@@ -3,7 +3,6 @@ package com.ibm.softlayer.client;
 import java.io.File;
 import java.io.FileInputStream;
 
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.apache.wink.client.ClientResponse;
@@ -50,6 +49,8 @@ public class XAuthTokenSLClient extends AbstractSoftLayerClient {
 		fis.read(bytes);
 		fis.close();
 		
+		System.out.println("upload bytes.length: " + bytes.length);
+		
 		//append the filename to the url
 		if(!url.endsWith("/")) {
 			url += "/";
@@ -64,10 +65,10 @@ public class XAuthTokenSLClient extends AbstractSoftLayerClient {
 		MultivaluedMap<String,String> headers = new MultivaluedMapImpl<String,String>();
 		headers.add("name", "file_part");
 		headers.add("filename", inputFile.getName());
-		fp.setHeaders(headers);
+		fp.setHeaders(headers);		
 		
-		fp.setContentType(MediaType.TEXT_PLAIN);
-		fp.setBody(inputFile);     
+		fp.setContentType("multipart/form-data; boundary=simple boundary");
+		fp.setBody(bytes);     
 		mp.addPart(fp);
 		
 		RestClient client = new RestClient(getClientConfig());		

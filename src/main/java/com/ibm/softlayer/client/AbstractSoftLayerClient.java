@@ -191,7 +191,7 @@ public abstract class AbstractSoftLayerClient {
 		
 		RestClient client = new RestClient(getClientConfig());		
 		Resource resource = client.resource(url);	
-		resource.header("Accept", "application/json");
+		//resource.header("Accept", "application/json");
 		
 		if(useAuthToken) {
 			resource.header("X-Auth-Token", getxAuthToken());
