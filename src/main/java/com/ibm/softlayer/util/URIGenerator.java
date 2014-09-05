@@ -69,4 +69,26 @@ public class URIGenerator {
 		url.append(APIConstants.QUEUES_API);
 		return url.toString();
 	}	
+	
+	
+	/**
+	 * Gets the SL messaging apiurl for topic.
+	 *
+	 * @return the SL messaging apiurl for topic
+	 */
+	public static String getSLMessagingAPIURLForTopic(){
+		StringBuffer url = new StringBuffer();
+		url.append(properties.getProperty(SLProperties.SL_MESSAGING_BASE_API));
+		if(!url.toString().endsWith("/")) {
+			url.append("/");
+		}
+		
+		//append the account id
+		url.append(properties.getProperty(SLProperties.SL_MESSAGING_ACCOUNTID)).append("/");
+				
+		url.append(APIConstants.TOPICS_API);
+		return url.toString();
+	}	
+	
+	
 }
