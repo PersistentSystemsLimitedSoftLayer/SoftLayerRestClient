@@ -11,7 +11,8 @@ public class UnitTestConstants {
 		PropertyConfigurator.configure("log4j.properties");
 	}
 
-	public static final String STORAGE_TENANT_NAME = "SLOS367792-2";
+	public static final String STORAGE_TENANT_NAME = "SLOS367792-5";
+	
 	
 	public static final String SL_USERNAME = "runtestsuser";
 	

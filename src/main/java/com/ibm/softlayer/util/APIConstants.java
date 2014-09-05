@@ -12,6 +12,9 @@ public class APIConstants {
 	/** The Constant QUEUES_API. */
 	public static final String QUEUES_API = "queues";
 	
+	/** The Constant TOPICS_API. */
+	public static final String TOPICS_API = "topics";
+	
 	/** The Constant MESSAGES_API. */
 	public static final String MESSAGES_API = "messages";
 	
@@ -49,4 +52,11 @@ public class APIConstants {
 	
 	/** The Constant VIRTUAL_GUEST_ROOT_API. */
 	public static final String VIRTUAL_GUEST_ROOT_API = "SoftLayer_Virtual_Guest";
+	
+	/** The Constant SUBSCRIPTION_API. */
+	public static final String SUBSCRIPTION_API = "subscriptions";
+	
+	/** The Constant IMAGE_API. */
+	public static final String IMAGE_API = "SoftLayer_Virtual_Guest_Block_Device_Template_Group";
+	
 }
