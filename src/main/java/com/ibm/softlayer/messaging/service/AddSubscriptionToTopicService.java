@@ -44,7 +44,7 @@ public class AddSubscriptionToTopicService {
 	
 	
 	/**
-	 * add subscription the topic.
+	 * add subscription the topic, queue as a endpoint.
 	 *
 	 * @param topicName the topic name
 	 * @param 
@@ -53,7 +53,7 @@ public class AddSubscriptionToTopicService {
 	 * @return the JSON object
 	 * @throws Exception the exception
 	 */
-	public JSONObject addSubscriptionToTopic(String topicName,String endpointTyp, Map<String,String> queueName) throws Exception {
+	public JSONObject addSubscriptionToTopic(String topicName,String endpointTyp, Map<String,Object> endpointMap) throws Exception {
 		logger.info("Executing addSubscriptionToTopic for username: " + username);
 		
 		//authenticate the user and retrieve the token
@@ -66,7 +66,7 @@ public class AddSubscriptionToTopicService {
 		url += "/" + topicName + "/subscriptions";
 				
 		XAuthTokenSLClient client = new XAuthTokenSLClient(token);
-		ClientResponse clientResponse = client.executePOST(url, getJSON(endpointTyp,queueName));
+		ClientResponse clientResponse = client.executePOST(url, getJSON(endpointTyp,endpointMap));
 		String response = clientResponse.getEntity(String.class);
 		logger.info("Executed  addSubscriptionTotopic for topicName: " + topicName + ", clientResponse: " + clientResponse.getStatusCode());
 		
@@ -88,19 +88,26 @@ public class AddSubscriptionToTopicService {
 	 * @param tags the tags
 	 * @return the json
 	 */
-	private String getJSON(String endpointTyp,Map<String,String> queueName) {
+	private String getJSON(String endpointTyp,Map<String,Object> endpointMap) {
 		
-		System.out.println("obj json ===== "+new JSONObject(queueName));
+		System.out.println("obj json ===== "+new JSONObject(endpointMap));
 		
 		JSONObject json = new JSONObject();
 		try {
 			json.put("endpoint_type", endpointTyp);
-			json.put("endpoint", new JSONObject(queueName));
+			json.put("endpoint", new JSONObject(endpointMap));
 		} catch (JSONException e) {
 			logger.error(e.getMessage(), e);
 		}		
 		return json.toString();
 	}
+	
+	
+	
+	
+
+	
+	
 	
 	
 

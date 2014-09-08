@@ -55,7 +55,7 @@ public class DeleteSubscriptionFromTopic {
 		String token = TokenGenerator.getTokenForMessaging(username, apiKey);
 				
 				//generate the get queues URL		
-				String url = URIGenerator.getSLMessagingAPIURL();
+				String url = URIGenerator.getSLMessagingAPIURLForTopic();
 		
 		//append the topicname and subcription id to the URL		
 		url += "/" + topicName + "/" + APIConstants.SUBSCRIPTION_API + "/" + subscriptionId;

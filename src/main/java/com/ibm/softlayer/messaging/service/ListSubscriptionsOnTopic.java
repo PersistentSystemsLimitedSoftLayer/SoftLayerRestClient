@@ -44,7 +44,7 @@ public class ListSubscriptionsOnTopic {
 		String token = TokenGenerator.getTokenForMessaging(username, apiKey);
 				
 				//generate the get queues URL		
-				String url = URIGenerator.getSLMessagingAPIURL();
+				String url = URIGenerator.getSLMessagingAPIURLForTopic();
 		
 		url += "/" + topicName + "/" + APIConstants.SUBSCRIPTION_API; 
 		
