@@ -38,7 +38,7 @@ public class FileObjectServiceTest {
 		assertEquals(true, created);
 	}
 	
-	@Test
+	/*@Test
 	public void testUploadFileToContainer() throws Exception {
 		String fileLocation = Thread.currentThread().getContextClassLoader().getResource(uploadFileName).getFile();
 		FileObjectService service = new FileObjectService(storageURL, authToken, containerName);
@@ -58,7 +58,7 @@ public class FileObjectServiceTest {
 		FileObjectService service = new FileObjectService(storageURL, authToken, containerName);
 		boolean retrieved = service.deleteFileObject(uploadFileName);
 		assertEquals(true, retrieved);
-	}
+	}*/
 	
 	@Test
 	public void testDeleteContainer() throws Exception {
