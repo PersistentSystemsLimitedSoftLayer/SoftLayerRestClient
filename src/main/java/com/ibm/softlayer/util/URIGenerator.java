@@ -1,5 +1,6 @@
 package com.ibm.softlayer.util;
 
+import java.util.List;
 
 /**
  * The Class URIGenerator.
@@ -49,7 +50,30 @@ public class URIGenerator {
 		
 		url.append(apiUrl);
 		return url.toString();
-	}		
+	}	
+	
+	/**
+	 * Gets the soft layer api url.
+	 *
+	 * @param pathList the path list
+	 * @return the soft layer api url
+	 */
+	public static String getSoftLayerApiUrl(List<String> pathList) {
+		StringBuffer url = new StringBuffer();
+		url.append(properties.getProperty(SLProperties.SL_BASE_API));
+		
+		//append the path list separated by /
+		if(pathList != null && pathList.size() > 0){
+			for(String path : pathList) {
+				if(!url.toString().endsWith("/")) {
+					url.append("/");
+				}
+				url.append(path);
+			}
+		}
+		
+		return url.toString();
+	}	
 	
 	/**
 	 * Gets the SL messaging apiurl.
