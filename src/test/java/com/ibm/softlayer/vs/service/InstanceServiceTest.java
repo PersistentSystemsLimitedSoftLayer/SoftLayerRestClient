@@ -29,8 +29,17 @@ public class InstanceServiceTest {
 	public void testGetAllVirtualServers_WithObjectMasks() throws Exception {
 		GetAllVirtalServers service = new GetAllVirtalServers(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
 		JSONArray jsonArray = service.findAll(Arrays.asList("id", "fullyQualifiedDomainName"));
-		assertNotNull(jsonArray);		
+		assertNotNull(jsonArray);
+		instanceId = jsonArray.getJSONObject(0).getString("id");
 	}	
+	
+	@Test
+	public void testGetInstance() throws Exception {
+		GetInstanceService service = new GetInstanceService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		JSONObject jsonObject = service.getInstance(instanceId);
+		assertNotNull(jsonObject);
+		assertEquals(instanceId, jsonObject.getString("id"));
+	}
 	
 //	@Test
 //	public void testCreateInstance() throws Exception {
