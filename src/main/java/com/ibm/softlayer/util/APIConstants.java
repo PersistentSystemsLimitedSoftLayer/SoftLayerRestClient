@@ -59,4 +59,10 @@ public class APIConstants {
 	/** The Constant IMAGE_API. */
 	public static final String IMAGE_API = "SoftLayer_Virtual_Guest_Block_Device_Template_Group";
 	
+	/* The constant for Notification */
+	public static final String NOTIFICATION_ROOT_URL = "SoftLayer_Notification";
+	
+	/* The constant for GetAllObject */
+	public static final String GETALLOBJECT_API = "getAllObjects";
+	
 }
