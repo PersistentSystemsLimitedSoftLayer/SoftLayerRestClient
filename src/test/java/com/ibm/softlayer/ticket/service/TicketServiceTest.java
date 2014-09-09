@@ -129,4 +129,18 @@ public class TicketServiceTest {
 		JSONArray jsonObject = service.list_subjectsByObjectMask(Arrays.asList("group"));
 		assertNotNull(jsonObject);
 	}
+	
+	@Test
+public void testUpdateTicketService() throws Exception {
+		
+		
+		String assinedToUser="245240";
+		String SubjectId="1522";
+		String tittle="TestAutoTicket";
+		String content="update ticket........... generated for Testing Automation process";
+		UpdateTicketService updateTicketService = new UpdateTicketService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		JSONObject jsonObject=updateTicketService.updateTicket(assinedToUser, SubjectId, tittle, content, ticketId);
+		assertNotNull(jsonObject);
+		assertEquals(ticketId, jsonObject.getString("id"));
+	}
 }
