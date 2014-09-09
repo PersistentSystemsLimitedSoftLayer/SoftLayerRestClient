@@ -3,8 +3,11 @@ package com.ibm.softlayer.vs.service;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 
+import java.util.Arrays;
+
 import junit.framework.Assert;
 
+import org.apache.wink.json4j.JSONArray;
 import org.apache.wink.json4j.JSONObject;
 import org.junit.Test;
 
@@ -14,6 +17,20 @@ public class InstanceServiceTest {
 
 	private static String hostname = "psl-" + String.valueOf(System.currentTimeMillis());
 	private static String instanceId = null;
+	
+	@Test
+	public void testGetAllVirtualServers() throws Exception {
+		GetAllVirtalServers service = new GetAllVirtalServers(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		JSONArray jsonArray = service.findAll();		
+		assertNotNull(jsonArray);		
+	}	
+	
+	@Test
+	public void testGetAllVirtualServers_WithObjectMasks() throws Exception {
+		GetAllVirtalServers service = new GetAllVirtalServers(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		JSONArray jsonArray = service.findAll(Arrays.asList("id", "fullyQualifiedDomainName"));
+		assertNotNull(jsonArray);		
+	}	
 	
 //	@Test
 //	public void testCreateInstance() throws Exception {
