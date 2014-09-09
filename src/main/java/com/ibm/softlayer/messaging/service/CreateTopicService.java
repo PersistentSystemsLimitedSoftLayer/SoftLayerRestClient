@@ -57,7 +57,7 @@ public class CreateTopicService {
 		String token = TokenGenerator.getTokenForMessaging(username, apiKey);
 				
 				//generate the get queues URL		
-				String url = URIGenerator.getSLMessagingAPIURL();
+				String url = URIGenerator.getSLMessagingAPIURLForTopic();
 		
 		//append the auth to the URL		
 		url += "/" + topicName;

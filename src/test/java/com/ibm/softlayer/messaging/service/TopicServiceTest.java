@@ -33,6 +33,7 @@ public class TopicServiceTest {
 	
 	public String subcriptionId;
 	
+	
 
 	/**
 	 * Test create queue.
@@ -62,22 +63,79 @@ public class TopicServiceTest {
 	
 	
 	/**
-	 * Test Add Subscription to topic.
+	 * Test Add Subscription to topic as Http.
 	 *
 	 * @throws Exception the exception
 	 */
-	/*@Test
-	public void testaddSubscriptionToTopic() throws Exception {
-		Map<String,String> queueMap = new HashMap<String, String>();
-		queueMap.put("queue_name", queueName);
+	@Test
+	public void testaddSubscriptionToTopicAsHttp() throws Exception {
+		
+		/**
+		 * Endpoint As Http
+		 * */
+		String endPointType = "http";
+		Map<String,Object> endpointMap = new HashMap<String, Object>();
+	
+		Map<String,Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("ignore", "true");
+		
+		Map<String,Object> headerMap = new HashMap<String, Object>();
+		headerMap.put("Content-Type", "application/x-www-form-urlencoded");
+		
+		
+		endpointMap.put("method", "GET");
+		endpointMap.put("url", "http://softlayer.com");
+		endpointMap.put("params", new JSONObject().put("ignore", "true"));
+		endpointMap.put("headers", new JSONObject().put("Content-Type", "application/x-www-form-urlencoded"));
+		endpointMap.put("body", "This is Message Body");
+		
+		
+		/**
+		 * Endpoint As Queue
+		 * */
+		//String endPointType = "queue";
+		//Map<String,Object> endpointMap = new HashMap<String, Object>();
+		//endpointMap.put("queue_name", queueName);
+		
 		
 		
 		AddSubscriptionToTopicService service = new AddSubscriptionToTopicService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
-		JSONObject subscriptionAdded = service.addSubscriptionToTopic(topicName, "queue", queueMap);
+		JSONObject subscriptionAdded = service.addSubscriptionToTopic(topicName, endPointType, endpointMap);
 		assertNotNull(subscriptionAdded);
+		assertEquals("Object created", subscriptionAdded.get("message"));
 		
 		System.out.println("subscriptionAdded ===="+subscriptionAdded);
-	}*/
+	}
+	
+	
+	
+	/**
+	 * Test Add Subscription to topic as Queue.
+	 *
+	 * @throws Exception the exception
+	 */
+	
+	@Test
+	public void testaddSubscriptionToTopicAsQueue() throws Exception {
+		
+		/**
+		 * Endpoint As Queue
+		 * */
+		String endPointType = "queue";
+		Map<String,Object> endpointMap = new HashMap<String, Object>();
+		endpointMap.put("queue_name", queueName);
+		
+		
+		
+		AddSubscriptionToTopicService service = new AddSubscriptionToTopicService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		JSONObject subscriptionAdded = service.addSubscriptionToTopic(topicName, endPointType, endpointMap);
+		assertNotNull(subscriptionAdded);
+		assertEquals("Object created", subscriptionAdded.get("message"));
+		
+		System.out.println("subscriptionAdded ===="+subscriptionAdded);
+	}
+	
+	
 	
 	@Test
 	public void testListAllTopics() throws Exception {
@@ -87,26 +145,26 @@ public class TopicServiceTest {
 		System.out.println(jsonObj.toString());
 	}
 	
-	/*@Test
+	@Test
 	public void testgetTopicDetails() throws Exception {
 		GetTopicDetailsService service = new GetTopicDetailsService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY );
 		JSONObject jsonObj = service.getTopicDetails(topicName);
 		assertNotNull(jsonObj);
 		System.out.println(jsonObj.toString());
-	}*/
+	}
 	
 	/**
 	 * Test list subcriptions on topic.
 	 *
 	 * @throws Exception the exception
 	 */
-	/*@Test
+	@Test
 	public void testListAllSubscriptionsOnTopic() throws Exception {
 		ListSubscriptionsOnTopic service = new ListSubscriptionsOnTopic(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY );
 		JSONObject jsonObj = service.getAllSubcriptionOnTopic(topicName);
 		assertNotNull(jsonObj);
 		System.out.println("List all sub on topic : "+jsonObj.toString());
-	}*/
+	}
 	
 	@Test
 	public void testPushMessageToTopic() throws Exception {
@@ -127,7 +185,7 @@ public class TopicServiceTest {
 	 *
 	 * @throws Exception the exception
 	 */
-	/*@Test
+	@Test
 	public void testDeleteSubcriptionFromTopic() throws Exception {
 		
 		ListSubscriptionsOnTopic service1 = new ListSubscriptionsOnTopic(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY );
@@ -142,7 +200,7 @@ public class TopicServiceTest {
 		DeleteSubscriptionFromTopic service = new DeleteSubscriptionFromTopic(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
 		boolean deleted = service.deleteSubscriptionFromTopic(topicName,this.subcriptionId);
 		assertEquals(deleted, true);
-	}*/
+	}
 	
 	
 	/**
@@ -155,8 +213,8 @@ public class TopicServiceTest {
 		DeleteTopicService service = new DeleteTopicService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
 		boolean deleted = service.deleteTopic(topicName);;
 		assertEquals(deleted, true);
-	}
-	*/
+	}*/
+	
 	
 
 }
