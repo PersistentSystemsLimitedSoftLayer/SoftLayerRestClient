@@ -5,14 +5,13 @@ import java.util.List;
 
 import org.apache.wink.json4j.JSONArray;
 
-import com.ibm.softlayer.common.service.AbstractGetService;
 import com.ibm.softlayer.util.APIConstants;
 import com.ibm.softlayer.util.URIGenerator;
 
 /**
  * The Class GetAllVirtalServers.
  */
-public class GetAllVirtalServers extends AbstractGetService {
+public class GetAllInstances extends AbstractVSService {
 
 	/**
 	 * Instantiates a new gets the all virtal servers.
@@ -20,7 +19,7 @@ public class GetAllVirtalServers extends AbstractGetService {
 	 * @param username the username
 	 * @param apikey the apikey
 	 */
-	public GetAllVirtalServers(String username, String apikey) {
+	public GetAllInstances(String username, String apikey) {
 		super(username, apikey);
 	}
 	
@@ -35,9 +34,9 @@ public class GetAllVirtalServers extends AbstractGetService {
 		//generate the get instance url
 		StringBuffer url = new StringBuffer();
 		url.append(URIGenerator.getSoftLayerApiUrl(Arrays.asList(
-				APIConstants.ACCOUNT_ROOT_API, APIConstants.VIRTUAL_GUEST_API)));
+				APIConstants.ACCOUNT_ROOT_API, APIConstants.GET_VIRTUAL_GUEST_API)));
 			
-		return findAll(url.toString(), null);			
+		return findAll(url.toString());			
 	}	
 
 	/**
@@ -51,7 +50,7 @@ public class GetAllVirtalServers extends AbstractGetService {
 		//generate the get instance url
 		StringBuffer url = new StringBuffer();
 		url.append(URIGenerator.getSoftLayerApiUrl(Arrays.asList(
-				APIConstants.ACCOUNT_ROOT_API, APIConstants.VIRTUAL_GUEST_API)));
+				APIConstants.ACCOUNT_ROOT_API, APIConstants.GET_VIRTUAL_GUEST_API)));
 			
 		return findAll(url.toString(), objectMasks);		
 	}	

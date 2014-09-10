@@ -16,27 +16,37 @@ import com.ibm.softlayer.util.UnitTestConstants;
 public class InstanceServiceTest {
 
 	private static String hostname = "psl-" + String.valueOf(System.currentTimeMillis());
-	private static String instanceId = null;
+	private static String instanceId = null;	
 	
 	@Test
 	public void testGetAllVirtualServers() throws Exception {
-		GetAllVirtalServers service = new GetAllVirtalServers(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		GetAllInstances service = new GetAllInstances(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
 		JSONArray jsonArray = service.findAll();		
 		assertNotNull(jsonArray);		
 	}	
 	
 	@Test
 	public void testGetAllVirtualServers_WithObjectMasks() throws Exception {
-		GetAllVirtalServers service = new GetAllVirtalServers(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		GetAllInstances service = new GetAllInstances(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
 		JSONArray jsonArray = service.findAll(Arrays.asList("id", "fullyQualifiedDomainName"));
-		assertNotNull(jsonArray);		
+		assertNotNull(jsonArray);
+		instanceId = jsonArray.getJSONObject(0).getString("id");
 	}	
+	
+	@Test
+	public void testGetInstance() throws Exception {
+		GetInstanceService service = new GetInstanceService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		JSONObject jsonObject = service.getInstance(instanceId);
+		assertNotNull(jsonObject);
+		assertEquals(instanceId, jsonObject.getString("id"));
+	}
 	
 //	@Test
 //	public void testCreateInstance() throws Exception {
 //		CreateInstanceService service = new CreateInstanceService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
-//		JSONObject jsonObject = service.createInstance(hostname);
+//		JSONObject jsonObject = service.createInstance(hostname, UnitTestConstants.DALLAS_DC);
 //		assertNotNull(jsonObject);
+//		System.out.println("jsonObject: " + jsonObject);
 //		instanceId = jsonObject.getString("id");
 //		assertEquals(hostname, jsonObject.getString("hostname"));
 //	}	

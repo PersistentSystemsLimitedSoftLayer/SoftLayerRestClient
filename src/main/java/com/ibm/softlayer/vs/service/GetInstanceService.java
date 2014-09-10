@@ -1,27 +1,21 @@
 package com.ibm.softlayer.vs.service;
 
-import org.apache.wink.client.ClientResponse;
+import java.util.Arrays;
+
 import org.apache.wink.json4j.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ibm.softlayer.client.BasicAuthorizationSLClient;
 import com.ibm.softlayer.util.APIConstants;
 import com.ibm.softlayer.util.URIGenerator;
 
 /**
  * The Class GetInstanceService.
  */
-public class GetInstanceService {
+public class GetInstanceService extends AbstractVSService {
 
 	/** The Constant logger. */
 	private static final Logger logger = LoggerFactory.getLogger(GetInstanceService.class);	
-	
-	/** The username. */
-	private String username = null;
-	
-	/** The api key. */
-	private String apiKey = null;
 	
 	/**
 	 * Instantiates a new gets the instance service.
@@ -30,8 +24,7 @@ public class GetInstanceService {
 	 * @param apikey the apikey
 	 */
 	public GetInstanceService(String username, String apikey) {
-		this.username = username;
-		this.apiKey = apikey;
+		super(username, apikey);
 	}
 
 	
@@ -50,20 +43,8 @@ public class GetInstanceService {
 		
 		//generate the get instance url
 		StringBuffer url = new StringBuffer();
-		url.append(URIGenerator.getSLBaseURL(APIConstants.VIRTUAL_GUEST_ROOT_API));
-		url.append("/").append(instanceId).append("/getObject");
-				
-		BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(username, apiKey);
-		ClientResponse clientResponse = client.executeGET(url.toString(), null);
-		String response = clientResponse.getEntity(String.class);
-		logger.info("Executed Get Instance: " + instanceId + ", Response Status Code: " + clientResponse.getStatusCode() + ", Message: " + response);
+		url.append(URIGenerator.getSoftLayerApiUrl(Arrays.asList(APIConstants.VIRTUAL_GUEST_ROOT_API, instanceId, APIConstants.GETOBJECT_API)));		
 		
-		if(clientResponse.getStatusCode() == 200){
-			JSONObject json = new JSONObject(response);
-			logger.debug("Get Instance: JSON Response: " + response);
-			return json;		
-		}
-		
-		throw new Exception("Could not retrieve the instance: Code: " + clientResponse.getStatusCode() + ", Reason: " + response);			
+		return get(url.toString());
 	}
 }

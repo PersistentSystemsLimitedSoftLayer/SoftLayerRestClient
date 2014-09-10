@@ -65,6 +65,6 @@ public class APIConstants {
 	/* The constant for GetAllObject */
 	public static final String GETALLOBJECT_API = "getAllObjects";
 	
-	public static final String VIRTUAL_GUEST_API = "VirtualGuests";
+	public static final String GET_VIRTUAL_GUEST_API = "getVirtualGuests";
 	
 }
