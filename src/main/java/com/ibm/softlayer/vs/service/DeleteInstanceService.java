@@ -1,5 +1,7 @@
 package com.ibm.softlayer.vs.service;
 
+import java.util.Arrays;
+
 import org.apache.wink.client.ClientResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,12 +49,11 @@ public class DeleteInstanceService {
 		}
 		
 		//generate the delete instance url
-		StringBuffer url = new StringBuffer();
-		url.append(URIGenerator.getSLBaseURL(APIConstants.VIRTUAL_GUEST_ROOT_API));
-		url.append("/").append(instanceId);
+		String url = URIGenerator.getSoftLayerApiUrl(Arrays.asList(
+				APIConstants.VIRTUAL_GUEST_ROOT_API, instanceId, APIConstants.DELETE_OBJECT_API));
 				
 		BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(username, apiKey);
-		ClientResponse clientResponse = client.executeDELETE(url.toString());
+		ClientResponse clientResponse = client.executeDELETE(url);
 		String response = clientResponse.getEntity(String.class);
 		
 		logger.info("Executed Delete Instance: " + instanceId + ", Response Status Code: " + clientResponse.getStatusCode() + ", Message: " + response);

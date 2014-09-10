@@ -47,4 +47,27 @@ public class GetInstanceService extends AbstractVSService {
 		
 		return get(url.toString());
 	}
+	
+	/**
+	 * Gets the instance relational info.
+	 *
+	 * @param instanceId the instance id
+	 * @param relationalDatatype the relational datatype
+	 * @return the instance relational info
+	 * @throws Exception the exception
+	 */
+	public String getInstanceRelationalInfo(String instanceId, String relationalDatatype) throws Exception {
+		if(instanceId == null || instanceId.trim().length() == 0){
+			throw new Exception("Instance Id is mandatory to get instance details");
+		}
+		
+		//generate the relational API
+		String relationalAPI = "get" + String.valueOf(relationalDatatype.charAt(0)).toUpperCase() + 
+				relationalDatatype.substring(1, relationalDatatype.length());
+		
+		String url = URIGenerator.getSoftLayerApiUrl(Arrays.asList(
+				APIConstants.VIRTUAL_GUEST_ROOT_API, instanceId, relationalAPI));
+		
+		return getString(url.toString());
+	}	
 }
