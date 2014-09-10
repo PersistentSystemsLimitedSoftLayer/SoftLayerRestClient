@@ -116,9 +116,14 @@ public abstract class AbstractVSService {
 		logger.debug("Executed apiUrl: " + apiUrl + ", Response Status Code: " + clientResponse.getStatusCode());
 		
 		if(clientResponse.getStatusCode() == 200){
-			JSONObject json = new JSONObject(response);
-			logger.debug("Executed get for apiUrl: " + apiUrl + ": JSON Response: " + response);
-			return json;		
+			if(response != null && response.trim().length() > 0 && !response.equals("null")){
+				JSONObject json = new JSONObject(response);
+				logger.debug("Executed get for apiUrl: " + apiUrl + ": JSON Response: " + response);
+				return json;		
+			}
+			else {
+				return null;
+			}
 		}
 		
 		throw new Exception("Error: Code: " + clientResponse.getStatusCode() + ", Reason: " + response);	

@@ -16,6 +16,12 @@ public class PingInstanceService extends AbstractVSService {
 	/** The Constant logger. */
 	private static final Logger logger = LoggerFactory.getLogger(PingInstanceService.class);	
 	
+	/** The username. */
+	private String username = null;
+	
+	/** The api key. */
+	private String apiKey = null;
+	
 	/**
 	 * Instantiates a new ping instance service.
 	 *
@@ -24,6 +30,8 @@ public class PingInstanceService extends AbstractVSService {
 	 */
 	public PingInstanceService(String username, String apikey) {
 		super(username, apikey);
+		this.username = username;
+		this.apiKey = apikey;
 	}
 
 	
@@ -54,7 +62,7 @@ public class PingInstanceService extends AbstractVSService {
 		logger.info("Checking if instance: " + instanceId +" becomes active...");
 		
 		int limit = 1;
-		int checkLimit = 10;
+		int checkLimit = 25;
 		int sleepTime = 10;
 		boolean instanceActive = false;				
 		
@@ -63,14 +71,22 @@ public class PingInstanceService extends AbstractVSService {
 				//sleep for some time to ensure the instance creation request is initiated by softlayer
 				Thread.sleep(sleepTime*1000);
 				
-				instanceActive = isPinbbable(instanceId);
-				if(!instanceActive) {
-					logger.info("Instance: " + instanceId +" is not yet active. Retrying in " + sleepTime + " seconds. Attemp " + limit + " of " + checkLimit);
-					++limit;									
-				}
-				else {				
-					break;				
-				}			
+				GetInstanceService service = new GetInstanceService(this.username, this.apiKey);
+				System.out.println("getActiveTransaction: " + service.getActiveTransaction(instanceId));
+				
+				System.out.println("getProvisionDate: " + service.getProvisionDate(instanceId));
+				
+				System.out.println("getLastOperatingSystemReload: " + service.getLastOperatingSystemReload(instanceId));
+				
+				++limit;	
+//				instanceActive = isPinbbable(instanceId);
+//				if(!instanceActive) {
+//					logger.info("Instance: " + instanceId +" is not yet active. Retrying in " + sleepTime + " seconds. Attemp " + limit + " of " + checkLimit);
+//					++limit;									
+//				}
+//				else {				
+//					break;				
+//				}			
 			}
 			catch(Exception ex){
 				logger.info("Instance: " + instanceId +" is not yet active. Retrying in " + sleepTime + " seconds. Attemp " + limit + " of " + checkLimit);
