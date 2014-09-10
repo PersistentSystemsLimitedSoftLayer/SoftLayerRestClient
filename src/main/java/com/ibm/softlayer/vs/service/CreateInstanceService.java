@@ -37,14 +37,16 @@ public class CreateInstanceService {
 		this.apiKey = apikey;
 	}
 
+	
 	/**
 	 * Creates the instance.
 	 *
 	 * @param hostname the hostname
+	 * @param datacenterName the datacenter name
 	 * @return the JSON object
 	 * @throws Exception the exception
 	 */
-	public JSONObject createInstance(String hostname) throws Exception {
+	public JSONObject createInstance(String hostname, String datacenterName) throws Exception {
 		logger.info("Executing Create Instance with hostname: " + hostname);
 		
 		//generate the create instance url
@@ -63,7 +65,7 @@ public class CreateInstanceService {
 		requestJson.put("operatingSystemReferenceCode", "UBUNTU_LATEST");
 			
 		JSONObject datacenter = new JSONObject();
-		datacenter.put("name", "dal05");
+		datacenter.put("name", datacenterName);
 		requestJson.put("datacenter", datacenter);			
 		
 		//add the vm details to the array
