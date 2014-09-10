@@ -11,7 +11,7 @@ import com.ibm.softlayer.util.URIGenerator;
 /**
  * The Class GetAllVirtalServers.
  */
-public class GetAllVirtalServers extends AbstractVSService {
+public class GetAllInstances extends AbstractVSService {
 
 	/**
 	 * Instantiates a new gets the all virtal servers.
@@ -19,7 +19,7 @@ public class GetAllVirtalServers extends AbstractVSService {
 	 * @param username the username
 	 * @param apikey the apikey
 	 */
-	public GetAllVirtalServers(String username, String apikey) {
+	public GetAllInstances(String username, String apikey) {
 		super(username, apikey);
 	}
 	
@@ -34,7 +34,7 @@ public class GetAllVirtalServers extends AbstractVSService {
 		//generate the get instance url
 		StringBuffer url = new StringBuffer();
 		url.append(URIGenerator.getSoftLayerApiUrl(Arrays.asList(
-				APIConstants.ACCOUNT_ROOT_API, APIConstants.VIRTUAL_GUEST_API)));
+				APIConstants.ACCOUNT_ROOT_API, APIConstants.GET_VIRTUAL_GUEST_API)));
 			
 		return findAll(url.toString());			
 	}	
@@ -50,7 +50,7 @@ public class GetAllVirtalServers extends AbstractVSService {
 		//generate the get instance url
 		StringBuffer url = new StringBuffer();
 		url.append(URIGenerator.getSoftLayerApiUrl(Arrays.asList(
-				APIConstants.ACCOUNT_ROOT_API, APIConstants.VIRTUAL_GUEST_API)));
+				APIConstants.ACCOUNT_ROOT_API, APIConstants.GET_VIRTUAL_GUEST_API)));
 			
 		return findAll(url.toString(), objectMasks);		
 	}	
