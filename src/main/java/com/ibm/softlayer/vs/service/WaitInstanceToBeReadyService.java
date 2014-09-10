@@ -1,6 +1,5 @@
 package com.ibm.softlayer.vs.service;
 
-import org.apache.wink.json4j.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +39,7 @@ public class WaitInstanceToBeReadyService {
 		logger.info("Checking if instance: " + instanceId +" becomes active...");
 		
 		int limit = 1;
-		int checkLimit = 20;
+		int checkLimit = 25;
 		int sleepTime = 15;
 		boolean instanceActive = false;				
 		
@@ -50,8 +49,8 @@ public class WaitInstanceToBeReadyService {
 				//sleep for some time to ensure the instance creation request is initiated by softlayer
 				Thread.sleep(sleepTime*1000);
 				
-				JSONObject activeTrans = service.getActiveTransaction(instanceId);				
-				if(activeTrans != null && activeTrans.size() > 0) {
+				String activeTrans = service.getInstanceRelationalInfo(instanceId, "activeTransaction");							
+				if(activeTrans != null && activeTrans.trim().length() > 0 && !activeTrans.equals("null")) {
 					logger.info("Instance: " + instanceId +" is not yet active. Retrying in " + sleepTime + " seconds. Attemp " + limit + " of " + checkLimit);
 					++limit;									
 				}
