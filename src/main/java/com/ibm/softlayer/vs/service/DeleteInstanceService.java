@@ -49,7 +49,7 @@ public class DeleteInstanceService {
 		//generate the delete instance url
 		StringBuffer url = new StringBuffer();
 		url.append(URIGenerator.getSLBaseURL(APIConstants.VIRTUAL_GUEST_ROOT_API));
-		url.append("/").append(instanceId);
+		url.append("/").append(instanceId).append("/deleteObject");
 				
 		BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(username, apiKey);
 		ClientResponse clientResponse = client.executeDELETE(url.toString());

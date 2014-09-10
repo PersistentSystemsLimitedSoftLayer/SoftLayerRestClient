@@ -67,4 +67,6 @@ public class APIConstants {
 	
 	public static final String GET_VIRTUAL_GUEST_API = "getVirtualGuests";
 	
+	public static final String IS_PINGABLE = "isPingable";
+	
 }
