@@ -46,65 +46,28 @@ public class GetInstanceService extends AbstractVSService {
 		url.append(URIGenerator.getSoftLayerApiUrl(Arrays.asList(APIConstants.VIRTUAL_GUEST_ROOT_API, instanceId, APIConstants.GETOBJECT_API)));		
 		
 		return get(url.toString());
-	}		
-	
-	/**
-	 * Gets the active transaction.
-	 *
-	 * @param instanceId the instance id
-	 * @return the active transaction
-	 * @throws Exception the exception
-	 */
-	public JSONObject getActiveTransaction(String instanceId) throws Exception {
-		if(instanceId == null || instanceId.trim().length() == 0){
-			throw new Exception("Instance Id is mandatory to get Active Transaction for an instance");
-		}
-		
-		//generate the get instance url
-		StringBuffer url = new StringBuffer();
-		url.append(URIGenerator.getSoftLayerApiUrl(Arrays.asList(
-				APIConstants.VIRTUAL_GUEST_ROOT_API, instanceId, APIConstants.GETACTIVE_TRANSACTION_API)));		
-		
-		return get(url.toString());
 	}
 	
 	/**
-	 * Gets the provision date.
+	 * Gets the instance relational info.
 	 *
 	 * @param instanceId the instance id
-	 * @return the provision date
+	 * @param relationalDatatype the relational datatype
+	 * @return the instance relational info
 	 * @throws Exception the exception
 	 */
-	public String getProvisionDate(String instanceId) throws Exception {
+	public String getInstanceRelationalInfo(String instanceId, String relationalDatatype) throws Exception {
 		if(instanceId == null || instanceId.trim().length() == 0){
-			throw new Exception("Instance Id is mandatory to get Provision Date for an instance");
+			throw new Exception("Instance Id is mandatory to get instance details");
 		}
 		
-		//generate the get instance url
-		StringBuffer url = new StringBuffer();
-		url.append(URIGenerator.getSoftLayerApiUrl(Arrays.asList(
-				APIConstants.VIRTUAL_GUEST_ROOT_API, instanceId, APIConstants.GETPROVISION_DATE_API)));		
+		//generate the relational API
+		String relationalAPI = "get" + String.valueOf(relationalDatatype.charAt(0)).toUpperCase() + 
+				relationalDatatype.substring(1, relationalDatatype.length());
+		
+		String url = URIGenerator.getSoftLayerApiUrl(Arrays.asList(
+				APIConstants.VIRTUAL_GUEST_ROOT_API, instanceId, relationalAPI));
 		
 		return getString(url.toString());
-	}
-	
-	/**
-	 * Gets the last operating system reload.
-	 *
-	 * @param instanceId the instance id
-	 * @return the last operating system reload
-	 * @throws Exception the exception
-	 */
-	public String getLastOperatingSystemReload(String instanceId) throws Exception {
-		if(instanceId == null || instanceId.trim().length() == 0){
-			throw new Exception("Instance Id is mandatory to get Last Operating System Load for an instance");
-		}
-		
-		//generate the get instance url
-		StringBuffer url = new StringBuffer();
-		url.append(URIGenerator.getSoftLayerApiUrl(Arrays.asList(
-				APIConstants.VIRTUAL_GUEST_ROOT_API, instanceId, APIConstants.GETLAST_OS_SYSTEM_LOAD_API)));		
-		
-		return getString(url.toString());
-	}
+	}	
 }

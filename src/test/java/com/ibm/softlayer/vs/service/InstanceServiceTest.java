@@ -17,6 +17,7 @@ public class InstanceServiceTest {
 
 	private static String hostname = "psl-" + String.valueOf(System.currentTimeMillis());
 	private static String instanceId = null;	
+	private static String slpractices1_instanceId = "5830450";
 	
 	@Test
 	public void testGetAllVirtualServers() throws Exception {
@@ -33,46 +34,68 @@ public class InstanceServiceTest {
 	}	
 	
 	@Test
-	public void testCreateInstance() throws Exception {
-		CreateInstanceService service = new CreateInstanceService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
-		JSONObject jsonObject = service.createInstance(hostname, UnitTestConstants.LON_02_DC);
-		assertNotNull(jsonObject);
-		instanceId = jsonObject.getString("id");
-		assertEquals(hostname, jsonObject.getString("hostname"));				
-		
-		//wait till instance is active
-		WaitInstanceToBeReadyService pingService = new WaitInstanceToBeReadyService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
-		boolean ispingable = pingService.checkIfInstanceActive(instanceId);
-		assertEquals(true, ispingable);
-	}		
-	
-	
-	@Test
 	public void testIsInstancePingable() throws Exception {
 		PingInstanceService service = new PingInstanceService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
-		boolean ispingable = service.isPinbbable(instanceId);
+		boolean ispingable = service.isPinbbable(slpractices1_instanceId);
 		assertEquals(true, ispingable);	
 	}	
 	
 	@Test
 	public void testGetInstance() throws Exception {
 		GetInstanceService service = new GetInstanceService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
-		JSONObject jsonObject = service.getInstance(instanceId);
+		JSONObject jsonObject = service.getInstance(slpractices1_instanceId);
 		assertNotNull(jsonObject);
-		assertEquals(instanceId, jsonObject.getString("id"));
+		assertEquals(slpractices1_instanceId, jsonObject.getString("id"));
 	}
 	
-	@Test (expected = Exception.class)
-	public void testDeleteInstanceNullInstanceId() throws Exception {
-		DeleteInstanceService service = new DeleteInstanceService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
-		service.deleteInstance(null);
-		Assert.fail();
-	}	
+	@Test
+	public void testGetDataCenter() throws Exception {
+		GetInstanceService service = new GetInstanceService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		String jsonObject = service.getInstanceRelationalInfo(slpractices1_instanceId, "datacenter");
+		assertNotNull(jsonObject);
+	}
 	
 	@Test
-	public void testDeleteInstance() throws Exception {
-		DeleteInstanceService service = new DeleteInstanceService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
-		boolean deleted = service.deleteInstance(instanceId);
-		assertEquals(true, deleted);
-	}	
+	public void testGetProvisionDate() throws Exception {
+		GetInstanceService service = new GetInstanceService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		String jsonObject = service.getInstanceRelationalInfo(slpractices1_instanceId, "provisionDate");
+		assertNotNull(jsonObject);
+	}
+	
+	@Test
+	public void testGetRecentEvents() throws Exception {
+		GetInstanceService service = new GetInstanceService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		String jsonObject = service.getInstanceRelationalInfo(slpractices1_instanceId, "recentEvents");
+		assertNotNull(jsonObject);
+	}
+	
+	
+//	@Test
+//	public void testCreateInstance() throws Exception {
+//		CreateInstanceService service = new CreateInstanceService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+//		JSONObject jsonObject = service.createInstance(hostname, UnitTestConstants.LON_02_DC);
+//		assertNotNull(jsonObject);
+//		instanceId = jsonObject.getString("id");
+//		assertEquals(hostname, jsonObject.getString("hostname"));				
+//		
+//		//wait till instance is active
+//		WaitInstanceToBeReadyService pingService = new WaitInstanceToBeReadyService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+//		boolean ispingable = pingService.checkIfInstanceActive(instanceId);
+//		assertEquals(true, ispingable);
+//	}			
+//	
+//
+//	@Test (expected = Exception.class)
+//	public void testDeleteInstanceNullInstanceId() throws Exception {
+//		DeleteInstanceService service = new DeleteInstanceService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+//		service.deleteInstance(null);
+//		Assert.fail();
+//	}	
+//	
+//	@Test
+//	public void testDeleteInstance() throws Exception {
+//		DeleteInstanceService service = new DeleteInstanceService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+//		boolean deleted = service.deleteInstance(instanceId);
+//		assertEquals(true, deleted);
+//	}
 }
