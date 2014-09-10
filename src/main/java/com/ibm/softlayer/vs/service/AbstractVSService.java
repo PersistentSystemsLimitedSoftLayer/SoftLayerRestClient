@@ -54,6 +54,13 @@ public abstract class AbstractVSService {
 		return apiKey;
 	}
 	
+	/**
+	 * Find all.
+	 *
+	 * @param apiUrl the api url
+	 * @return the JSON array
+	 * @throws Exception the exception
+	 */
 	public JSONArray findAll(String apiUrl) throws Exception {
 		return findAll(apiUrl, null);
 	}
@@ -67,47 +74,103 @@ public abstract class AbstractVSService {
 	 * @throws Exception the exception
 	 */
 	public JSONArray findAll(String apiUrl, List<String> objectMasks) throws Exception {
-		logger.debug("Executing apiUrl: " + apiUrl);
+		logger.debug("Executing findAll for apiUrl: " + apiUrl);
 		
-		//setting the object masks
-		StringBuffer url = new StringBuffer(apiUrl);		
-		SLAPIUtil.processObjectMasks(url, objectMasks);
-				
-		BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(username, apiKey);
-		ClientResponse clientResponse = client.executeGET(url.toString(), null);
+		ClientResponse clientResponse = executeGET(apiUrl, objectMasks);
 		String response = clientResponse.getEntity(String.class);
 		logger.debug("Executed apiUrl: " + apiUrl + ", Response Status Code: " + clientResponse.getStatusCode());
 		
 		if(clientResponse.getStatusCode() == 200){
 			JSONArray json = new JSONArray(response);
-			logger.debug("Executed apiUrl: " + apiUrl + ": JSON Response: " + response);
+			logger.debug("Executed findAll for apiUrl: " + apiUrl + ": JSON Response: " + response);
 			return json;		
 		}
 		
 		throw new Exception("Error: Code: " + clientResponse.getStatusCode() + ", Reason: " + response);	
 	}	
 	
+	/**
+	 * Gets the.
+	 *
+	 * @param apiUrl the api url
+	 * @return the JSON object
+	 * @throws Exception the exception
+	 */
 	public JSONObject get(String apiUrl) throws Exception {
 		return get(apiUrl, null);
 	}
 	
+	/**
+	 * Gets the.
+	 *
+	 * @param apiUrl the api url
+	 * @param objectMasks the object masks
+	 * @return the JSON object
+	 * @throws Exception the exception
+	 */
 	public JSONObject get(String apiUrl, List<String> objectMasks) throws Exception {
-		logger.debug("Executing apiUrl: " + apiUrl);
-		//setting the object masks
-		StringBuffer url = new StringBuffer(apiUrl);		
-		SLAPIUtil.processObjectMasks(url, objectMasks);
-				
-		BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(username, apiKey);
-		ClientResponse clientResponse = client.executeGET(url.toString(), null);
+		logger.debug("Executing get for apiUrl: " + apiUrl);
+
+		ClientResponse clientResponse = executeGET(apiUrl, objectMasks);
 		String response = clientResponse.getEntity(String.class);
 		logger.debug("Executed apiUrl: " + apiUrl + ", Response Status Code: " + clientResponse.getStatusCode());
 		
 		if(clientResponse.getStatusCode() == 200){
 			JSONObject json = new JSONObject(response);
-			logger.debug("Executed apiUrl: " + apiUrl + ": JSON Response: " + response);
+			logger.debug("Executed get for apiUrl: " + apiUrl + ": JSON Response: " + response);
 			return json;		
 		}
 		
 		throw new Exception("Error: Code: " + clientResponse.getStatusCode() + ", Reason: " + response);	
+	}
+	
+	/**
+	 * Gets the string.
+	 *
+	 * @param apiUrl the api url
+	 * @return the string
+	 * @throws Exception the exception
+	 */
+	public String getString(String apiUrl) throws Exception {
+		return getString(apiUrl, null);
+	}
+	
+	/**
+	 * Gets the string.
+	 *
+	 * @param apiUrl the api url
+	 * @param objectMasks the object masks
+	 * @return the string
+	 * @throws Exception the exception
+	 */
+	public String getString(String apiUrl, List<String> objectMasks) throws Exception {
+		logger.debug("Executing getString for apiUrl: " + apiUrl);
+		
+		ClientResponse clientResponse = executeGET(apiUrl, objectMasks);
+		String response = clientResponse.getEntity(String.class);
+		logger.debug("Executed apiUrl: " + apiUrl + ", Response Status Code: " + clientResponse.getStatusCode());
+		
+		if(clientResponse.getStatusCode() == 200){
+			logger.debug("Executed getString for apiUrl: " + apiUrl + ": JSON Response: " + response);
+			return response;		
+		}
+		
+		throw new Exception("Error: Code: " + clientResponse.getStatusCode() + ", Reason: " + response);	
+	}
+	
+	/**
+	 * Execute get.
+	 *
+	 * @param apiUrl the api url
+	 * @param objectMasks the object masks
+	 * @return the client response
+	 */
+	private ClientResponse executeGET(String apiUrl, List<String> objectMasks) {
+		//setting the object masks
+		StringBuffer url = new StringBuffer(apiUrl);		
+		SLAPIUtil.processObjectMasks(url, objectMasks);
+				
+		BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(username, apiKey);
+		return client.executeGET(url.toString(), null);
 	}
 }
