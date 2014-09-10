@@ -26,6 +26,12 @@ public class APIConstants {
 	/** The Constant GETOBJECT_API. */
 	public static final String GETOBJECT_API = "getObject";
 	
+	public static final String GETACTIVE_TRANSACTION_API = "getActiveTransaction";
+	
+	public static final String GETPROVISION_DATE_API = "getProvisionDate";
+	
+	public static final String GETLAST_OS_SYSTEM_LOAD_API = "getLastOperatingSystemReload";
+	
 	/** The Constant GETASSIGNEDUSER_API. */
 	public static final String GETASSIGNEDUSER_API = "getAssignedUser";
 	
@@ -68,5 +74,7 @@ public class APIConstants {
 	public static final String GET_VIRTUAL_GUEST_API = "getVirtualGuests";
 	
 	public static final String IS_PINGABLE = "isPingable";
+	
+	public static final String DELETE_OBJECT_API = "deleteObjects";
 	
 }

@@ -219,6 +219,8 @@ public abstract class AbstractSoftLayerClient {
 		
 		if(useAuthToken) {
 			resource.header("X-Auth-Token", getxAuthToken());
+		} else if(useBasicAuth) {
+			resource.header("Authorization", "Basic "+ getxAuthToken());
 		}
 		
 		ClientResponse clientResponse = resource.delete();
