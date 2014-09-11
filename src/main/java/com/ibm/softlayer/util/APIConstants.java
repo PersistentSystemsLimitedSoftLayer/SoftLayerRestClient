@@ -51,8 +51,7 @@ public class APIConstants {
 	public static final String ACCOUNT_ROOT_API = "SoftLayer_Account";
 	
 	/** The Constant TICKETS_ROOT_API. */
-	public static final String TICKETS_ROOT_API = "SoftLayer_Ticket";
-	
+	public static final String TICKETS_ROOT_API = "SoftLayer_Ticket";	
 	
 	public static final String TICKETS_SUBJECTS_API = "SoftLayer_Ticket_Subject";
 	
@@ -68,10 +67,14 @@ public class APIConstants {
 	/* The constant for Notification */
 	public static final String NOTIFICATION_ROOT_URL = "SoftLayer_Notification";
 	
+	public static final String SL_NETWORK_SUBNET_IPADDRESS_ROOT_API = "SoftLayer_Network_Subnet_IpAddress";	
+	
 	/* The constant for GetAllObject */
 	public static final String GETALLOBJECT_API = "getAllObjects";
 	
-	public static final String GET_VIRTUAL_GUEST_API = "getVirtualGuests";
+	public static final String GET_VIRTUAL_GUEST_API = "getVirtualGuest";
+	
+	public static final String GET_BYIPADDRESSES_API = "getByIpAddress";
 	
 	public static final String IS_PINGABLE = "isPingable";
 	
