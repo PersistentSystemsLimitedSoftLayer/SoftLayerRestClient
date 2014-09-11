@@ -5,13 +5,17 @@ import static junit.framework.Assert.assertNotNull;
 import static org.junit.Assert.*;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.wink.json4j.JSONObject;
 import org.apache.wink.json4j.JSONArray;
 import org.junit.Test;
 
-import com.ibm.softlayer.messaging.service.CreateQueueService;
 import com.ibm.softlayer.util.UnitTestConstants;
+
+
+
 
 public class ImagesServiceTest {
 
@@ -26,6 +30,7 @@ public class ImagesServiceTest {
 	@Test
 	public void testgetImageObject() throws Exception {
 		String imageId="10599";
+		//String imageId="230942";
 		GetImageDetailsService service = new GetImageDetailsService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
 		JSONObject imageJson = service.getImageObject(imageId);
 		assertNotNull(imageJson);
@@ -80,8 +85,8 @@ public class ImagesServiceTest {
 		
 		//String s = "https://api.softlayer.com/rest/v3/SoftLayer_Virtual_Guest_Block_Device_Template_Group/getPublicImages?objectFilter={"name":{"operation":"test public"}}";
 		
-	}*/
-	
+	}
+	*/
 	
 
 	/**
@@ -110,6 +115,26 @@ public class ImagesServiceTest {
 		String imageId =  service.getIdFromNamePrivate(name);
 		//assertNotNull(imageId);
 		System.out.println("id is ===="+imageId);
+	}
+	
+	
+	/**
+	 * Edit Images Test.
+	 *
+	 * @throws Exception the exception
+	 */
+	@Test
+	public void testeditImageObject() throws Exception {
+		String imageId = "230942";
+		
+		JSONObject bodyelement = new JSONObject();
+		bodyelement.put("note", "This is edited mod");
+		
+		
+		EditImageService service = new EditImageService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		Boolean isedited = service.editImageObject(imageId, bodyelement);
+		assertEquals(true, isedited);;
+		System.out.println("isedited is ===="+isedited);
 	}
 	
 	
