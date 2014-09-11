@@ -126,13 +126,11 @@ public class ImagesServiceTest {
 	@Test
 	public void testeditImageObject() throws Exception {
 		String imageId = "230942";
-		
-		JSONObject bodyelement = new JSONObject();
-		bodyelement.put("note", "This is edited mod");
-		
+		Map<String,String> bodyelementMap = new HashMap<String,String>();
+		bodyelementMap.put("note", "This is edited mod");
 		
 		EditImageService service = new EditImageService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
-		Boolean isedited = service.editImageObject(imageId, bodyelement);
+		Boolean isedited = service.editImageObject(imageId, bodyelementMap);
 		assertEquals(true, isedited);;
 		System.out.println("isedited is ===="+isedited);
 	}
