@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import com.ibm.softlayer.client.BasicAuthorizationSLClient;
 import com.ibm.softlayer.util.APIConstants;
 import com.ibm.softlayer.util.URIGenerator;
-import com.ibm.softlayer.util.UnitTestConstants;
 
 public class UpdateTicketService extends AbstractGetTicketsService {
 
@@ -19,7 +18,6 @@ public class UpdateTicketService extends AbstractGetTicketsService {
 	
 	public UpdateTicketService(String username, String apikey) {
 		super(username, apikey);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -34,7 +32,7 @@ public class UpdateTicketService extends AbstractGetTicketsService {
 	 */
 	public JSONObject updateTicket (String assinedToUser, String SubjectId,String tittle,String content, String ticketId) throws Exception{
 		
-		GetTicketByIdService service = new GetTicketByIdService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		GetTicketByIdService service = new GetTicketByIdService(getUsername(), getApiKey());
 		JSONObject jsonObject = service.getTicketById(ticketId);
 		
 		/**
@@ -60,7 +58,7 @@ public class UpdateTicketService extends AbstractGetTicketsService {
 		json.put("parameters", parameter);
 		
 		
-        logger.info("Executing update ticket username: " + UnitTestConstants.SL_USERNAME);
+        logger.info("Executing update ticket username: " + getUsername());
 		
 		StringBuffer url = new StringBuffer(URIGenerator.getSLBaseURL(APIConstants.TICKETS_ROOT_API));
 		if(!url.toString().endsWith("/")) {
@@ -69,7 +67,7 @@ public class UpdateTicketService extends AbstractGetTicketsService {
 		url.append(ticketId);
 		url.append("/edit.json");
 		
-		BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);		
+		BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(getUsername(), getApiKey());		
 		ClientResponse clientResponse = client.executePOST(url.toString(), json.toString());
 		String response = clientResponse.getEntity(String.class);
 		logger.info("Executed update Ticket: clientResponse: " + clientResponse.getStatusCode() + ", response: " + response);

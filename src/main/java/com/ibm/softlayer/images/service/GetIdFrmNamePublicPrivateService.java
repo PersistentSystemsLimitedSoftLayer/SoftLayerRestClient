@@ -2,17 +2,10 @@ package com.ibm.softlayer.images.service;
 
 import java.util.Map;
 
-import org.apache.wink.client.ClientResponse;
 import org.apache.wink.json4j.JSONArray;
-import org.apache.wink.json4j.JSONException;
 import org.apache.wink.json4j.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.ibm.softlayer.client.BasicAuthorizationSLClient;
-import com.ibm.softlayer.util.APIConstants;
-import com.ibm.softlayer.util.URIGenerator;
-import com.ibm.softlayer.util.UnitTestConstants;
 
 public class GetIdFrmNamePublicPrivateService {
 
@@ -32,6 +25,8 @@ public class GetIdFrmNamePublicPrivateService {
 		this.username = username;
 		this.apiKey = apikey;	
 	}
+	
+	
 
 	
 	
@@ -70,9 +65,38 @@ public class GetIdFrmNamePublicPrivateService {
 	}*/
 	
 	
+	/**
+	 * @return the username
+	 */
+	public String getUsername() {
+		return username;
+	}
+
+	/**
+	 * @param username the username to set
+	 */
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	/**
+	 * @return the apiKey
+	 */
+	public String getApiKey() {
+		return apiKey;
+	}
+
+	/**
+	 * @param apiKey the apiKey to set
+	 */
+	public void setApiKey(String apiKey) {
+		this.apiKey = apiKey;
+	}
+
+
 	public String getIdFromNamePublic(String ImageName) throws Exception {
 		String id = null;
-		ListPublicImagesService service = new ListPublicImagesService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		ListPublicImagesService service = new ListPublicImagesService(getUsername(), getApiKey());
 		JSONArray imageJson =  service.listPublicImages();
 		for(int i=0; i<imageJson.length();i++){
 			JSONObject jobj = (JSONObject) imageJson.get(i);
@@ -87,7 +111,7 @@ public class GetIdFrmNamePublicPrivateService {
 	
 	public String getIdFromNamePrivate(String ImageName) throws Exception {
 		String id = null;
-		ListPrivateImagesService service = new ListPrivateImagesService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		ListPrivateImagesService service = new ListPrivateImagesService(getUsername(), getApiKey());
 		JSONArray imageJson =  service.listPrivateImages();
 		for(int i=0; i<imageJson.length();i++){
 			JSONObject jobj = (JSONObject) imageJson.get(i);
