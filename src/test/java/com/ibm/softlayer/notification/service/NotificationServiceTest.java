@@ -16,13 +16,17 @@ import com.ibm.softlayer.util.UnitTestConstants;
 
 public class NotificationServiceTest {
 	
-	private static String notificationId = null;
+	private static int notificationId = 0;
+	private static String notificationName=null;
 
 	@Test
 	public void testgetAllNotification() throws Exception{
 		GetNotificationService service= new GetNotificationService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
-		JSONArray notificationObject = service.getAllNotification();
-		assertNotNull(notificationObject);
+		JSONArray notificationArray = service.getAllNotification();
+		assertNotNull(notificationArray);
+		JSONObject notificationObject1= notificationArray.getJSONObject(0);
+		notificationId=notificationObject1.getInt("id");
+		notificationName=notificationObject1.getString("name");
 	}
 	
 	@Test
@@ -33,7 +37,8 @@ public class NotificationServiceTest {
 		JSONArray notificationArray = service.getAllNotification(objectMaskList);
 		assertNotNull(notificationArray);
 		JSONObject notificationObject= notificationArray.getJSONObject(0);
-		notificationId=notificationObject.getString("id");
+		notificationId=notificationObject.getInt("id");
+		//notificationName=notificationObject.getString("name");
 	}
 	
 	@Test
@@ -42,5 +47,19 @@ public class NotificationServiceTest {
 		JSONObject notificationObject = service.getNotificationById(notificationId);
 		assertNotNull(notificationObject);
 	}
-}
+	
+	/*@Test
+	public void testgetNotificationBYName() throws Exception{
+		GetNotificationIdByNameService service= new GetNotificationIdByNameService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		JSONObject notificationObject = service.getNotificationIdByName(notificationName);
+		assertNotNull(notificationObject);
+	}
+*/
+	@Test
+	public void testSubscribeForNotificationByID() throws Exception{
+		SubscribeForNotificationService service= new SubscribeForNotificationService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		JSONObject notificationObject = service.SubscribeForNotificationByID(notificationId, 248250);
+		assertNotNull(notificationObject);
+	}
+	}
 
