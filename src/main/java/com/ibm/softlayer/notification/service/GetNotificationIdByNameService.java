@@ -6,8 +6,9 @@ import org.apache.wink.json4j.JSONObject;
 
 import com.ibm.softlayer.util.APIConstants;
 
-public class GetNotificationByIDService extends AbstractGetNotificationService {
-	public GetNotificationByIDService(String username, String apikey) {
+public class GetNotificationIdByNameService extends AbstractGetNotificationService{
+
+	public GetNotificationIdByNameService(String username, String apikey) {
 		super(username, apikey);	
 	}		
 	
@@ -18,8 +19,8 @@ public class GetNotificationByIDService extends AbstractGetNotificationService {
 	 * @return the notifications
 	 * @throws Exception the exception
 	 */
-	public JSONObject getNotificationById(int notificationId) throws Exception {
-		return getByNotificationId(notificationId, APIConstants.GETOBJECT_API, null);
+	public JSONObject getNotificationIdByName(String notificationName) throws Exception {
+		return getByNotificationName(notificationName, APIConstants.GETALLOBJECT_API, null);
 	}
 
 	/**
@@ -30,8 +31,7 @@ public class GetNotificationByIDService extends AbstractGetNotificationService {
 	 * @return the notification by id
 	 * @throws Exception the exception
 	 */
-	public JSONObject getNotificationById(int notificationId, List<String> objectMasks) throws Exception {
-		return getByNotificationId(notificationId, APIConstants.GETOBJECT_API, objectMasks);
+	public JSONObject getNotificationById(String notificationName, List<String> objectMasks) throws Exception {
+		return getByNotificationName(notificationName, APIConstants.GETALLOBJECT_API, objectMasks);
 	}
-
 }
