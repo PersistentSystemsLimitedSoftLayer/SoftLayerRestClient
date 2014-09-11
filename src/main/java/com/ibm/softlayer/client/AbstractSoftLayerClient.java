@@ -30,9 +30,12 @@ public abstract class AbstractSoftLayerClient {
 	/** The x auth token. */
 	private String xAuthToken = null;		
 	
+	/** The use basic auth. */
 	private boolean useBasicAuth = false;		
 
 	/**
+	 * Checks if is use basic auth.
+	 *
 	 * @return the useBasicAuth
 	 */
 	public boolean isUseBasicAuth() {
@@ -40,6 +43,8 @@ public abstract class AbstractSoftLayerClient {
 	}
 
 	/**
+	 * Sets the use basic auth.
+	 *
 	 * @param useBasicAuth the useBasicAuth to set
 	 */
 	public void setUseBasicAuth(boolean useBasicAuth) {
@@ -155,8 +160,18 @@ public abstract class AbstractSoftLayerClient {
 	 */
 	public ClientResponse executeGET(String url)  {		
 		return executeGET(url, null);
-	}
+	}	
 	
+	/**
+	 * Execute get with object filter.
+	 *
+	 * @param url the url
+	 * @param objectFilter the object filter
+	 * @return the client response
+	 */
+	public ClientResponse executeGETWithObjectFilter(String url, String objectFilter)  {		
+		return executeGET(url, objectFilter, null);
+	}	
 	
 	/**
 	 * Execute get.
@@ -165,7 +180,19 @@ public abstract class AbstractSoftLayerClient {
 	 * @param requestParamsMap the request params map
 	 * @return the client response
 	 */
-	public ClientResponse executeGET(String url, Map<String, String> requestParamsMap)  {		
+	public ClientResponse executeGET(String url, Map<String, String> requestParamsMap)  {	
+		return executeGET(url, null, requestParamsMap);
+	}
+	
+	/**
+	 * Execute get.
+	 *
+	 * @param url the url
+	 * @param objectFilter the object filter
+	 * @param requestParamsMap the request params map
+	 * @return the client response
+	 */
+	public ClientResponse executeGET(String url, String objectFilter, Map<String, String> requestParamsMap)  {		
 		logger.info("Executing GET for following URL: " + url + ", requestParamsMap: " + requestParamsMap);
 		
 		StringBuffer requestParams = new StringBuffer();
@@ -186,9 +213,18 @@ public abstract class AbstractSoftLayerClient {
 			if(requestParams.toString().length() > 0) {
 				url += "?" + requestParams.toString();
 			}
-			logger.info("Executing GET for following URL: " + url);
 		}
 		
+		//append the object filter
+		if(objectFilter != null && objectFilter.trim().length() > 0){
+			try {
+				url += "?objectFilter=" + URLEncoder.encode(objectFilter.toString(), "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			} 
+		}
+		
+		logger.info("Executing GET for following URL: " + url);
 		RestClient client = new RestClient(getClientConfig());		
 		Resource resource = client.resource(url);	
 		//resource.header("Accept", "application/json");
@@ -229,6 +265,13 @@ public abstract class AbstractSoftLayerClient {
 		return clientResponse;
 	}
 	
+	/**
+	 * Execute post.
+	 *
+	 * @param url the url
+	 * @param requestObject the request object
+	 * @return the client response
+	 */
 	public ClientResponse executePOST(String url, String requestObject)  {
 		return executePOST(url, requestObject, null);
 	}

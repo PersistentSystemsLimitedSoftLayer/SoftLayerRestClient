@@ -57,7 +57,19 @@ public class InstanceServiceTest {
 		assertNotNull(jsonObject);
 		assertEquals(ipAddress, jsonObject.getString("primaryIpAddress"));
 		assertEquals(slpractices1_instanceId, jsonObject.getString("id"));
-	}	
+	}
+	
+	@Test
+	public void testGetInstanceByHostname() throws Exception {
+		String attributeName = "hostname";
+		String attributeValue = "slpractices1";
+		GetInstanceService service = new GetInstanceService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		JSONArray jsonObject = service.getInstanceByKey(attributeName, attributeValue);
+		assertNotNull(jsonObject);
+		assertEquals(1, jsonObject.size());
+		assertEquals(attributeValue, jsonObject.getJSONObject(0).getString(attributeName));
+		assertEquals(slpractices1_instanceId, jsonObject.getJSONObject(0).getString("id"));
+	}
 	
 	@Test
 	public void testGetDataCenter() throws Exception {
