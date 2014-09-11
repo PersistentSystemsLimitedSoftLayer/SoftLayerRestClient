@@ -74,6 +74,8 @@ public class APIConstants {
 	
 	public static final String GET_VIRTUAL_GUEST_API = "getVirtualGuest";
 	
+	public static final String GET_VIRTUAL_GUESTS_API = "getVirtualGuests";
+	
 	public static final String GET_BYIPADDRESSES_API = "getByIpAddress";
 	
 	public static final String IS_PINGABLE = "isPingable";
