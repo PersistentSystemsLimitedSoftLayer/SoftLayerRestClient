@@ -34,7 +34,7 @@ public class GetAllInstances extends AbstractVSService {
 		//generate the get instance url
 		StringBuffer url = new StringBuffer();
 		url.append(URIGenerator.getSoftLayerApiUrl(Arrays.asList(
-				APIConstants.ACCOUNT_ROOT_API, APIConstants.GET_VIRTUAL_GUEST_API)));
+				APIConstants.ACCOUNT_ROOT_API, APIConstants.GET_VIRTUAL_GUESTS_API)));
 			
 		return findAll(url.toString());			
 	}	
@@ -50,7 +50,7 @@ public class GetAllInstances extends AbstractVSService {
 		//generate the get instance url
 		StringBuffer url = new StringBuffer();
 		url.append(URIGenerator.getSoftLayerApiUrl(Arrays.asList(
-				APIConstants.ACCOUNT_ROOT_API, APIConstants.GET_VIRTUAL_GUEST_API)));
+				APIConstants.ACCOUNT_ROOT_API, APIConstants.GET_VIRTUAL_GUESTS_API)));
 			
 		return findAll(url.toString(), objectMasks);		
 	}	

@@ -28,7 +28,7 @@ public class PingInstanceService extends AbstractVSService {
 	 * @return true, if is pinbbable
 	 * @throws Exception the exception
 	 */
-	public boolean isPinbbable(String instanceId) throws Exception {
+	public boolean isPingable(String instanceId) throws Exception {
 		//generate the get instance url
 		StringBuffer url = new StringBuffer();
 		url.append(URIGenerator.getSoftLayerApiUrl(Arrays.asList(APIConstants.VIRTUAL_GUEST_ROOT_API, instanceId, APIConstants.IS_PINGABLE)));		

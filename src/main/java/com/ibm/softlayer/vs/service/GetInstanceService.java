@@ -6,6 +6,7 @@ import org.apache.wink.json4j.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ibm.softlayer.network.service.NetworkSubnetService;
 import com.ibm.softlayer.util.APIConstants;
 import com.ibm.softlayer.util.URIGenerator;
 
@@ -24,7 +25,7 @@ public class GetInstanceService extends AbstractVSService {
 	 * @param apikey the apikey
 	 */
 	public GetInstanceService(String username, String apikey) {
-		super(username, apikey);
+		super(username, apikey);		
 	}
 
 	
@@ -69,5 +70,27 @@ public class GetInstanceService extends AbstractVSService {
 				APIConstants.VIRTUAL_GUEST_ROOT_API, instanceId, relationalAPI));
 		
 		return getString(url.toString());
-	}	
+	}
+	
+	/**
+	 * Gets the instance by ip address.
+	 *
+	 * @param ipAddress the ip address
+	 * @return the instance by ip address
+	 * @throws Exception the exception
+	 */
+	public JSONObject getInstanceByIPAddress(String ipAddress) throws Exception {
+		logger.debug("Executing getInstanceByIPAddress, ipAddress: " + ipAddress);
+		
+		NetworkSubnetService service = new NetworkSubnetService(getUsername(), getApiKey());
+		JSONObject ipAddressDetails = service.getIpAddressDetails(ipAddress, Arrays.asList("id"));
+		String ipAddressId = ipAddressDetails.getString("id");
+
+		StringBuffer url = new StringBuffer();
+		url.append(URIGenerator.getSoftLayerApiUrl(Arrays.asList(APIConstants.SL_NETWORK_SUBNET_IPADDRESS_ROOT_API, ipAddressId, APIConstants.GET_VIRTUAL_GUEST_API)));		
+		
+		JSONObject instance = get(url.toString());
+		logger.debug("Executing getInstanceByIPAddress, ipAddress: " + ipAddress + ", instance:" + instance);
+		return instance;
+	}
 }
