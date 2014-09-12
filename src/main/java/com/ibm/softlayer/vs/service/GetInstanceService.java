@@ -1,11 +1,15 @@
 package com.ibm.softlayer.vs.service;
 
 import java.util.Arrays;
+import java.util.List;
 
+import org.apache.wink.client.ClientResponse;
+import org.apache.wink.json4j.JSONArray;
 import org.apache.wink.json4j.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ibm.softlayer.client.BasicAuthorizationSLClient;
 import com.ibm.softlayer.network.service.NetworkSubnetService;
 import com.ibm.softlayer.util.APIConstants;
 import com.ibm.softlayer.util.URIGenerator;
@@ -92,5 +96,60 @@ public class GetInstanceService extends AbstractVSService {
 		JSONObject instance = get(url.toString());
 		logger.debug("Executing getInstanceByIPAddress, ipAddress: " + ipAddress + ", instance:" + instance);
 		return instance;
+	}
+	
+	/**
+	 * Gets the instance by key.
+	 *
+	 * @param attributeKey the attribute key
+	 * @param attributeValue the attribute value
+	 * @return the instance by key
+	 * @throws Exception the exception
+	 */
+	public JSONArray getInstanceByKey(String attributeKey, String attributeValue) throws Exception {	
+		
+		logger.debug("Executing getInstanceByKey, key: " + attributeKey + ", Value: " + attributeValue);
+		String url = URIGenerator.getSoftLayerApiUrl(Arrays.asList(
+				APIConstants.ACCOUNT_ROOT_API, APIConstants.GET_VIRTUAL_GUESTS_API));		
+		
+		BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(getUsername(), getApiKey());
+		ClientResponse clientResponse = client.executeGET(url, "virtualGuests", attributeKey, attributeValue, null);
+		String response = clientResponse.getEntity(String.class);
+		logger.debug("Executed getInstanceByKey, key: " + attributeKey + ", Value: " + attributeValue + ", Status Code: " + clientResponse.getStatusCode());
+		
+		if(clientResponse.getStatusCode() == 200){
+			JSONArray json = new JSONArray(response);			
+			return json;		
+		}
+		
+		throw new Exception("Could not retrieve getInstanceByKey, Code: " + clientResponse.getStatusCode() + ", Reason: " + response);		
+	}
+	
+	/**
+	 * Gets the instance by key.
+	 *
+	 * @param attributeKey the attribute key
+	 * @param attributeValue the attribute value
+	 * @param objectMasks the object masks
+	 * @return the instance by key
+	 * @throws Exception the exception
+	 */
+	public JSONArray getInstanceByKey(String attributeKey, String attributeValue, List<String> objectMasks) throws Exception {	
+		
+		logger.debug("Executing getInstanceByKey, key: " + attributeKey + ", Value: " + attributeValue);
+		String url = URIGenerator.getSoftLayerApiUrl(Arrays.asList(
+				APIConstants.ACCOUNT_ROOT_API, APIConstants.GET_VIRTUAL_GUESTS_API));		
+		
+		BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(getUsername(), getApiKey());
+		ClientResponse clientResponse = client.executeGET(url, "virtualGuests", attributeKey, attributeValue, objectMasks);
+		String response = clientResponse.getEntity(String.class);
+		logger.debug("Executed getInstanceByKey, key: " + attributeKey + ", Value: " + attributeValue + ", Status Code: " + clientResponse.getStatusCode());
+		
+		if(clientResponse.getStatusCode() == 200){
+			JSONArray json = new JSONArray(response);			
+			return json;		
+		}
+		
+		throw new Exception("Could not retrieve getInstanceByKey, Code: " + clientResponse.getStatusCode() + ", Reason: " + response);		
 	}
 }
