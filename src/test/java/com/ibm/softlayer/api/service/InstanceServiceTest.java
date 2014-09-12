@@ -1,4 +1,4 @@
-package com.ibm.softlayer.vs.service;
+package com.ibm.softlayer.api.service;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -12,6 +12,9 @@ import org.apache.wink.json4j.JSONObject;
 import org.junit.Test;
 
 import com.ibm.softlayer.util.UnitTestConstants;
+import com.ibm.softlayer.vs.service.GetAllInstances;
+import com.ibm.softlayer.vs.service.GetInstanceService;
+import com.ibm.softlayer.vs.service.PingInstanceService;
 
 public class InstanceServiceTest {
 
@@ -65,6 +68,18 @@ public class InstanceServiceTest {
 		String attributeValue = "slpractices1";
 		GetInstanceService service = new GetInstanceService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
 		JSONArray jsonObject = service.getInstanceByKey(attributeName, attributeValue);
+		assertNotNull(jsonObject);
+		assertEquals(1, jsonObject.size());
+		assertEquals(attributeValue, jsonObject.getJSONObject(0).getString(attributeName));
+		assertEquals(slpractices1_instanceId, jsonObject.getJSONObject(0).getString("id"));
+	}
+	
+	@Test
+	public void testGetInstanceByHostnameWithObjectMask() throws Exception {
+		String attributeName = "hostname";
+		String attributeValue = "slpractices1";
+		GetInstanceService service = new GetInstanceService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		JSONArray jsonObject = service.getInstanceByKey(attributeName, attributeValue, Arrays.asList("id", "hostname"));
 		assertNotNull(jsonObject);
 		assertEquals(1, jsonObject.size());
 		assertEquals(attributeValue, jsonObject.getJSONObject(0).getString(attributeName));

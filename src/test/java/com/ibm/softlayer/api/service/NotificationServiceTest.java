@@ -1,4 +1,4 @@
-package com.ibm.softlayer.notification.service;
+package com.ibm.softlayer.api.service;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -11,6 +11,9 @@ import org.apache.wink.json4j.JSONArray;
 import org.apache.wink.json4j.JSONObject;
 import org.junit.Test;
 
+import com.ibm.softlayer.notification.service.GetNotificationByIDService;
+import com.ibm.softlayer.notification.service.GetNotificationService;
+import com.ibm.softlayer.notification.service.SubscribeForNotificationService;
 import com.ibm.softlayer.util.UnitTestConstants;
 
 

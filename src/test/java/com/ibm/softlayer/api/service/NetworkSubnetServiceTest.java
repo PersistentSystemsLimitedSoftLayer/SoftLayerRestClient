@@ -1,4 +1,4 @@
-package com.ibm.softlayer.service;
+package com.ibm.softlayer.api.service;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;

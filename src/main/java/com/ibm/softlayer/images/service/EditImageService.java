@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.wink.client.ClientResponse;
 import org.apache.wink.json4j.JSONArray;
+import org.apache.wink.json4j.JSONException;
 import org.apache.wink.json4j.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,12 +33,18 @@ public class EditImageService {
 	}
 
 	
-	
-	public Boolean editImageObject(String imageId, JSONObject bodyJson) throws Exception {
+	/**
+	 * Edit the image.
+	 *
+	 * @param imageId the image id
+	 * @param bodyMap contain parameters to be edited
+	 * @return the Boolean object
+	 * @throws Exception the exception
+	 */
+	public Boolean editImageObject(String imageId, Map<String,String> bodyMap) throws Exception {
 		
 		//authenticate the user and retrieve the token
-		
-		
+
 		
 		logger.info("Executing edit Image for image id: " + imageId);
 		if(imageId == null || imageId.trim().length() == 0){
@@ -50,7 +57,7 @@ public class EditImageService {
 		url.append("/").append(imageId).append("/editObject");
 				
 		BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(username, apiKey);
-		ClientResponse clientResponse = client.executePOST(url.toString(),getJSON(bodyJson));
+		ClientResponse clientResponse = client.executePOST(url.toString(),getJSON(bodyMap));
 		String response = clientResponse.getEntity(String.class);
 		logger.info("Executed edit Image: " + imageId + ", Response Status Code: " + clientResponse.getStatusCode() + ", Message: " + response);
 		
@@ -64,18 +71,13 @@ public class EditImageService {
 	}
 	
 	
-	private String getJSON(JSONObject bodyJson) {
-		
+	private String getJSON(Map<String,String> bodyMap) throws JSONException {
+		JSONObject bodyelement = new JSONObject(bodyMap);
 		JSONArray jarr = new JSONArray();
-		jarr.add(bodyJson);
-		
-		Map<String,Object> bodyMap = new HashMap<String, Object>();
-		bodyMap.put("parameters", jarr);
-		
-		JSONObject json = new JSONObject(bodyMap);
-		
+		jarr.add(bodyelement);
+		JSONObject json = new JSONObject();
+		json.put("parameters", jarr);
 		System.out.println("obj json ===== "+json);
-				
 		return json.toString();
 	}
 	
