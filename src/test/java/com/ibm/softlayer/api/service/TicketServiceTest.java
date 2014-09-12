@@ -1,4 +1,4 @@
-package com.ibm.softlayer.ticket.service;
+package com.ibm.softlayer.api.service;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -9,6 +9,17 @@ import org.apache.wink.json4j.JSONArray;
 import org.apache.wink.json4j.JSONObject;
 import org.junit.Test;
 
+import com.ibm.softlayer.ticket.service.AddUpdateTicketService;
+import com.ibm.softlayer.ticket.service.CreateTicketsService;
+import com.ibm.softlayer.ticket.service.GetAssignedUserToTicketService;
+import com.ibm.softlayer.ticket.service.GetClosedTicketsService;
+import com.ibm.softlayer.ticket.service.GetOpenTicketsService;
+import com.ibm.softlayer.ticket.service.GetTicketByIdService;
+import com.ibm.softlayer.ticket.service.GetTicketStatusService;
+import com.ibm.softlayer.ticket.service.GetTicketUpdatesService;
+import com.ibm.softlayer.ticket.service.GetTicketsService;
+import com.ibm.softlayer.ticket.service.ListSubjectsService;
+import com.ibm.softlayer.ticket.service.UpdateTicketService;
 import com.ibm.softlayer.util.UnitTestConstants;
 
 public class TicketServiceTest {

@@ -1,4 +1,4 @@
-package com.ibm.softlayer.vs.service;
+package com.ibm.softlayer.api.service;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -12,6 +12,9 @@ import org.apache.wink.json4j.JSONObject;
 import org.junit.Test;
 
 import com.ibm.softlayer.util.UnitTestConstants;
+import com.ibm.softlayer.vs.service.GetAllInstances;
+import com.ibm.softlayer.vs.service.GetInstanceService;
+import com.ibm.softlayer.vs.service.PingInstanceService;
 
 public class InstanceServiceTest {
 
