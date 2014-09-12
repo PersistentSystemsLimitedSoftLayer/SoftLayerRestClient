@@ -1,4 +1,4 @@
-package com.ibm.softlayer.images.service;
+package com.ibm.softlayer.api.service;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -12,6 +12,11 @@ import org.apache.wink.json4j.JSONObject;
 import org.apache.wink.json4j.JSONArray;
 import org.junit.Test;
 
+import com.ibm.softlayer.images.service.EditImageService;
+import com.ibm.softlayer.images.service.GetIdFrmNamePublicPrivateService;
+import com.ibm.softlayer.images.service.GetImageDetailsService;
+import com.ibm.softlayer.images.service.ListPrivateImagesService;
+import com.ibm.softlayer.images.service.ListPublicImagesService;
 import com.ibm.softlayer.util.UnitTestConstants;
 
 
