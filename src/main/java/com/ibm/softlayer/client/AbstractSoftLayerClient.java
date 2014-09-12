@@ -2,15 +2,19 @@ package com.ibm.softlayer.client;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.wink.client.ClientConfig;
 import org.apache.wink.client.ClientResponse;
 import org.apache.wink.client.Resource;
 import org.apache.wink.client.RestClient;
+import org.apache.wink.json4j.JSONException;
+import org.apache.wink.json4j.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ibm.softlayer.util.SLAPIUtil;
 import com.ibm.softlayer.util.SLProperties;
 
 /**
@@ -163,37 +167,65 @@ public abstract class AbstractSoftLayerClient {
 	}	
 	
 	/**
-	 * Execute get with object filter.
-	 *
-	 * @param url the url
-	 * @param objectFilter the object filter
-	 * @return the client response
-	 */
-	public ClientResponse executeGETWithObjectFilter(String url, String objectFilter)  {		
-		return executeGET(url, objectFilter, null);
-	}	
-	
-	/**
 	 * Execute get.
 	 *
 	 * @param url the url
-	 * @param requestParamsMap the request params map
+	 * @param apiClient the api client
+	 * @param filterKey the filter key
+	 * @param filterValue the filter value
+	 * @param objectMasks the object masks
 	 * @return the client response
 	 */
-	public ClientResponse executeGET(String url, Map<String, String> requestParamsMap)  {	
-		return executeGET(url, null, requestParamsMap);
+	public ClientResponse executeGET(String url, String apiClient, String filterKey, String filterValue, List<String> objectMasks)  {				
+		String objectFilter = null;
+		if((filterKey != null && filterKey.trim().length() > 0) && (filterValue !=null && filterValue.length() > 0)){
+			JSONObject operation = new JSONObject();
+			try {
+				operation.put("operation", filterValue);
+				
+				JSONObject requestJson = new JSONObject();
+				requestJson.put(filterKey, operation);
+				
+				JSONObject filter = new JSONObject();
+				filter.put(apiClient, requestJson);			
+				
+				objectFilter = filter.toString();
+			} catch (JSONException e) {
+				logger.error(e.getMessage(), e);
+			}						
+		}
+		
+		StringBuffer apiUrl = new StringBuffer(url);
+		
+		//set the object masks
+		SLAPIUtil.processObjectMasks(apiUrl, objectMasks);
+		
+		//append the object filter
+		if(objectFilter != null && objectFilter.trim().length() > 0){
+			try {
+				String seperator = "?";
+				if(objectMasks != null && objectMasks.size() > 0){
+					seperator = "&";
+				}
+				apiUrl.append(seperator).append("objectFilter=").append(URLEncoder.encode(objectFilter.toString(), "UTF-8"));
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			} 
+		}
+		
+		return executeGET(apiUrl.toString());
 	}
 	
+	
 	/**
 	 * Execute get.
 	 *
 	 * @param url the url
-	 * @param objectFilter the object filter
 	 * @param requestParamsMap the request params map
 	 * @return the client response
 	 */
-	public ClientResponse executeGET(String url, String objectFilter, Map<String, String> requestParamsMap)  {		
-		logger.info("Executing GET for following URL: " + url + ", requestParamsMap: " + requestParamsMap);
+	public ClientResponse executeGET(String url, Map<String, String> requestParamsMap)  {		
+		logger.info("Executing executeGET for following URL: " + url + ", requestParamsMap: " + requestParamsMap);
 		
 		StringBuffer requestParams = new StringBuffer();
 		if(requestParamsMap != null){
@@ -213,16 +245,7 @@ public abstract class AbstractSoftLayerClient {
 			if(requestParams.toString().length() > 0) {
 				url += "?" + requestParams.toString();
 			}
-		}
-		
-		//append the object filter
-		if(objectFilter != null && objectFilter.trim().length() > 0){
-			try {
-				url += "?objectFilter=" + URLEncoder.encode(objectFilter.toString(), "UTF-8");
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			} 
-		}
+		}				
 		
 		logger.info("Executing GET for following URL: " + url);
 		RestClient client = new RestClient(getClientConfig());		
