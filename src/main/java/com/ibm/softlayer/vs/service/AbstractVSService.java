@@ -176,6 +176,6 @@ public abstract class AbstractVSService {
 		SLAPIUtil.processObjectMasks(url, objectMasks);
 				
 		BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(username, apiKey);
-		return client.executeGET(url.toString(), null);
+		return client.executeGET(url.toString());
 	}
 }

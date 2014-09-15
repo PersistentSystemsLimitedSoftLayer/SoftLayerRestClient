@@ -58,6 +58,8 @@ public class APIConstants {
 	/** The Constant VIRTUAL_GUEST_ROOT_API. */
 	public static final String VIRTUAL_GUEST_ROOT_API = "SoftLayer_Virtual_Guest";
 	
+	public static final String SOFTLAYER_SECURITY_SSH_KEY = "SoftLayer_Security_Ssh_Key";
+	
 	/** The Constant SUBSCRIPTION_API. */
 	public static final String SUBSCRIPTION_API = "subscriptions";
 	
@@ -84,6 +86,8 @@ public class APIConstants {
 	
 	/* The constant for CreateObject */
 	public static final String CREATEOBJECT_API = "createObject";
+	
+	public static final String EDITOBJECT_API = "editObject";
 	
 	/* The constant for Notification user Subscription url */
 	public static final String NOTIFICATION_USER_SUBSCRIBER_URL="SoftLayer_Notification_User_Subscriber";
