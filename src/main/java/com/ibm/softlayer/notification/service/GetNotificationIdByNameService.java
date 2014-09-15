@@ -2,6 +2,7 @@ package com.ibm.softlayer.notification.service;
 
 import java.util.List;
 
+import org.apache.wink.json4j.JSONArray;
 import org.apache.wink.json4j.JSONObject;
 
 import com.ibm.softlayer.util.APIConstants;
@@ -19,7 +20,7 @@ public class GetNotificationIdByNameService extends AbstractGetNotificationServi
 	 * @return the notifications
 	 * @throws Exception the exception
 	 */
-	public JSONObject getNotificationIdByName(String notificationName) throws Exception {
+	public JSONArray getNotificationIdByName(String notificationName) throws Exception {
 		return getByNotificationName(notificationName, APIConstants.GETALLOBJECT_API, null);
 	}
 
@@ -31,7 +32,7 @@ public class GetNotificationIdByNameService extends AbstractGetNotificationServi
 	 * @return the notification by id
 	 * @throws Exception the exception
 	 */
-	public JSONObject getNotificationById(String notificationName, List<String> objectMasks) throws Exception {
+	public JSONArray getNotificationById(String notificationName, List<String> objectMasks) throws Exception {
 		return getByNotificationName(notificationName, APIConstants.GETALLOBJECT_API, objectMasks);
 	}
 }
