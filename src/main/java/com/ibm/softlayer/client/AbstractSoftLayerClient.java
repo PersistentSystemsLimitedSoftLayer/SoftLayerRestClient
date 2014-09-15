@@ -186,10 +186,14 @@ public abstract class AbstractSoftLayerClient {
 				JSONObject requestJson = new JSONObject();
 				requestJson.put(filterKey, operation);
 				
-				JSONObject filter = new JSONObject();
-				filter.put(apiClient, requestJson);			
-				
-				objectFilter = filter.toString();
+				if(apiClient != null && apiClient.trim().length() > 0){
+					JSONObject filter = new JSONObject();
+					filter.put(apiClient, requestJson);			
+					
+					objectFilter = filter.toString();
+				} else {
+					objectFilter = requestJson.toString();
+				}				
 			} catch (JSONException e) {
 				logger.error(e.getMessage(), e);
 			}						
