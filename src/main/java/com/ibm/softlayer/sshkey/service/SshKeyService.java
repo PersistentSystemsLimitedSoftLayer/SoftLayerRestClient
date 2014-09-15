@@ -125,7 +125,7 @@ public class SshKeyService {
 		BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(username, apiKey);
 		ClientResponse clientResponse = client.executeGET(url, "sshKeys", filterKey, filterValue, objectMasks);
 		String response = clientResponse.getEntity(String.class);
-		logger.info("Executed List Public Images:  Response Status Code: " + clientResponse.getStatusCode() + ", Message: " + response);
+		logger.info("Executed getSshKeys:  Response Status Code: " + clientResponse.getStatusCode() + ", Message: " + response);
 		
 		if(clientResponse.getStatusCode() == 200){
 			JSONArray json = new JSONArray(response);
@@ -162,14 +162,24 @@ public class SshKeyService {
 		throw new Exception("Error: Code: " + clientResponse.getStatusCode() + ", Reason: " + response);
 	}
 	
+	/**
+	 * Update key.
+	 *
+	 * @param keyId the key id
+	 * @param sshkey the sshkey
+	 * @return true, if successful
+	 * @throws Exception the exception
+	 */
 	public boolean updateKey(String keyId, String sshkey) throws Exception {
-		logger.debug("Executing updateKey with keyId: " + keyId + ", sshkey: " + sshkey);
+		logger.info("Executing updateKey with keyId: " + keyId + ", sshkey: " + sshkey);
 		
 		String url = URIGenerator.getSoftLayerApiUrl(Arrays.asList(
 				APIConstants.SOFTLAYER_SECURITY_SSH_KEY, keyId, APIConstants.EDITOBJECT_API));
 		
 		JSONObject requestJson = new JSONObject();
 		requestJson.put("key", sshkey);
+		requestJson.put("id", keyId);
+		requestJson.put("notes", "Updated Notes");
 		
 		//add the vm details to the array
 		JSONArray parameters = new JSONArray();
