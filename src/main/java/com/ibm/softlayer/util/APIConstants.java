@@ -87,6 +87,8 @@ public class APIConstants {
 	/* The constant for CreateObject */
 	public static final String CREATEOBJECT_API = "createObject";
 	
+	public static final String EDITOBJECT_API = "editObject";
+	
 	/* The constant for Notification user Subscription url */
 	public static final String NOTIFICATION_USER_SUBSCRIBER_URL="SoftLayer_Notification_User_Subscriber";
 }

@@ -161,4 +161,33 @@ public class SshKeyService {
 		
 		throw new Exception("Error: Code: " + clientResponse.getStatusCode() + ", Reason: " + response);
 	}
+	
+	public boolean updateKey(String keyId, String sshkey) throws Exception {
+		logger.debug("Executing updateKey with keyId: " + keyId + ", sshkey: " + sshkey);
+		
+		String url = URIGenerator.getSoftLayerApiUrl(Arrays.asList(
+				APIConstants.SOFTLAYER_SECURITY_SSH_KEY, keyId, APIConstants.EDITOBJECT_API));
+		
+		JSONObject requestJson = new JSONObject();
+		requestJson.put("key", sshkey);
+		
+		//add the vm details to the array
+		JSONArray parameters = new JSONArray();
+		parameters.add(requestJson);
+		
+		JSONObject requests = new JSONObject();
+		requests.put("parameters", parameters);
+		
+		BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(username, apiKey);
+		ClientResponse clientResponse = client.executePUT(url, requests.toString());
+		String response = clientResponse.getEntity(String.class);		
+		logger.info("Executed Update sshKey with keyId: " + keyId + ", Status Code: " 
+					+ clientResponse.getStatusCode() + ", Message: " + response);
+		
+		if(clientResponse.getStatusCode() == 200){
+			return Boolean.valueOf(response);	
+		}
+		
+		throw new Exception("Could not update sshkey: Code: " + clientResponse.getStatusCode() + ", Reason: " + response);
+	}
 }
