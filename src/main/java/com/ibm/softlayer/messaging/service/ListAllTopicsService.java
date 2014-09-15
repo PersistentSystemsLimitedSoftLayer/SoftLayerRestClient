@@ -66,7 +66,7 @@ public class ListAllTopicsService {
 		
 				
 				XAuthTokenSLClient client = new XAuthTokenSLClient(token);
-		ClientResponse clientResponse = client.executeGET(url, null);
+		ClientResponse clientResponse = client.executeGET(url);
 		String response = clientResponse.getEntity(String.class);
 		logger.info("Executed listAllTopics for Account: " + ", clientResponse: " + clientResponse.getStatusCode());
 		
