@@ -58,6 +58,8 @@ public class APIConstants {
 	/** The Constant VIRTUAL_GUEST_ROOT_API. */
 	public static final String VIRTUAL_GUEST_ROOT_API = "SoftLayer_Virtual_Guest";
 	
+	public static final String SOFTLAYER_SECURITY_SSH_KEY = "SoftLayer_Security_Ssh_Key";
+	
 	/** The Constant SUBSCRIPTION_API. */
 	public static final String SUBSCRIPTION_API = "subscriptions";
 	
