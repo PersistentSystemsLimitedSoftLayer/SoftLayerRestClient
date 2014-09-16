@@ -109,7 +109,7 @@ public class ImagesServiceTest {
 		bodyelementMap.put("note", "This is edited mod");
 		
 		EditImageService service = new EditImageService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
-		Boolean isedited = service.editImageObject(imageId, bodyelementMap);
+		boolean isedited = service.editImageObject(imageId, bodyelementMap);
 		assertEquals(true, isedited);;
 		System.out.println("isedited is ===="+isedited);
 	}
