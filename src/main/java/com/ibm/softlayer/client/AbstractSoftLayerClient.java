@@ -2,6 +2,7 @@ package com.ibm.softlayer.client;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -163,8 +164,12 @@ public abstract class AbstractSoftLayerClient {
 	 * @return the client response
 	 */
 	public ClientResponse executeGET(String url)  {		
-		return executeGET(url, null);
-	}	
+		return executeGET(url, new HashMap<String, String>());
+	}
+	
+	public ClientResponse executeGET(String url, List<String> objectMasks)  {		
+		return executeGET(url, null, null, null, objectMasks);
+	}
 	
 	/**
 	 * Execute get.
@@ -186,10 +191,14 @@ public abstract class AbstractSoftLayerClient {
 				JSONObject requestJson = new JSONObject();
 				requestJson.put(filterKey, operation);
 				
-				JSONObject filter = new JSONObject();
-				filter.put(apiClient, requestJson);			
-				
-				objectFilter = filter.toString();
+				if(apiClient != null && apiClient.trim().length() > 0){
+					JSONObject filter = new JSONObject();
+					filter.put(apiClient, requestJson);			
+					
+					objectFilter = filter.toString();
+				} else {
+					objectFilter = requestJson.toString();
+				}				
 			} catch (JSONException e) {
 				logger.error(e.getMessage(), e);
 			}						
@@ -228,7 +237,7 @@ public abstract class AbstractSoftLayerClient {
 		logger.info("Executing executeGET for following URL: " + url + ", requestParamsMap: " + requestParamsMap);
 		
 		StringBuffer requestParams = new StringBuffer();
-		if(requestParamsMap != null){
+		if(requestParamsMap != null && requestParamsMap.size() > 0){
 			for(Map.Entry<String, String> entry : requestParamsMap.entrySet()) {				
 				try {
 					if(requestParams.toString().length() > 0){

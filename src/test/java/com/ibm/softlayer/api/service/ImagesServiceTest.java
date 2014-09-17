@@ -13,19 +13,12 @@ import org.apache.wink.json4j.JSONArray;
 import org.junit.Test;
 
 import com.ibm.softlayer.images.service.EditImageService;
-import com.ibm.softlayer.images.service.GetIdFrmNamePublicPrivateService;
 import com.ibm.softlayer.images.service.GetImageDetailsService;
 import com.ibm.softlayer.images.service.ListPrivateImagesService;
 import com.ibm.softlayer.images.service.ListPublicImagesService;
 import com.ibm.softlayer.util.UnitTestConstants;
 
-
-
-
-public class ImagesServiceTest {
-
-	/** The Constant random. */
-	private static final long random = System.currentTimeMillis();
+public class ImagesServiceTest {	
 
 	/**
 	 * Test get Image.
@@ -35,7 +28,6 @@ public class ImagesServiceTest {
 	@Test
 	public void testgetImageObject() throws Exception {
 		String imageId="10599";
-		//String imageId="230942";
 		GetImageDetailsService service = new GetImageDetailsService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
 		JSONObject imageJson = service.getImageObject(imageId);
 		assertNotNull(imageJson);
@@ -55,72 +47,54 @@ public class ImagesServiceTest {
 		assertNotNull(imageJson);
 	}
 	
+	@Test
+	public void testlistPublicImagesByFilter() throws Exception {
+		String imageName = "25G CentOS 5 64-bit";
+		ListPublicImagesService service = new ListPublicImagesService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		JSONArray imageJson =  service.listPublicImages("name", imageName, null);		
+		assertNotNull(imageJson);
+		assertEquals(1, imageJson.size());
+		assertEquals(imageName, imageJson.getJSONObject(0).getString("name"));
+	}	
 	
+	@Test
+	public void testGetIDFromPublicImagesByFilter() throws Exception {
+		String imageName = "25G CentOS 5 64-bit";
+		ListPublicImagesService service = new ListPublicImagesService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		JSONArray imageJson =  service.listPublicImages("name", imageName, Arrays.asList("id"));	
+		assertNotNull(imageJson);
+		assertEquals(1, imageJson.size());
+		assertEquals(1, imageJson.getJSONObject(0).size());
+		assertEquals("10006", imageJson.getJSONObject(0).getString("id"));
+	}
 	
-
-	/**
-	 * List private Images Test.
-	 *
-	 * @throws Exception the exception
-	 */
 	@Test
 	public void testlistPrivateImages() throws Exception {
 		ListPrivateImagesService service = new ListPrivateImagesService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
 		JSONArray imageJson =  service.listPrivateImages();
 		assertNotNull(imageJson);
-		System.out.println("Private Images ===="+imageJson);
-		
 	}
 	
-	
-	/**
-	 * Get Id From name public Images Test.
-	 *
-	 * @throws Exception the exception
-	 */
-	/*@Test
-	public void testgetIdFromNamePublic() throws Exception {
-		GetIdFromNamePublicService service = new GetIdFromNamePublicService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
-		String name = "name";
-		String value = "test public";
-		Map<String,Object> filterMap = new HashMap<String, Object>();		
-		filterMap.put(name, new JSONObject().put("operation", value));
-		String imageId =  service.getIdFromNamePublic(filterMap);
-		assertNotNull(imageId);
-		
-		//String s = "https://api.softlayer.com/rest/v3/SoftLayer_Virtual_Guest_Block_Device_Template_Group/getPublicImages?objectFilter={"name":{"operation":"test public"}}";
-		
-	}
-	*/
-	
-
-	/**
-	 * Get Id From name public Images Test.
-	 *
-	 * @throws Exception the exception
-	 */
 	@Test
-	public void testgetIdFromNamePublic() throws Exception {
-		String name = "test public";
-		GetIdFrmNamePublicPrivateService service = new GetIdFrmNamePublicPrivateService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
-		String imageId =  service.getIdFromNamePublic(name);
-		assertNotNull(imageId);
-		System.out.println("id is ===="+imageId);
+	public void testlistPrivateImagesByFilter() throws Exception {
+		String imageName = "PslTestImage";
+		ListPrivateImagesService service = new ListPrivateImagesService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		JSONArray imageJson =  service.listPrivateImages("name", imageName, null);		
+		assertNotNull(imageJson);
+		assertEquals(1, imageJson.size());
+		assertEquals(imageName, imageJson.getJSONObject(0).getString("name"));
 	}
 	
-	/**
-	 * Get Id From name public Images Test.
-	 *
-	 * @throws Exception the exception
-	 */
 	@Test
-	public void testgetIdFromNamePrivate() throws Exception {
-		String name = "test public";
-		GetIdFrmNamePublicPrivateService service = new GetIdFrmNamePublicPrivateService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
-		String imageId =  service.getIdFromNamePrivate(name);
-		//assertNotNull(imageId);
-		System.out.println("id is ===="+imageId);
-	}
+	public void testGetIDFromPrivateImagesByFilter() throws Exception {
+		String imageName = "PslTestImage";
+		ListPrivateImagesService service = new ListPrivateImagesService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		JSONArray imageJson =  service.listPrivateImages("name", imageName, Arrays.asList("id"));	
+		assertNotNull(imageJson);
+		assertEquals(1, imageJson.size());
+		assertEquals(1, imageJson.getJSONObject(0).size());
+		assertEquals("230942", imageJson.getJSONObject(0).getString("id"));
+	}		
 	
 	
 	/**
@@ -135,13 +109,8 @@ public class ImagesServiceTest {
 		bodyelementMap.put("note", "This is edited mod");
 		
 		EditImageService service = new EditImageService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
-		Boolean isedited = service.editImageObject(imageId, bodyelementMap);
+		boolean isedited = service.editImageObject(imageId, bodyelementMap);
 		assertEquals(true, isedited);;
 		System.out.println("isedited is ===="+isedited);
 	}
-	
-	
-	
-	
-
 }

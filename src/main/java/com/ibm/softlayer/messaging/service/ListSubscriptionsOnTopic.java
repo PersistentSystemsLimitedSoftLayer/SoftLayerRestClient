@@ -49,7 +49,7 @@ public class ListSubscriptionsOnTopic {
 		url += "/" + topicName + "/" + APIConstants.SUBSCRIPTION_API; 
 		
 		XAuthTokenSLClient client = new XAuthTokenSLClient(token);
-		ClientResponse clientResponse = client.executeGET(url,null);
+		ClientResponse clientResponse = client.executeGET(url);
 		String response = clientResponse.getEntity(String.class);
 		logger.info("Executed getAllSubcriptionOnTopic for username: " + username + ", clientResponse: " + clientResponse.getStatusCode());
 		

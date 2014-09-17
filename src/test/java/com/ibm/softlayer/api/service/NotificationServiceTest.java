@@ -1,17 +1,14 @@
 package com.ibm.softlayer.api.service;
 
-import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
-import static org.junit.Assert.*;
-
-import java.awt.List;
-import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.apache.wink.json4j.JSONArray;
 import org.apache.wink.json4j.JSONObject;
 import org.junit.Test;
 
 import com.ibm.softlayer.notification.service.GetNotificationByIDService;
+import com.ibm.softlayer.notification.service.GetNotificationIdByNameService;
 import com.ibm.softlayer.notification.service.GetNotificationService;
 import com.ibm.softlayer.notification.service.SubscribeForNotificationService;
 import com.ibm.softlayer.util.UnitTestConstants;
@@ -34,14 +31,12 @@ public class NotificationServiceTest {
 	
 	@Test
 	public void testgetAllNotificationObjectMask() throws Exception{
-		ArrayList<String> objectMaskList=new ArrayList<String>();
-		objectMaskList.add("id");
 		GetNotificationService service= new GetNotificationService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
-		JSONArray notificationArray = service.getAllNotification(objectMaskList);
+		JSONArray notificationArray = service.getAllNotification(Arrays.asList("id", "name"));
 		assertNotNull(notificationArray);
 		JSONObject notificationObject= notificationArray.getJSONObject(0);
 		notificationId=notificationObject.getInt("id");
-		//notificationName=notificationObject.getString("name");
+		
 	}
 	
 	@Test
@@ -51,17 +46,17 @@ public class NotificationServiceTest {
 		assertNotNull(notificationObject);
 	}
 	
-	/*@Test
-	public void testgetNotificationBYName() throws Exception{
+	@Test
+	public void testgetNotificationBYNameFilter() throws Exception{
 		GetNotificationIdByNameService service= new GetNotificationIdByNameService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
-		JSONObject notificationObject = service.getNotificationIdByName(notificationName);
+		JSONArray notificationObject = service.getNotificationIdByName(notificationName);
 		assertNotNull(notificationObject);
 	}
-*/
+
 	@Test
 	public void testSubscribeForNotificationByID() throws Exception{
 		SubscribeForNotificationService service= new SubscribeForNotificationService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
-		JSONObject notificationObject = service.SubscribeForNotificationByID(notificationId, 248250);
+		JSONObject notificationObject = service.SubscribeForNotificationByID(notificationId);
 		assertNotNull(notificationObject);
 	}
 	}

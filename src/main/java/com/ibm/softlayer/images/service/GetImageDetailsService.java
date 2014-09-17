@@ -5,17 +5,14 @@ import org.apache.wink.json4j.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-
-
-
-
 import com.ibm.softlayer.client.BasicAuthorizationSLClient;
 
 import com.ibm.softlayer.util.APIConstants;
 import com.ibm.softlayer.util.URIGenerator;
-import com.ibm.softlayer.vs.service.GetInstanceService;
 
+/**
+ * The Class GetImageDetailsService.
+ */
 public class GetImageDetailsService  {
 	
 	/** The Constant logger. */
@@ -27,18 +24,25 @@ public class GetImageDetailsService  {
 	/** The api key. */
 	private String apiKey = null;
 	
+	/**
+	 * Instantiates a new gets the image details service.
+	 *
+	 * @param username the username
+	 * @param apikey the apikey
+	 */
 	public GetImageDetailsService(String username, String apikey) {
 		this.username = username;
 		this.apiKey = apikey;	
-	}
-
+	}	
 	
-	
+	/**
+	 * Gets the image object.
+	 *
+	 * @param imageId the image id
+	 * @return the image object
+	 * @throws Exception the exception
+	 */
 	public JSONObject getImageObject(String imageId) throws Exception {
-		
-		//authenticate the user and retrieve the token
-		
-		
 		
 		logger.info("Executing Get Image: " + imageId);
 		if(imageId == null || imageId.trim().length() == 0){
