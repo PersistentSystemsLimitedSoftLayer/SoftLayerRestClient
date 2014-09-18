@@ -54,7 +54,7 @@ public class GetQueueByNameService {
 		url += "/" + queueName;
 		
 		XAuthTokenSLClient client = new XAuthTokenSLClient(token);
-		ClientResponse clientResponse = client.executeGET(url, null);
+		ClientResponse clientResponse = client.executeGET(url);
 		String response = clientResponse.getEntity(String.class);
 		logger.info("Executed getQueue for QueueName: " 
 				+ queueName + ", username: " + username + ", clientResponse: " + clientResponse.getStatusCode());

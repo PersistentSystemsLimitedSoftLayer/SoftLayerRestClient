@@ -11,9 +11,9 @@ public class SubscribeForNotificationService  extends AbstractGetNotificationSer
 		super(username, apikey);
 	}
 	
-	public JSONObject SubscribeForNotificationByID(int NotificationId ,int userId) throws Exception
+	public JSONObject SubscribeForNotificationByID(int NotificationId) throws Exception
 	{
-	return createNotification(APIConstants.CREATEOBJECT_API, NotificationId, userId);
+	return createNotification(APIConstants.CREATEOBJECT_API, NotificationId);
 	}
 	
 }
