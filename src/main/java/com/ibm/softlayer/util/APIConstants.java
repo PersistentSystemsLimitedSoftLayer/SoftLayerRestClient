@@ -91,4 +91,12 @@ public class APIConstants {
 	
 	/* The constant for Notification user Subscription url */
 	public static final String NOTIFICATION_USER_SUBSCRIBER_URL="SoftLayer_Notification_User_Subscriber";
+	
+	public static final String ISCSI_NETWORK_STORAGE_ROOT_URL="SoftLayer_Network_Storage_Iscsi";
+	
+	public static final String GET_NETWORK_STORAGE="getIscsiNetworkStorage";
+	
+	 public static final String  CREATE_SNAPSHOT_ISCSI_STORAGE="createSnapshot";
+	 
+	
 }

@@ -178,16 +178,6 @@ public abstract class AbstractGetNotificationService {
 		SLAPIUtil objectMask= new SLAPIUtil();
 		objectMask.processObjectMasks(url, objectMasks);
 		
-		String objectFilter=null;
-		
-		JSONObject operation = new JSONObject();
-        operation.put("operation", notificationName);
-            
-        JSONObject filter = new JSONObject();
-        filter.put("name", operation);        
-        objectFilter = filter.toString();
-  
-		
 		
 		//execute the get notifications call with Object Filter
 		BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(username, apiKey);
