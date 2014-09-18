@@ -27,7 +27,7 @@ public class IscsiService {
 	@Test
 	public void testGetIscsiNetworkStorageobjectMask() throws Exception {
 		GetIscsiNetworkStorageService service= new GetIscsiNetworkStorageService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
-		JSONArray iscsiNetworkArray = service.getAllIscsiNetworkStorage(Arrays.asList("id","capacity","username"));
+		JSONArray iscsiNetworkArray = service.getAllIscsiNetworkStorage(Arrays.asList("id","capacityGb","username"));
 		assertNotNull(iscsiNetworkArray);
 	}
 	@Test
