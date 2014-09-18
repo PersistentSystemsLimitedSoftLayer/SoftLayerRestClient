@@ -45,13 +45,12 @@ private String username = null;
 			url.append("/");
 		}
 		url.append(iscsiUrl);
-		
-		SLAPIUtil.processObjectMasks(url, objectMasks);
-		
+	
 		
 		//execute the get iSCSI Network Storage call
 		BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(username, apiKey);
-		ClientResponse clientResponse = client.executeGET(url.toString());
+		ClientResponse clientResponse = client.executeGET(url.toString(), objectMasks);
+		
 		String response = clientResponse.getEntity(String.class);
 		logger.info("Executed get iSCSI Network Storage call for username: " + username + ", clientResponse: " + clientResponse.getStatusCode() + ", response: " + response);
 		
@@ -76,12 +75,11 @@ private String username = null;
 		}
 		url.append(iscsiID).append("/").append(iscsiUrl);
 		
-		SLAPIUtil.processObjectMasks(url, objectMasks);
 		
 		
 		//execute the get get Iscsi Network Storage call
 		BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(username, apiKey);
-		ClientResponse clientResponse = client.executeGET(url.toString());
+		ClientResponse clientResponse = client.executeGET(url.toString(),objectMasks);
 		String response = clientResponse.getEntity(String.class);
 		logger.info("Executed  get Iscsi Network Storage By ID "+iscsiID+" for username: " + username + ", clientResponse: " + clientResponse.getStatusCode() + ", response: " + response);
 		
