@@ -51,11 +51,10 @@ public class NetworkSubnetService {
 		
 		StringBuffer url = new StringBuffer(URIGenerator.getSoftLayerApiUrl(Arrays.asList(
 				APIConstants.SL_NETWORK_SUBNET_IPADDRESS_ROOT_API, APIConstants.GET_BYIPADDRESSES_API, ipAddress)));		
-		SLAPIUtil.processObjectMasks(url, objectMasks);
 		
 		//execute the GET Call
 		BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(username, apiKey);	
-		ClientResponse clientResponse = client.executeGET(url.toString());
+		ClientResponse clientResponse = client.executeGET(url.toString(),objectMasks);
 		String response = clientResponse.getEntity(String.class);
 		logger.info("Executed getIpAddressDetails for ipAddress: " + ipAddress + ", clientResponse: " + clientResponse.getStatusCode() + ", response: " + response);
 		
