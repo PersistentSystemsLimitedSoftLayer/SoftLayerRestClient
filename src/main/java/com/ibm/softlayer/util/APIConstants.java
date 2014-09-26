@@ -102,4 +102,21 @@ public class APIConstants {
 	public static final String SSL_API="SoftLayer_Security_Certificate";
 	 
 	
+	
+	
+	 public static final String  SL_DATACENTER_LOCATION_ROOT_URL= "SoftLayer_Location_Datacenter";
+	  
+	 public static final 	String GET_DATACENTER= "getDatacenters";  
+	 
+	 public static final String SL_PRODUCT_PACKAGE_ROOT_URL= "SoftLayer_Product_Package";
+	 
+	 public static final String SL_PRODUCT_ORDER="SoftLayer_Product_Order";
+	 
+	 public static final String SL_PLACE_ORDER="placeOrder";
+	 
+	 public static final String GET_ITEM ="getItems";
+	 
+	 public static final  String RESTORE_FROM_SNAPSHOT="restoreFromSnapshot";
+	 
+	
 }
