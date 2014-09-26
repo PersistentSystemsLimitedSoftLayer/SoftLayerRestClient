@@ -1,8 +1,12 @@
 package com.ibm.softlayer.iscsi.service;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.wink.json4j.JSONObject;
 
 import com.ibm.softlayer.util.APIConstants;
+
 
 public class CreateSnapshotOfiSCSIStorageService extends AbstractgetIscsiNetworkStorageService {
 
@@ -12,9 +16,11 @@ public class CreateSnapshotOfiSCSIStorageService extends AbstractgetIscsiNetwork
 	}
 	
 
-public JSONObject createSnapshotOfiSCSIStorage(int iscsiVolumeId, String notes) throws Exception
+public JSONObject createSnapshotOfiSCSIStorage(int iscsiVolumeId, String notes,List<String >objectMask) throws Exception
 {
-	// TODO Auto-generated method stub
+	
+	
+	//JSONObject snapShotSpace=createSnapshotSpace(iscsiVolumeId,20);
 	return createSnapshot(iscsiVolumeId, notes, APIConstants.CREATE_SNAPSHOT_ISCSI_STORAGE);
 }
 
