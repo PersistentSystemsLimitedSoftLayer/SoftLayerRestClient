@@ -98,5 +98,8 @@ public class APIConstants {
 	
 	 public static final String  CREATE_SNAPSHOT_ISCSI_STORAGE="createSnapshot";
 	 
+	/* The constant for SSL */
+	public static final String SSL_API="SoftLayer_Security_Certificate";
+	 
 	
 }
