@@ -1,16 +1,15 @@
 package com.ibm.softlayer.client;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 
-import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.MediaType;
 
 import org.apache.wink.client.ClientResponse;
 import org.apache.wink.client.Resource;
 import org.apache.wink.client.RestClient;
-import org.apache.wink.common.internal.MultivaluedMapImpl;
-import org.apache.wink.common.model.multipart.BufferedOutMultiPart;
-import org.apache.wink.common.model.multipart.OutPart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,11 +44,11 @@ public class XAuthTokenSLClient extends AbstractSoftLayerClient {
 		
 		logger.info("Executing uploadFile:PUT for following URL: " + url);
 		byte[] bytes = new byte[(int) inputFile.length()];
-		FileInputStream fis = new FileInputStream(inputFile);
+		InputStream fis = new FileInputStream(inputFile);
 		fis.read(bytes);
 		fis.close();
 		
-		System.out.println("upload bytes.length: " + bytes.length);
+		//System.out.println("upload bytes.length: " + bytes.length);
 		
 		//append the filename to the url
 		if(!url.endsWith("/")) {
@@ -57,27 +56,33 @@ public class XAuthTokenSLClient extends AbstractSoftLayerClient {
 		}
 		url += inputFile.getName();
 		
-		// Create a multipart request
-		BufferedOutMultiPart mp = new BufferedOutMultiPart();
-		
-		// Add file part
-		OutPart fp = new OutPart();
-		MultivaluedMap<String,String> headers = new MultivaluedMapImpl<String,String>();
-		headers.add("name", "file_part");
-		headers.add("filename", inputFile.getName());
-		fp.setHeaders(headers);		
-		
-		fp.setContentType("multipart/form-data; boundary=simple boundary");
-		fp.setBody(bytes);     
-		mp.addPart(fp);
-		
 		RestClient client = new RestClient(getClientConfig());		
 		Resource resource = client.resource(url);			
 		resource.header("X-Auth-Token", getxAuthToken());
+		resource.header("Content-Type", "*/*");
 		
-		ClientResponse clientResponse = resource.put(mp);
+		ClientResponse clientResponse = resource.put(new ByteArrayInputStream(bytes));
 		String response = clientResponse.getEntity(String.class);		
 		logger.info("Executed uploadFile:PUT for following URL: " + url + ", clientResponse: " + clientResponse.getStatusCode() + ", response: " + response);
+		fis.close();
+		return clientResponse;
+	}
+	
+	/**
+	 * Download file.
+	 *
+	 * @param url the url
+	 * @return the client response
+	 * @throws Exception the exception
+	 */
+	public ClientResponse downloadFile(String url) throws Exception {
+		logger.info("Executing downloadFile:GET for following URL: " + url);
+		RestClient client = new RestClient(getClientConfig());		
+		Resource resource = client.resource(url);		
+		resource.header("X-Auth-Token", getxAuthToken());
+		
+		ClientResponse clientResponse = resource.accept(MediaType.APPLICATION_ATOM_XML).get();
+		logger.info("Executed downloadFile:GET for following URL: " + url + ", clientResponse: " + clientResponse.getStatusCode());
 		return clientResponse;
 	}
 }
