@@ -403,9 +403,41 @@ private String username = null;
 	 
  }
  
+ public boolean editNotesIscsiStorage(int iscsiVolumeId,String editField,String newValue, String editUrl )throws Exception
  
- 
- 
+ {
+	 logger.info("Executing Edit iscsi storage : " + editUrl + " for username: " + username);
+	 StringBuffer url = new StringBuffer(URIGenerator.getSLBaseURL(APIConstants.ISCSI_NETWORK_STORAGE_ROOT_URL));
+		
+	 	if(!url.toString().endsWith("/")) {
+	 		url.append("/");
+	 	}
+	 url.append(iscsiVolumeId).append("/").append(editUrl);
+	 
+	BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(username, apiKey);
+	
+	 JSONObject notes=new JSONObject();
+	 notes.put(editField, newValue);
+	 
+	 JSONArray paramArray =new JSONArray();
+	 paramArray.add(notes);
+	 
+	 JSONObject patameters =new JSONObject();
+	 patameters.put("parameters", paramArray);
+	 
+		 
+	ClientResponse clientResponse =client.executePOST(url.toString(),patameters.toString());
+	String response = clientResponse.getEntity(String.class);
+
+	if(clientResponse.getStatusCode() == 200){
+		
+		return true;			
+	}
+	
+	throw new Exception("Could not Edit  iSCSI Network Storage: " + url + ": Code: " + clientResponse.getStatusCode() + ", Reason: " + response);			
+	 
+
+ }
 	 }
 		
  

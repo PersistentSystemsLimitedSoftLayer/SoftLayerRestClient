@@ -12,6 +12,7 @@ import com.ibm.softlayer.iscsi.service.CreateIscsiNetworkStorageService;
 import com.ibm.softlayer.iscsi.service.CreateSnapshotOfiSCSIStorageService;
 import com.ibm.softlayer.iscsi.service.DeleteIscsiNetworkStorageService;
 import com.ibm.softlayer.iscsi.service.DeleteIscsiSnapshotService;
+import com.ibm.softlayer.iscsi.service.EditIscsiNetworkStorageService;
 import com.ibm.softlayer.iscsi.service.GetIscsiNetworkStorageService;
 import com.ibm.softlayer.iscsi.service.GetOneIscsiNetworkStorageService;
 import com.ibm.softlayer.iscsi.service.RestoreIscsiStorageFromSnapshotService;
@@ -21,7 +22,15 @@ public class IscsiService {
 	private static int iscsiVolumeId=3808800;
 	private static int snaphotId=3819960;
 	
-
+	
+/*	
+	@Test
+		public void testCreateIscsiNetworkStorage() throws Exception {
+		CreateIscsiNetworkStorageService service = new CreateIscsiNetworkStorageService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		JSONObject iscsiNetworkObject = service.createIscsi();
+		assertNotNull(iscsiNetworkObject);
+	}
+*/
 	@Test
 	public void testGetIscsiNetworkStorage() throws Exception {
 		GetIscsiNetworkStorageService service= new GetIscsiNetworkStorageService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
@@ -42,15 +51,7 @@ public class IscsiService {
 		JSONObject iscsiNetworkObject = service.getOneIscsiNetworkStorage(iscsiVolumeId);
 		assertNotNull(iscsiNetworkObject);
 	}
-	
-/*	
-	@Test
-		public void testCreateIscsiNetworkStorage() throws Exception {
-		CreateIscsiNetworkStorageService service = new CreateIscsiNetworkStorageService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
-		JSONObject iscsiNetworkObject = service.createIscsi();
-		assertNotNull(iscsiNetworkObject);
-	}
-*/
+
 	
 /*	@Test
 	public void testCreateSnapshotOfIscsiNetworkStorage() throws Exception {
@@ -71,17 +72,26 @@ public class IscsiService {
 		assertNotNull(result);
 	}
 */
-
-/*	
-//	@Test void testDeleteIscsiSnapshot() throws Exception{
-//		DeleteIscsiSnapshotService service =new DeleteIscsiSnapshotService(UnitTestConstants.SL_USERNAME,UnitTestConstants.SL_APIKEY);
-//		boolean result= service.deleteIscsiSnapshot(snaphotId);
-//		assertNotNull(result);
-//	
-//	}
-*/
+	@Test 
+	public void testEditIscsiNetworkStorage() throws Exception{
+		EditIscsiNetworkStorageService service= new EditIscsiNetworkStorageService(UnitTestConstants.SL_USERNAME,UnitTestConstants.SL_APIKEY);
+		boolean result= service.editIscsiNetworkStorage(iscsiVolumeId);
+		assertNotNull(result);
 		
+	}
 
+	/*
+	@Test 
+	public void testDeleteIscsiSnapshot() throws Exception{
+		DeleteIscsiSnapshotService service =new DeleteIscsiSnapshotService(UnitTestConstants.SL_USERNAME,UnitTestConstants.SL_APIKEY);
+		boolean result= service.deleteIscsiSnapshot(snaphotId);
+		assertNotNull(result);
+	
+	}
+
+		
+*/
+	//Need to be tested
 /*	
   	@Test
 	public void testDeleteIscsiNetworkStorage() throws Exception{
