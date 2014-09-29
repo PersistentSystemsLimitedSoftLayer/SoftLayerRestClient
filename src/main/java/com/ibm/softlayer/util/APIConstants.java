@@ -91,4 +91,32 @@ public class APIConstants {
 	
 	/* The constant for Notification user Subscription url */
 	public static final String NOTIFICATION_USER_SUBSCRIBER_URL="SoftLayer_Notification_User_Subscriber";
+	
+	public static final String ISCSI_NETWORK_STORAGE_ROOT_URL="SoftLayer_Network_Storage_Iscsi";
+	
+	public static final String GET_NETWORK_STORAGE="getIscsiNetworkStorage";
+	
+	 public static final String  CREATE_SNAPSHOT_ISCSI_STORAGE="createSnapshot";
+	 
+	/* The constant for SSL */
+	public static final String SSL_API="SoftLayer_Security_Certificate";
+	 
+	
+	
+	
+	 public static final String  SL_DATACENTER_LOCATION_ROOT_URL= "SoftLayer_Location_Datacenter";
+	  
+	 public static final 	String GET_DATACENTER= "getDatacenters";  
+	 
+	 public static final String SL_PRODUCT_PACKAGE_ROOT_URL= "SoftLayer_Product_Package";
+	 
+	 public static final String SL_PRODUCT_ORDER="SoftLayer_Product_Order";
+	 
+	 public static final String SL_PLACE_ORDER="placeOrder";
+	 
+	 public static final String GET_ITEM ="getItems";
+	 
+	 public static final  String RESTORE_FROM_SNAPSHOT="restoreFromSnapshot";
+	 
+	
 }

@@ -9,7 +9,6 @@ import org.apache.wink.json4j.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ibm.softlayer.util.SLAPIUtil;
 import com.ibm.softlayer.client.BasicAuthorizationSLClient;
 import com.ibm.softlayer.util.APIConstants;
 import com.ibm.softlayer.util.URIGenerator;
@@ -60,14 +59,11 @@ public abstract class AbstractGetNotificationService {
 		
 		//setting the object masks
 		
-		SLAPIUtil objectMask= new SLAPIUtil();
-		objectMask.processObjectMasks(url, objectMasks);
 		
-		//processObjectMasks(url, objectMasks);
 		
 		//execute the get notifications call
 		BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(username, apiKey);
-		ClientResponse clientResponse = client.executeGET(url.toString());
+		ClientResponse clientResponse = client.executeGET(url.toString(),objectMasks);
 		String response = clientResponse.getEntity(String.class);
 		logger.info("Executed getBynotificationId:" + NotificationURL + "  for notificationId: " + notificationId 
 				+ ", clientResponse: " + clientResponse.getStatusCode() + ", response: " + response);		
@@ -100,15 +96,11 @@ public abstract class AbstractGetNotificationService {
 			url.append("/");
 		}
 		url.append(NotificationURL);
-		
-		//setting the object masks
-		SLAPIUtil objectMask= new SLAPIUtil();
-		objectMask.processObjectMasks(url, objectMasks);
-		
+	
 		
 		//execute the get notifications call
 		BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(username, apiKey);
-		ClientResponse clientResponse = client.executeGET(url.toString());
+		ClientResponse clientResponse = client.executeGET(url.toString(),objectMasks);
 		String response = clientResponse.getEntity(String.class);
 		logger.info("Executed get notifications for username: " + username + ", clientResponse: " + clientResponse.getStatusCode() + ", response: " + response);
 		
@@ -174,21 +166,6 @@ public abstract class AbstractGetNotificationService {
 		}		
 		url.append(NotificationURL);
 		
-		//setting the object masks
-		SLAPIUtil objectMask= new SLAPIUtil();
-		objectMask.processObjectMasks(url, objectMasks);
-		
-		String objectFilter=null;
-		
-		JSONObject operation = new JSONObject();
-        operation.put("operation", notificationName);
-            
-        JSONObject filter = new JSONObject();
-        filter.put("name", operation);        
-        objectFilter = filter.toString();
-  
-		
-		
 		//execute the get notifications call with Object Filter
 		BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(username, apiKey);
 		ClientResponse clientResponse = client.executeGET(url.toString(),null,"name",notificationName, objectMasks);
@@ -230,11 +207,9 @@ protected int getUserIdbyUserName(String userName, String apiKey) throws Excepti
 	}
 	url.append("getCurrentUser");
 	
-	SLAPIUtil objectMask= new SLAPIUtil();
-	objectMask.processObjectMasks(url, objectMasks);
 	
     BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(userName,apiKey);
-	ClientResponse clientResponse = client.executeGET(url.toString());
+	ClientResponse clientResponse = client.executeGET(url.toString(),objectMasks);
 	String response = clientResponse.getEntity(String.class);
 	JSONObject json = new JSONObject(response);
 	System.out.println("response************* "+json.getInt("id"));

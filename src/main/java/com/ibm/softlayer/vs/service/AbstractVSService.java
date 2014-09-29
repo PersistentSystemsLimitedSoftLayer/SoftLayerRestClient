@@ -173,11 +173,10 @@ public abstract class AbstractVSService {
 	private ClientResponse executeGET(String apiUrl, List<String> objectMasks) {
 		//setting the object masks
 		StringBuffer url = new StringBuffer(apiUrl);		
-		SLAPIUtil.processObjectMasks(url, objectMasks);
-				
+		
 		BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(username, apiKey);
 		try {
-			return client.executeGET(url.toString());
+			return client.executeGET(url.toString(),objectMasks);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
