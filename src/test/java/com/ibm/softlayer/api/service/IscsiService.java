@@ -8,19 +8,14 @@ import org.apache.wink.json4j.JSONArray;
 import org.apache.wink.json4j.JSONObject;
 import org.junit.Test;
 
-import com.ibm.softlayer.iscsi.service.CreateIscsiNetworkStorageService;
-import com.ibm.softlayer.iscsi.service.CreateSnapshotOfiSCSIStorageService;
-import com.ibm.softlayer.iscsi.service.DeleteIscsiNetworkStorageService;
-import com.ibm.softlayer.iscsi.service.DeleteIscsiSnapshotService;
 import com.ibm.softlayer.iscsi.service.EditIscsiNetworkStorageService;
 import com.ibm.softlayer.iscsi.service.GetIscsiNetworkStorageService;
 import com.ibm.softlayer.iscsi.service.GetOneIscsiNetworkStorageService;
-import com.ibm.softlayer.iscsi.service.RestoreIscsiStorageFromSnapshotService;
 import com.ibm.softlayer.util.UnitTestConstants;
 
 public class IscsiService {
-	private static int iscsiVolumeId=3808800;
-	private static int snaphotId=3819960;
+	private static int iscsiVolumeId=0;
+	private static int snaphotId=0;
 	
 	
 /*	
@@ -72,6 +67,7 @@ public class IscsiService {
 		assertNotNull(result);
 	}
 */
+/*
 	@Test 
 	public void testEditIscsiNetworkStorage() throws Exception{
 		EditIscsiNetworkStorageService service= new EditIscsiNetworkStorageService(UnitTestConstants.SL_USERNAME,UnitTestConstants.SL_APIKEY);
@@ -79,7 +75,7 @@ public class IscsiService {
 		assertNotNull(result);
 		
 	}
-
+*/
 	/*
 	@Test 
 	public void testDeleteIscsiSnapshot() throws Exception{
@@ -91,18 +87,19 @@ public class IscsiService {
 
 		
 */
-	//Need to be tested
-/*	
+	
+/*
   	@Test
-	public void testDeleteIscsiNetworkStorage() throws Exception{
-		DeleteIscsiNetworkStorageService  service =new DeleteIscsiNetworkStorageService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
-		boolean iscsiNetworkObject = service.deleteIscsiNetworkStorage(snaphotId);
+	public void tesCancelIscsiNetworkStorage() throws Exception{
+  		CancelIscsiNetworkStorageService  service =new CancelIscsiNetworkStorageService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		boolean iscsiNetworkObject = service.cancelIscsiNetworkStorage(iscsiVolumeId);
 		assertNotNull(iscsiNetworkObject);
 	
 	}		
-*/	
-
 	
+
+	*/
+
 	
 }
 
