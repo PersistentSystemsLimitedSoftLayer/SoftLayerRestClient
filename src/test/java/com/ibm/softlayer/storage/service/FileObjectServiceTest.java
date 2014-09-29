@@ -17,9 +17,9 @@ public class FileObjectServiceTest {
 
 	private static String authToken = null;
 	private static String storageURL = null;
-	private static String containerName = "container12";
+	private static String containerName = "container20";
 	private static String uploadFileName = "logs.zip";
-	private static int uploadFileName_size = 814; 
+	private static int uploadFileName_size = 841; 
 	
 	@BeforeClass
 	public static void authenticateUser() throws Exception {
@@ -38,7 +38,7 @@ public class FileObjectServiceTest {
 		assertEquals(true, created);
 	}
 	
-	/*@Test
+	@Test
 	public void testUploadFileToContainer() throws Exception {
 		String fileLocation = Thread.currentThread().getContextClassLoader().getResource(uploadFileName).getFile();
 		FileObjectService service = new FileObjectService(storageURL, authToken, containerName);
@@ -50,7 +50,7 @@ public class FileObjectServiceTest {
 	public void testGetUploadFileFromContainer() throws Exception {
 		FileObjectService service = new FileObjectService(storageURL, authToken, containerName);
 		byte[] bytes = service.getFileObject(uploadFileName);
-		assertEquals(uploadFileName_size, bytes.length);
+		assertEquals(uploadFileName_size, bytes.length);				
 	}
 	
 	@Test
@@ -58,7 +58,7 @@ public class FileObjectServiceTest {
 		FileObjectService service = new FileObjectService(storageURL, authToken, containerName);
 		boolean retrieved = service.deleteFileObject(uploadFileName);
 		assertEquals(true, retrieved);
-	}*/
+	}
 	
 	@Test
 	public void testDeleteContainer() throws Exception {
