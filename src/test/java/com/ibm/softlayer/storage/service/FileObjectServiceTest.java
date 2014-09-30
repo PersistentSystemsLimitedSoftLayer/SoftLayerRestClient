@@ -3,12 +3,16 @@ package com.ibm.softlayer.storage.service;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 
+import java.io.File;
+import java.io.FileOutputStream;
+
 import org.apache.wink.json4j.JSONObject;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.ibm.softlayer.storage.object.service.ContainerService;
 import com.ibm.softlayer.storage.object.service.FileObjectService;
+import com.ibm.softlayer.storage.object.service.StaticLargeObjects;
 import com.ibm.softlayer.util.APIConstants;
 import com.ibm.softlayer.util.TokenGenerator;
 import com.ibm.softlayer.util.UnitTestConstants;
@@ -19,7 +23,9 @@ public class FileObjectServiceTest {
 	private static String storageURL = null;
 	private static String containerName = "container20";
 	private static String uploadFileName = "logs.zip";
-	private static int uploadFileName_size = 841; 
+	private static int uploadFileName_size = 841;
+	private static String uploadLargeFileName = "big.zip";
+	private static String manifestContainerName = "images";
 	
 	@BeforeClass
 	public static void authenticateUser() throws Exception {
@@ -65,5 +71,25 @@ public class FileObjectServiceTest {
 		ContainerService service = new ContainerService(storageURL, authToken);
 		boolean deleted = service.deleteContainer(containerName);
 		assertEquals(true, deleted);
-	}	
+	}
+	
+	@Test
+	public void testUploadLargeFileToContainer() throws Exception {
+		
+		String fileLocation = Thread.currentThread().getContextClassLoader().getResource(uploadLargeFileName).getFile();
+		StaticLargeObjects service = new StaticLargeObjects(storageURL, authToken);
+		boolean uploaded = service.uploadLargeFile(fileLocation);
+		assertEquals(true, uploaded);
+	}
+	
+	@Test
+	public void testGetUploadLargeFileFromContainer() throws Exception {
+		FileObjectService service = new FileObjectService(storageURL, authToken, manifestContainerName);
+		byte[] bytes = service.getFileObject(uploadLargeFileName);
+		assertNotNull(bytes);
+		File f = new File(uploadLargeFileName);
+		FileOutputStream fos = new FileOutputStream(f);
+		fos.write(bytes);
+		fos.close();
+	}
 }
