@@ -11,6 +11,8 @@ import org.apache.wink.json4j.JSONArray;
 import org.apache.wink.json4j.JSONObject;
 import org.junit.Test;
 
+import com.ibm.softlayer.ssl.service.DeleteCertificateService;
+import com.ibm.softlayer.ssl.service.EditCertificateService;
 import com.ibm.softlayer.ssl.service.GetAllValidExpireCertificateService;
 import com.ibm.softlayer.ssl.service.GetCertificationService;
 import com.ibm.softlayer.util.UnitTestConstants;
@@ -22,6 +24,9 @@ public class SSLServiceTest {
 	 * Get Certificate  Test.
 	 * certType is Certificate type i.e All or Expire or Valid
 	 * @throws Exception the exception
+	 * 
+	 * Note : This test is commented as there is no Certificates available with id 10599. 
+	 * This test will work when there will be Certificates available on softlayer.
 	 */
 	/*@Test
 	public void testgetCertification() throws Exception {
@@ -85,6 +90,44 @@ public class SSLServiceTest {
 		JSONArray jsonArr = service.getAllValidExpireCertificate(certType,objectMask);
 		assertNotNull(jsonArr);
 	}
+	
+	
+	/**
+	 * Edit Certificate Test.
+	 ** Note : This test is commented as there is no Certificates available with id 230942. 
+	 * This test will work when there will be Certificates available on softlayer.
+	 * Pass the Id of an Certificate to variable certId 
+	 * @throws Exception the exception
+	 */
+	/*@Test
+	public void testeditCertificateObject() throws Exception {
+		String certId = "230942";
+		Map<String,String> bodyelementMap = new HashMap<String,String>();
+		bodyelementMap.put("notes", "This will edit the notes of certificate");
+		
+		EditCertificateService service = new EditCertificateService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		boolean isedited = service.editCertificateObject(certId, bodyelementMap);
+		assertEquals(true, isedited);;
+		System.out.println("isedited is ===="+isedited);
+	}*/
+	
+	
+	
+	/**
+	 * Delete Certificate Test.
+	 ** Note : This test is commented as there is no Certificates available with id 230942. 
+	 * This test will work when there will be Certificates available on softlayer.
+	 * Pass the Id of an Certificate to variable certId 
+	 * @throws Exception the exception
+	 */
+	/*@Test
+	public void testdeleteCertificateObject() throws Exception {
+		String certId = "230942";
+		DeleteCertificateService service = new DeleteCertificateService(UnitTestConstants.SL_USERNAME, UnitTestConstants.SL_APIKEY);
+		JSONObject json = service.deleteCertificateObject(certId);
+		assertNotNull(json);
+		System.out.println("json response for delete certificate is ===="+json);
+	}*/
 	
 
 }

@@ -118,5 +118,7 @@ public class APIConstants {
 	 
 	 public static final  String RESTORE_FROM_SNAPSHOT="restoreFromSnapshot";
 	 
-	
+	 public static final  String BILLING_ITEM="SoftLayer_Billing_Item";
+	 
+	 public static final  String CANCEL_ITEM="cancelItem";
 }

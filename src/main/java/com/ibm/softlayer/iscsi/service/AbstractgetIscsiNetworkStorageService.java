@@ -69,7 +69,7 @@ private String username = null;
 	 }
  
  
- public JSONObject getIscsiById(int iscsiID , String iscsiUrl,List<String> objectMasks) throws Exception
+ public JSONObject getIscsiById(int iscsiID , String getIscsiUrl,List<String> objectMasks) throws Exception
  {
 		
 		//generate the get queues URL	
@@ -77,7 +77,7 @@ private String username = null;
 		if(!url.toString().endsWith("/")) {
 			url.append("/");
 		}
-		url.append(iscsiID).append("/").append(iscsiUrl);
+		url.append(iscsiID).append("/").append(getIscsiUrl);
 		
 		
 		
@@ -89,11 +89,11 @@ private String username = null;
 		
 		if(clientResponse.getStatusCode() == 200){
 			JSONObject json = new JSONObject(response);
-			logger.debug("getIscsiNetworkStorage By ID: " + iscsiUrl + " JSON Response: " + response);
+			logger.debug("getIscsiNetworkStorage By ID: " + getIscsiUrl + " JSON Response: " + response);
 			return json;			
 		}
 		
-		throw new Exception("Could not retrieve getIscsiNetworkStorage: " + iscsiUrl + ": Code: " + clientResponse.getStatusCode() + ", Reason: " + response);			
+		throw new Exception("Could not retrieve getIscsiNetworkStorage: " + getIscsiUrl + ": Code: " + clientResponse.getStatusCode() + ", Reason: " + response);			
 	 
  }
  
@@ -438,6 +438,50 @@ private String username = null;
 	 
 
  }
+ 
+ public boolean cancelIscsi(int iscsiVolumeId, String cancelUrl) throws Exception
+ {
+	 
+	 logger.info("Executing cancel iscsi storage : " + cancelUrl + " for username: " + username);
+	 StringBuffer url = new StringBuffer(URIGenerator.getSLBaseURL(APIConstants.BILLING_ITEM));
+		
+	 	if(!url.toString().endsWith("/")) {
+	 		url.append("/");
+	 	}
+	 	
+	
+	 
+	 JSONObject billingItemObject=getIscsiById(iscsiVolumeId,APIConstants.GETOBJECT_API,Arrays.asList("billingItem.id"));
+	 int billingitemId=billingItemObject.getJSONObject("billingItem").getInt("id");
+	
+	 BasicAuthorizationSLClient client = new BasicAuthorizationSLClient(username, apiKey);
+	
+	 url.append(billingitemId).append("/").append(cancelUrl);
+	 
+	 JSONArray cancelParams =new JSONArray();
+	 cancelParams.add("true");
+	 cancelParams.add("true");
+	 cancelParams.add("No longer needed");
+	 
+	 
+	
+	 JSONObject patameters =new JSONObject();
+	 patameters.put("parameters", cancelParams);
+	 
+		 
+	ClientResponse clientResponse =client.executePOST(url.toString(),patameters.toString());
+	String response = clientResponse.getEntity(String.class);
+
+	if(clientResponse.getStatusCode() == 200){
+		
+		return true;			
+	}
+	
+	throw new Exception("Could not cancel  iSCSI Network Storage: " + url + ": Code: " + clientResponse.getStatusCode() + ", Reason: " + response);			
+	 
+
+	 
+}
 	 }
 		
  
