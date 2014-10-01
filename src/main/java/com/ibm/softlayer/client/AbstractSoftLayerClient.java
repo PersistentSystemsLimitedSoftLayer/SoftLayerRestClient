@@ -248,6 +248,7 @@ public abstract class AbstractSoftLayerClient {
 			resource.header("Authorization", "Basic "+ getxAuthToken());
 		}
 		
+		resource.header("Accept", "application/json");
 		ClientResponse clientResponse = resource.get();	
 		String response = clientResponse.getEntity(String.class);		
 		logger.info("Executed GET for following URL: " + url + ", clientResponse: " + clientResponse.getStatusCode() + ", response: " + response);
