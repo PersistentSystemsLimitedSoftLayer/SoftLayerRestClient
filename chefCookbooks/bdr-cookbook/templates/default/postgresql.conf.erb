@@ -1,0 +1,25 @@
+<% node['postgresql']['config'].each do |key, value| %>
+<% next if value == "" %>
+  <% case key 
+     when 'shared_buffers' %>
+<%="#{key} = #{value}" %>
+  <% when 'bdr.dsnlist'   
+	    i = 0
+		connectionlist = node['postgresql']['config']['bdr.connections'].split(',')
+	    connectionlist.each do |connection| 
+		     dsnlist = node['postgresql']['config']['bdr.dsnlist'] %>
+<%="bdr.#{connection}_dsn = '#{dsnlist[i]}'" %>
+             <% i += 1	
+		end	 
+     else
+        case value  
+		when String %>
+<%="#{key} = '#{value}'" %>
+	 <% else %>
+<%="#{key} = #{value}" %>
+     <% end
+     end %>
+<% end %>
+
+
+
