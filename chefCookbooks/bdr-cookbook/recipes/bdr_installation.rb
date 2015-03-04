@@ -3,20 +3,20 @@ password = password.chop
 
 user 'postgres' do
   supports :manage_home => true
-  home '/home/postgres'
+  home node['postgresql']['directory']['home']
   shell '/bin/bash'    
   password #{password}
   action :create    
 end
 
-%w( #{node['postgresql']['config']['data_directory']} /home/postgres/2ndquadrant_bdr /home/bdr).each do |dir_name|
+[node['postgresql']['config']['data_directory'],node['postgresql']['directory']['git_clone'],node['postgresql']['directory']['installation']].each do |dir_name|
   directory dir_name do
      recursive true
 	 action :delete
   end
 end
 
- directory "#{node['postgresql']['config']['data_directory']}" do
+ directory node['postgresql']['config']['data_directory'] do
     mode "0775"
 	owner "postgres"
 	group "postgres"
@@ -24,20 +24,26 @@ end
 	recursive true
  end
 
-git "/home/postgres/2ndquadrant_bdr" do
-  repository "git://git.postgresql.org/git/2ndquadrant_bdr.git"
-  revision "bdr/0.7.1"
+git node['postgresql']['directory']['git_clone'] do
+  repository node['postgresql']['git']['repository']
+  revision node['postgresql']['git']['revision']
   user "postgres"
   action :sync
 end
 
-bash 'install_something' do
-  user 'postgres'
-  cwd '/home/postgres/2ndquadrant_bdr'
-  code <<-EOH
-  ./configure --prefix=/home/postgres/bdr  --with-openssl
-  make
-  make install
-  cd /home/postgres/2ndquadrant_bdr/contrib/btree_gist && make && make install && cd ../../contrib/bdr && make && make install
-  EOH
+execute "configure" do
+	command "./configure --prefix=#{node['postgresql']['directory']['installation']}  --with-openssl"
+	user "postgres"
+	cwd node['postgresql']['directory']['git_clone']
 end
+[node['postgresql']['directory']['git_clone'],node['postgresql']['directory']['contrib/btree_gist'],node['postgresql']['directory']['contrib/bdr']].each do |directory|
+	bash "do_install" do
+		user 'postgres'
+		cwd directory
+		code <<-EOH
+		make
+		make install
+		EOH
+	end
+end
+

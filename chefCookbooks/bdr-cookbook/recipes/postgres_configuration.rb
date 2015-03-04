@@ -1,27 +1,27 @@
 ruby_block "update path in .bashrc" do
   block do
-    file = Chef::Util::FileEdit.new("/home/postgres/.bashrc")
-    file.insert_line_if_no_match("export PATH=$PATH:/home/postgres/bdr/bin","export PATH=$PATH:/home/postgres/bdr/bin")
+    file = Chef::Util::FileEdit.new("#{node['postgresql']['directory']['home']}/.bashrc")
+    file.insert_line_if_no_match("export PATH=$PATH:#{node['postgresql']['directory']['bin']}","export PATH=$PATH:#{node['postgresql']['directory']['bin']}")
     file.write_file
   end
   action :run
 end
 
 execute "initdb" do
-	command "/home/postgres/bdr/bin/initdb -D #{node['postgresql']['config']['data_directory']} -U postgres --auth-host=md5 --auth-local=peer"
+	command "#{node['postgresql']['directory']['bin']}/initdb -D #{node['postgresql']['config']['data_directory']} -U postgres --auth-host=md5 --auth-local=peer"
 	user "postgres"
 end
 
-template "#{node['postgresql']['config']['data_directory']}/postgresql.conf" do
+template node['postgresql']['postgresql.conf'] do
   source "postgresql.conf.erb"
 end
-template "#{node['postgresql']['config']['data_directory']}/pg_hba.conf" do
+template node['postgresql']['pg_hba.conf'] do
   source "pg_hba.conf.erb"
 end
 
 ruby_block "copy directory contents" do
   block do
-    FileUtils.cp_r("/home/postgres/2ndquadrant_bdr/contrib/bdr/.","/home/postgres/bdr/share/extension")
+    FileUtils.cp_r("#{node['postgresql']['directory']['contrib/bdr']}/.","#{node['postgresql']['directory']['installation']}/share/extension")
   end
   action :run
 end
