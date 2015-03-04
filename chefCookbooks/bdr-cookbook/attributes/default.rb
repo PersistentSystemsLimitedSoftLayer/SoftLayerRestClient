@@ -1,9 +1,24 @@
+# Packages required for installing postgresql on Ubuntu
 default['postgresql']['prerequisites']['ubuntu'] = %w(git mc joe whois curl libreadline-dev zlib1g-dev bison flex make libssl-dev vim)
 
+# Array of entries to be inserted in pg_hba.conf  http://www.postgresql.org/docs/9.4/static/auth-pg-hba-conf.html
+default['postgresql']['hba'] = ["host  replication     postgres        169.53.244.193/20       md5"]
 
-default['postgresql']['hba'] = ""
+# Directory paths used by Postgresql
+default['postgresql']['directory']['home'] = "/home/postgres"
+default['postgresql']['directory']['installation'] = "#{node['postgresql']['directory']['home']}/bdr"
+default['postgresql']['directory']['bin'] = "#{node['postgresql']['directory']['installation']}/bin"
+default['postgresql']['directory']['git_clone'] = "#{node['postgresql']['directory']['home']}/2ndquadrant_bdr"
+default['postgresql']['directory']['contrib/btree_gist'] = "#{node['postgresql']['directory']['git_clone']}/contrib/btree_gist"
+default['postgresql']['directory']['contrib/bdr'] = "#{node['postgresql']['directory']['git_clone']}/contrib/bdr"
 
+# Git repository and revision used for Postgresql+BDR install
+default['postgresql']['git']['repository'] = "git://git.postgresql.org/git/2ndquadrant_bdr.git"
+default['postgresql']['git']['revision'] = "bdr/0.7.1"
 
+# Parameters to be set in postgresql.conf 
+# For detailed explanation of parameters refer http://www.postgresql.org/docs/9.4/static/runtime-config.html
+# For BDR configuration refer https://wiki.postgresql.org/wiki/BDR_Administration
 default['postgresql']['config']['data_directory'] = "/opt/pgdata"
 default['postgresql']['config']['hba_file']= ""
 default['postgresql']['config']['ident_file']=""
@@ -74,10 +89,10 @@ default['postgresql']['config']['archive_mode']= ""
 default['postgresql']['config']['archive_command']= ""
 default['postgresql']['config']['archive_timeout']= ""
 
-default['postgresql']['config']['max_wal_senders']= 4
+default['postgresql']['config']['max_wal_senders']= 10
 default['postgresql']['config']['wal_keep_segments']= ""
 default['postgresql']['config']['wal_sender_timeout']= ""
-default['postgresql']['config']['max_replication_slots']= 6
+default['postgresql']['config']['max_replication_slots']= 8
 default['postgresql']['config']['track_commit_timestamp']= "on"
 default['postgresql']['config']['synchronous_standby_names']= ""
 default['postgresql']['config']['vacuum_defer_cleanup_age']= ""
@@ -223,11 +238,12 @@ default['postgresql']['config']['restart_after_crash '] = ""
 default['postgresql']['config']['include_dir'] = ""
 default['postgresql']['config']['include_if_exists '] = ""
 default['postgresql']['config']['include'] = ""
-default['postgresql']['config']['bdr.connections'] = ""
-default['postgresql']['config']['bdr.dsnlist'] = ""
+default['postgresql']['config']['bdr.connections'] = "postgres"
+default['postgresql']['config']['bdr.dsnlist'] = ["dbname=postgres host=169.53.244.198 user=postgres password=postgres port=5432"]
 
-
-
+# Postgresql config file paths
+default['postgresql']['postgresql.conf'] = "#{node['postgresql']['config']['data_directory']}/postgresql.conf"
+default['postgresql']['pg_hba.conf'] = "#{node['postgresql']['config']['data_directory']}/pg_hba.conf"
 
 
 
