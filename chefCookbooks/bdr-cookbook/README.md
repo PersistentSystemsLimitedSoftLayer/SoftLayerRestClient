@@ -1219,7 +1219,7 @@ Usage
     "postgresql": {
       "config": {
         "bdr.dsnlist": [
-          dbname=thedb host=the-target-hostname user=bdr password=dbpassword port=5432"
+          "dbname=thedb host=the-target-hostname user=bdr password=dbpassword port=5432"
         ],
         "bdr.connections": "connection1"
       },
