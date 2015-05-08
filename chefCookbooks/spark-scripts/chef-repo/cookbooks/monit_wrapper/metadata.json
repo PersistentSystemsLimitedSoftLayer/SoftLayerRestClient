@@ -1,0 +1,36 @@
+{
+  "name": "monit_wrapper",
+  "version": "3.1.1",
+  "description": "A wrapper around Monit making it easier to monitor services",
+  "long_description": "",
+  "source_url": "https://github.com/clearstorydata-cookbooks/monit_wrapper",
+  "issues_url": "https://github.com/clearstorydata-cookbooks/monit_wrapper/issues",
+  "maintainer": "ClearStory Data, Inc.",
+  "maintainer_email": "mbautin@clearstorydata.com",
+  "license": "Apache License 2.0",
+  "platforms": {
+    "debian": ">= 0.0.0",
+    "ubuntu": ">= 0.0.0"
+  },
+  "dependencies": {
+    "apt": ">= 0.0.0",
+    "monit": ">= 0.0.0",
+    "notifying-action": "~> 1.0.1"
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+  },
+  "groupings": {
+  },
+  "recipes": {
+  }
+}
