@@ -1,0 +1,99 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+# vagrant plugins required:
+# vagrant-berkshelf, vagrant-omnibus, vagrant-hosts, vagrant-cachier
+Vagrant.configure("2") do |config|
+  config.vm.box = "Official Ubuntu 14.04 daily Cloud Image amd64 (Development release,  No Guest Additions)"
+  config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
+
+ # config.vm.box = "chef/centos-6.5"
+
+  # enable plugins
+  config.berkshelf.enabled = true
+  config.omnibus.chef_version = :latest
+
+  # if you want to use vagrant-cachier,
+  # please activate below.
+  config.cache.auto_detect = true
+
+  # please customize hostname and private ip configuration if you needed.
+  config.vm.hostname = "mesos"
+  private_ip = "192.168.33.10"
+  config.vm.network :private_network, ip: private_ip
+  config.vm.provision :hosts do |provisioner|
+    provisioner.add_host private_ip , [ config.vm.hostname ]
+  end
+
+  # for mesos web UI.
+  config.vm.network :forwarded_port, guest: 5050, host: 5050
+  # for marathon web UI.
+  config.vm.network :forwarded_port, guest: 8080, host: 8080
+
+  config.vm.provider :virtualbox do |vb|
+    vb.name = 'cookbook-mesos-sample-mesosphere'
+    # Use VBoxManage to customize the VM. For example to change memory:
+    vb.customize ["modifyvm", :id, "--memory", "#{1024*2}"]
+#    vb.customize ["modifyvm", :id,  "--cpus",  "2"]
+  end
+
+  config.vm.provision :shell do |s|
+      s.path = "scripts/populate_sshkey.sh"
+      s.args = "/home/vagrant vagrant"
+  end
+
+  # mesos-master doesn't create its work_dir.
+  config.vm.provision :shell, :inline => "mkdir -p /tmp/mesos"
+
+  config.vm.provision :chef_solo do |chef|
+    # chef.log_level = :debug
+    chef.add_recipe "apt"
+    chef.add_recipe "docker::aufs" # this fails on centos-6.5
+    chef.add_recipe "docker::lxc"
+    chef.add_recipe "docker"
+
+    chef.add_recipe "mesos"
+    chef.add_recipe "mesos::master"
+    chef.add_recipe "mesos::slave"
+
+    # You may also specify custom JSON attributes:
+    chef.json = {
+      :mesos => {
+        :type         => "mesosphere",
+        :mesosphere => {
+          :with_zookeeper => true
+        },
+        # command line options for mesos-master
+        :master => {
+          :zk => "zk://localhost:2181/mesos",
+          :log_dir => "/var/log/mesos",
+          :cluster => "MyCluster",
+          :quorum  => "1"
+        },
+        # command line options for mesos-slave
+        :slave =>{
+          :master => "zk://localhost:2181/mesos",
+          :containerizers => "docker,mesos",
+          :isolation => "cgroups/cpu,cgroups/mem",
+          :executor_registration_timeout => "5mins",
+          :log_dir => "/var/log/mesos",
+          :work_dir => "/var/run/work"
+        },
+        # below ip lists are for meoss-[start|stop]-cluster.sh
+        :master_ips => ["localhost"],
+        :slave_ips  => ["localhost"]
+      }
+    }
+  end
+
+  # installing marathon
+#   config.vm.provision "shell", :inline => <<SCRIPT
+#     DISTRO=$(lsb_release -is | tr '[:upper:]' '[:lower:]')
+#     CODENAME=$(lsb_release -cs)
+#     echo "deb http://repos.mesosphere.io/${DISTRO} ${CODENAME}-testing main" |   tee /etc/apt/sources.list.d/mesosphere.list
+#     apt-get -y update
+#     # Install or upgrade Marathon package
+#     sudo apt-get -y install marathon
+#     restart marathon
+# SCRIPT
+
+end

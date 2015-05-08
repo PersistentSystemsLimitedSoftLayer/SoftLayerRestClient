@@ -1,0 +1,6 @@
+#spark slaves.erb
+
+<% node['apache_spark']['standalone']['worker_ips'].each do |ip| %>
+<%= ip %>
+<% end %>
+

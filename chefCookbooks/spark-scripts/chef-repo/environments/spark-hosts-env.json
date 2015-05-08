@@ -1,0 +1,19 @@
+{
+ 	"name": "spark-hosts-env",
+ 	"description": "environment for writing to hosts file",
+  	"cookbook_versions": {
+       		"apache_spark": "1.0.5"
+  		},
+  	"json_class": "Chef::Environment",
+  	"chef_type": "environment",
+  	"default_attributes": {
+  		},
+  	"override_attributes": {
+    		"spark": {
+      			"ip":"5.153.43.188",
+				"hostname":"autoscale-worker-4074.persistent.com",
+				"nodename":"autoscale-worker-4074"
+    			}
+  		}
+	}
+

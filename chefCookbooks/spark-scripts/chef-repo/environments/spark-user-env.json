@@ -1,0 +1,20 @@
+{
+  "name": "spark-user-env",
+  "description": "environment for creation of spark user",
+  "cookbook_versions": {
+        "apache_spark": "1.0.5"
+  },
+  "json_class": "Chef::Environment",
+  "chef_type": "environment",
+  "default_attributes": {
+
+  },
+  "override_attributes": {
+    "apache_spark": {
+      "user": "spark" ,
+      "group": "spark" , 
+      "user_password": "psl"
+    }
+  }
+}
+

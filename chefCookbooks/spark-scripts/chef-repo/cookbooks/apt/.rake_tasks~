@@ -1,0 +1,8 @@
+integration:cloud
+integration:vagrant
+spec
+style
+style:chef
+style:ruby
+style:ruby:auto_correct
+travis
